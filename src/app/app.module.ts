@@ -1,8 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule }   from '@angular/forms'; // <-- NgModel lives here
-import { HttpModule, JsonpModule } from '@angular/http';
-import { NgSemanticModule } from 'ng-semantic';
+import { HttpModule, JsonpModule } from '@angular/http'
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routingComponents}     from './app-routing.module';
@@ -14,7 +13,7 @@ import { InstitutionService } from './common/services/institutions.service';
 import {CommonService} from './common/services/common.service';
 import {DivisionService} from './common/services/divisions.service';
 import {AuthGuard} from './common/services/auth-guard.service';
-import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxbargauge';
+
 
 @NgModule({
   imports: [
@@ -30,7 +29,6 @@ import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_j
   declarations: [
     AppComponent,
     routingComponents,
-    jqxBarGaugeComponent
   ],
   providers: [
     AuthGuard,
