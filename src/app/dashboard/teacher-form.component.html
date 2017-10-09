@@ -1,0 +1,89 @@
+<div class="ui basic modal" id="teacher-created">
+  <div class="ui icon header">
+    <i class="green wizard icon"></i>
+    Teacher added!
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button" (click)="showTeachers()">
+      <i class="remove icon"></i>
+      Close
+    </div>
+  </div>
+</div>
+<form class="ui form" [formGroup]="teacherForm">
+  <div class="active content">
+    <div class="field">
+      <label>Name</label>
+      <div class="three fields">
+        <div class="required field">
+          <input type="text" name="first_name" placeholder="First Name" formControlName="first_name">
+        </div>
+        <div class="field">
+          <input type="text" name="middle_name" placeholder="Middle Name" formControlName="middle_name">
+        </div>
+        <div class="required field">
+          <input type="text" name="last_name" placeholder="Last Name" formControlName="last_name">
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="two fields">
+        <div class="ui required field" [ngClass]="{'error': incorrectUsernameFormat || usernameTaken }">
+          <label>Username: <span>(Teacher will use this to login)</span> </label>
+          <div class="ui left action right icon input">
+            <div class="ui large primary icon button">
+              <i class="at icon"></i>
+            </div>
+            <input id="username" (keyup)="onKey($event)" type="text" formControlName="username"
+                   placeholder="Parent's unique username"
+                   name="username">
+            <i class="big blue notched circle loading icon" *ngIf="comparingUsernames"></i>
+            <i class="big green checkmark icon"
+               *ngIf="!usernameTaken && !incorrectUsernameFormat && teacherForm.get('username').status === 'VALID' && !comparingUsernames">
+            </i>
+            <i class="big red remove circle outline icon"
+               *ngIf="( usernameTaken || incorrectUsernameFormat || teacherForm.get('username').status === 'INVALID') && !comparingUsernames">
+            </i>
+
+          </div>
+        </div>
+        <div class="required field">
+          <label>Password <span>(Teacher will use this to login)</span> </label>
+          <input type="text" formControlName="password" placeholder="Parent's Initial Password">
+        </div>
+
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label>Email</label>
+          <input type="text" formControlName="email" placeholder="e.g. name@example.com">
+        </div>
+        <div class="required field">
+          <label>Gender</label>
+          <select class="ui fluid dropdown" formControlName="gender">
+            <option *ngFor="let gender of genders" [value]="gender.value">{{ gender?.name }}</option>
+          </select>
+        </div>
+        <div class="required field">
+          <label>Subjects Taught
+            <span>(at least one required)</span>
+          </label>
+          <select class="ui fluid search selection dropdown" formControlName="subjects" multiple="">
+            <option *ngFor="let subject of subjects" [value]="subject.id">
+              {{ subject.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="ui labeled icon primary button" tabindex="0" (click)="createTeacher()">
+    <i class="icon save"></i>
+    Save teacher
+  </div>
+
+  <div class="ui floating red message" *ngIf="errors?.length > 0">
+    <p *ngFor="let error of errors">{{ error }}</p>
+  </div>
+</form>

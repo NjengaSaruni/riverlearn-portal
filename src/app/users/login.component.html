@@ -1,0 +1,69 @@
+<div id="welcomeMessage" [ngClass]="{'hidden': !firstLoginAttempt }" class="ui attached floating message">
+  <div class="header">
+    Welcome! Please enter your credentials.
+  </div>
+  <a class="link">Forgot password?</a>
+</div>
+<div id="loggingInMessage" [ngClass]="{'hidden':  !loggingIn && (!loginErrorOccured || !serverErrorOccured) }"
+     class="ui icon attached floating message">
+  <i class="notched circle loading icon"></i>
+  <div class="content">
+    <div class="header">
+      Logging in...
+    </div>
+  </div>
+</div>
+<div id="logginErrorOccurredMessage" [ngClass]="{'hidden': !loginErrorOccured }" id="invalidCredentials"
+     class="ui icon attached orange floating message">
+  <i (click)="closeLoginErrorOccuredMessage();" class="close icon"></i>
+  <div class="header">
+    {{ loginErrorMessageTitle }}
+  </div>
+  <div class="content">
+    {{ loginErrorMessage }}
+  </div>
+</div>
+
+<div id="serverErrorOccurredMessage" [ngClass]="{'hidden': !serverErrorOccured }"
+     class="ui icon attached orange floating message">
+  <i (click)="closeServerErrorOccuredMessage();" class="close icon"></i>
+  <div class="header">
+    {{ serverErrorMessageTitle }}
+  </div>
+  <div class="content">
+    {{ serverErrorMessage }}
+  </div>
+</div>
+
+
+<form class="ui form attached fluid segment" [formGroup]='loginForm'>
+  <div class="field">
+    <label for="username">Username</label>
+    <div class="ui left icon input">
+      <input type="text" class="form-control" id="username" formControlName="username" placeholder="Username">
+      <i class="user icon"></i>
+    </div>
+  </div>
+  <div class="field">
+    <label for="password">Password</label>
+    <div class="ui left icon input">
+      <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password"/>
+      <i class="lock icon"></i>
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" formControlName="remember">
+        <label>Remember me</label>
+      </div>
+    </div>
+    <div class="field">
+      <input type="submit" (click)="auth($event);" value="Sign In" class="ui fluid primary button"/>
+    </div>
+  </div>
+</form>
+<div class="ui bottom attached message">
+  <i class="large icon help"></i>
+  <a class="link" (click)="closeOpenRegistration();">Create new account here.</a>
+</div>

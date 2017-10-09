@@ -1,0 +1,44 @@
+<div class="ui accordion">
+  <div class="ui primary button title" (click)="hideCards()">
+    Add New Teacher
+    <i class="icon dropdown"></i>
+  </div>
+  <div class="ui segment content">
+    <teacher-form></teacher-form>
+  </div>
+</div>
+<div class="ui dimmable segment">
+  <div class="ui link cards">
+    <div class="ui inverted active dimmer" *ngIf="!contentReady">
+      <div class="ui text center inline loader">
+        Fetching teachers
+      </div>
+    </div>
+    <div class="card" *ngFor="let teacher of teachers">
+      <div class="image">
+        <img src="/images/avatar/tom.jpg">
+      </div>
+      <div class="content">
+        <div class="header">{{ teacher?.user?.first_name + ' ' + teacher?.user?.last_name }}</div>
+        <div class="meta">
+          <a> Something </a>
+        </div>
+        <div class="description">
+          {{ teacher?.user?.first_name }} is an interior designer living in New York.
+        </div>
+      </div>
+      <div class="extra content">
+      <span class="right floated">
+        Joined on {{ teacher.created_at | date }}
+      </span>
+        <span>
+        <i class="user icon"></i>
+        Lorem Ipsum
+      </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

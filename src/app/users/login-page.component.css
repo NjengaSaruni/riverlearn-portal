@@ -1,0 +1,37 @@
+.grid {
+  height: 100% !important;
+  background-color: #0e5a77;
+  text-align: right !important;
+}
+
+.column {
+  max-width: 450px;
+  background-color: beige;
+  text-align: left !important;
+}
+.segment {
+  background: #DFF0FF;
+  text-align: left !important;
+  border: none !important;
+}
+
+.message {
+  border: none !important;
+}
+@media screen and (min-width: 800px) {
+  .ui.grid {
+    padding: 14.5%;
+  }
+
+  .column {
+    background-color: #0e5a77;
+    box-shadow: 1px 1px 5px #070a1c;
+    min-width: 600px;
+  }
+
+  .ui.blue.message {
+    background-color: #DFF0FF;
+    color: #0e5a77;
+    box-shadow: 0 0 0 1px #2185D0 inset, 0 0 0 0 transparent;
+  }
+}

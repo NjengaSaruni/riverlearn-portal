@@ -1,0 +1,97 @@
+<form class="ui form" [formGroup]="institutionForm">
+  <div class="field">
+    <div class="three fields">
+      <div class="required field">
+        <label>Name</label>
+        <input type="text" formControlName="name" placeholder="Name" (keyup)="onKey($event)">
+      </div>
+      <div class="required field">
+        <label>Institution Type</label>
+        <select class="ui selection dropdown" id="selectInstitutionType" formControlName="type"
+                name="type" (change)="onKey($event)">
+          <option *ngFor="let type of institutionTypes" [value]="type.id">{{ type.name }}
+          </option>
+        </select>
+      </div>
+      <div class="required field">
+        <label>Domain</label>
+        <div class="ui left action right icon input">
+          <div class="ui large primary icon button">
+            <i class="at icon"></i>
+          </div>
+          <input [attr.disabled]="true" id="domain" (keyup)="onKey($event)" type="text" formControlName="domain"
+                 placeholder="Your unique domain"
+                 name="domain">
+          <i class="big blue notched circle loading icon" *ngIf="comparingDomains"></i>
+          <i class="big green smile icon"
+             *ngIf="!domainTaken && institutionForm.get('domain').status === 'VALID' && !comparingDomains">
+          </i>
+          <i class="big red meh icon"
+             *ngIf="( domainTaken || institutionForm.get('domain').status === 'INVALID')
+            && !comparingDomains">
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="two fields">
+      <div class="field">
+        <label>Motto</label>
+        <input type="text" formControlName="motto" placeholder="e.g. Education is Light">
+      </div>
+      <div class="field">
+        <label>Logo</label>
+        <input #fileInput type="file" formControlName="logo">
+      </div>
+    </div>
+  </div>
+
+  <div class="ui blue top attached segment" id="contactInfo">
+    <h3 class="ui header">Contact Information</h3>
+    <div class="ui test toggle checkbox">
+      <div class="">
+        <input type="checkbox" checked="checked" formControlName="usePersonal" (change)="usePersonalContacts()">
+        <label >Use personal contacts</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui blue bottom attached segment">
+    <div class="three fields">
+      <div class="required field">
+        <label>Mobile</label>
+        <input type="text" formControlName="mobile" placeholder="Phone number">
+      </div>
+      <div class="required field">
+        <label>Email</label>
+        <input type="text" formControlName="email" placeholder="name@example.com">
+      </div>
+      <div class="field">
+        <label>Website</label>
+        <input type="text" formControlName="website" placeholder="www.example.com">
+      </div>
+    </div>
+    <h4 class="ui dividing header">Address</h4>
+    <div class="three fields" formGroupName="address">
+      <div class="field">
+        <label>P.O. Box</label>
+        <input type="text" formControlName="postalAddress" placeholder="e.g. 12345">
+      </div>
+      <div class="field">
+        <label>Town</label>
+        <input type="text" formControlName="town" placeholder="e.g. Nairobi">
+      </div>
+      <div class="field">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode" placeholder="e.g. 00100">
+      </div>
+    </div>
+  </div>
+
+  <div class="ui inverted blue right labeled icon button" (click)="createInstitution()">
+    Register Institution
+    <i class="icon right arrow"></i>
+  </div>
+</form>

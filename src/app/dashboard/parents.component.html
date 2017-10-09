@@ -1,0 +1,51 @@
+<div class="ui accordion">
+  <div class="ui primary button title" (click)="hideCards()">
+    Add New Parent
+    <i class="icon dropdown"></i>
+  </div>
+  <div class="ui segment content">
+    <parent-form></parent-form>
+  </div>
+</div>
+<div class="ui dimmable segment">
+  <div class="ui top attached message">
+    <div class="ui search icon fluid input" [ngClass]="{'error': searchTextEmpty }">
+      <input type="text" placeholder="Search for parent using name, class, etc.." [(ngModel)]="searchText"
+             (keyup.enter)="searchParents($event)">
+      <i class="search link icon" (click)="searchParents($event);"></i>
+    </div>
+  </div>
+  <div class="ui people shape">
+    <div class="ui inverted active dimmer" *ngIf="!contentReady">
+      <div class="ui text center inline loader">
+        Fetching parents
+      </div>
+    </div>
+    <div class="active side" *ngFor="let parent of parents">
+      <div class="image">
+        <img src="/images/avatar/tom.jpg">
+      </div>
+      <div class="content">
+        <div class="header">{{ parent?.user?.first_name + ' ' + parent?.user?.last_name }}</div>
+        <div class="meta">
+          <a> {{ parent.students?.length }} students</a>
+        </div>
+        <div class="description">
+          Matthew is an interior designer living in New York.
+        </div>
+      </div>
+      <div class="extra content">
+      <span class="right floated">
+        Joined on {{ parent.created_at | date }}
+      </span>
+        <span>
+        <i class="user icon"></i>
+        {{ parent.students?.length }} Friends
+      </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

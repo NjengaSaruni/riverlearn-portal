@@ -1,0 +1,8 @@
+.ui.menu .item {
+  height: auto;
+  text-align: center;
+}
+
+.sidebar {
+  background-color: #0e5a77 !important;
+}

@@ -1,0 +1,4 @@
+.ui.blue.segment:not(.inverted) {
+  border-top: 2px solid #0e5a77;
+}
+

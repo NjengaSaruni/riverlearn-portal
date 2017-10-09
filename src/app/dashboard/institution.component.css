@@ -1,0 +1,33 @@
+.ui.header {
+  color: #0e5a77;
+}
+
+.ui.blue.label {
+  background-color: #0e5a77 !important;
+}
+
+.vertical.menu > div {
+  font-weight: bold !important;
+  color: #0e5a77;
+}
+
+.ui.horizontal.divider {
+  color: #0e5a77;
+  font-weight: bolder !important;
+}
+
+.content {
+  overflow: auto;
+}
+
+.ui.buttons {
+  overflow: auto;
+}
+
+.block {
+  display: inline-flex;
+}
+
+.blue.text {
+  color: #cd9a36;
+}

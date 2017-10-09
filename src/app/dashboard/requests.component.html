@@ -1,0 +1,161 @@
+<div class="ui header">
+  <h3>Teachers</h3>
+</div>
+<div class="ui divider"></div>
+<div class="ui blue segment">
+  <div class="ui cards" *ngIf="teacherRequests?.length > 0">
+    <div class="card" *ngFor="let request of teacherRequests">
+      <div class="content">
+        <img class="right floated mini ui image" src="/images/avatar/tom.jpg">
+        <div class="header">
+          {{ request.created_by?.first_name + ' ' + request.created_by?.last_name }}
+        </div>
+        <div class="meta">
+          {{ request.created_by?.username }}
+        </div>
+        <div class="description">
+          {{ request.created_by?.first_name }} requested permission to join on {{ request.created_at | date }}
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="ui two buttons">
+          <div class="ui basic green button" (click)="acceptRequest(request, $event)">Approve</div>
+          <div class="ui basic red button" (click)="declineRequest(request, $event)">Decline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui blue message" *ngIf="teacherRequests?.length === 0">
+    <div class="ui header">
+      <h3>
+        There are no currently no new requests from teachers
+      </h3>
+    </div>
+  </div>
+</div>
+
+<div class="ui header">
+  <h3>Students</h3>
+</div>
+<div class="ui divider"></div>
+<div class="ui blue segment">
+  <table class="ui compact celled definition table" *ngIf="studentRequests?.length > 0">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>E-mail address</th>
+      <th>Username</th>
+      <th>Request date</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of studentRequests; let i=index" id="studentRow">
+      <td>{{ i + 1 }}</td>
+      <td> {{ request.created_by?.first_name + ' ' + request.created_by?.last_name }}</td>
+      <td>{{ request.created_by?.email }} </td>
+      <td>{{ request.created_by?.username }}</td>
+      <td>{{ request.created_at | date:'medium'}}</td>
+      <td>
+        <div class="ui green basic button" (click)="acceptRequest(request, $event)">
+          Approve
+        </div>
+      </td>
+      <td class="collapsing">
+        <div class="ui red basic button" (click)="declineRequest(request, $event)">
+          Decline
+        </div>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui right floated small primary labeled icon button">
+          <i class="user icon"></i> Add User
+        </div>
+        <div class="ui small button">
+          Approve
+        </div>
+        <div class="ui small  disabled button">
+          Approve All
+        </div>
+      </th>
+    </tr>
+    </tfoot>
+  </table>
+  <div class="ui blue message" *ngIf="studentRequests?.length === 0">
+    <div class="ui header">
+      <h3>
+        There are no currently no new requests from students
+      </h3>
+    </div>
+  </div>
+</div>
+
+<div class="ui header">
+  <h3>Parents</h3>
+</div>
+<div class="ui divider"></div>
+<div class="ui blue segment">
+  <table class="ui compact celled definition table" *ngIf="parentRequests?.length > 0">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>E-mail address</th>
+      <th>Username</th>
+      <th>Request date</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of parentRequests; let i=index">
+      <td>{{ i + 1 }}</td>
+      <td> {{ request.created_by?.first_name + ' ' + request.created_by?.last_name }}</td>
+      <td>{{ request.created_by?.email }} </td>
+      <td>{{ request.created_by?.username }}</td>
+      <td>{{ request.created_at | date:'medium'}}</td>
+      <td class="collapsing">
+        <div class="ui green basic button" (click)="acceptRequest(request, $event)">
+          Approve
+        </div>
+      </td>
+      <td class="collapsing">
+        <div class="ui red basic button" (click)="declineRequest(request, $event)">
+          Decline
+        </div>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui right floated small primary labeled icon button">
+          <i class="user icon"></i> Add User
+        </div>
+        <div class="ui small button">
+          Approve
+        </div>
+        <div class="ui small  disabled button">
+          Approve All
+        </div>
+      </th>
+    </tr>
+    </tfoot>
+  </table>
+  <div class="ui blue message" *ngIf="parentRequests?.length === 0">
+    <div class="ui header">
+      <h3>
+        There are no currently no new requests from parents.
+      </h3>
+    </div>
+  </div>
+</div>
+
+

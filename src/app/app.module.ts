@@ -1,16 +1,48 @@
+import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule }   from '@angular/forms'; // <-- NgModel lives here
+import { HttpModule, JsonpModule } from '@angular/http';
+import { NgSemanticModule } from 'ng-semantic';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule, routingComponents}     from './app-routing.module';
+
+import { UserService } from './common/services/user.service';
+import { HeroService } from './heroes/hero.service';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { InstitutionService } from './common/services/institutions.service';
+import {CommonService} from './common/services/common.service';
+import {DivisionService} from './common/services/divisions.service';
+import {AuthGuard} from './common/services/auth-guard.service';
+import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxbargauge';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule, // <-- import the FormsModule before binding with [(ngModel)]
+    ReactiveFormsModule,
+    HttpModule,
+    JsonpModule,
+    // NgSemanticModule,
+    AppRoutingModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    routingComponents,
+    jqxBarGaugeComponent
+  ],
+  providers: [
+    AuthGuard,
+    CommonService,
+    UserService,
+    HeroService,
+    InstitutionService,
+    DivisionService
+  ],
+  bootstrap: [ AppComponent ]
 })
+
 export class AppModule { }
+
+

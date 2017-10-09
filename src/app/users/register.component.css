@@ -1,0 +1,8 @@
+.button {
+  border-color: #0e5a77;
+}
+
+.field > input, option {
+  color: #0e5a77 !important;
+  font-weight: bold;
+}

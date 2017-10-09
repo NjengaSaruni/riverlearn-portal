@@ -1,0 +1,24 @@
+<div class="ui grid">
+  <div class="row">
+    <div class="thirteen wide column">
+      <h3>Available Books</h3>
+    </div>
+    <button class="primary" icon="plus">
+      Add Book
+    </button>
+    <button class="red" icon="remove">
+      Remove Book
+    </button>
+  </div>
+</div>
+
+<div class="ui stackable menu">
+  <div class="items">
+    <div class="item" *ngFor="let book of books">
+      <div *ngIf="book.file">
+        <a class="lick" href="{{book.file.url}}"> {{ book.title }} </a>
+      </div>
+    </div>
+  </div>
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>

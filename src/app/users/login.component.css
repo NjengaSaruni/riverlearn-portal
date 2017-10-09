@@ -1,0 +1,35 @@
+/*body, .ui.vertical.divider {*/
+  /*color: #696969;*/
+  /*float: left;*/
+/*}*/
+
+/*.ui.vertical.divider {*/
+  /*margin: 0 4px;*/
+/*}*/
+
+/*.ui.raised.segment {*/
+  /*background-color: #103d50 ;*/
+/*}.footer {*/
+   /*text-align: right;*/
+ /*}*/
+
+/*.text {*/
+  /*display: inline;*/
+/*}*/
+/*a {*/
+  /*text-decoration: none;*/
+  /*color: #1E90FF;*/
+/*}*/
+
+body {
+  background-color: #DADADA !important;
+}
+body > .grid {
+  height: 100% !important;
+}
+.image {
+  margin-top: -100px !important;
+}
+.column {
+  max-width: 450px !important;
+}

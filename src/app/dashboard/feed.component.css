@@ -1,0 +1,14 @@
+.item {
+  color: #0e5a77 !important;
+}
+
+.comment {
+  width: 100%;
+  color: #0e5a77;
+  font-weight: bold;
+  height: 80px;
+}
+
+a {
+  color: #0e5a77;
+}

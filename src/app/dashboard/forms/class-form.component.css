@@ -1,0 +1,48 @@
+.ui.horizontal.divider {
+  color: #0e5a77;
+}
+
+.field {
+  color: #0e5a77;
+}
+
+#selectStream {
+  width: 120px !important;
+}
+
+.ui.inverted.blue.button, .ui.inverted.blue.buttons .button{
+  background-color: #0e5a77;
+  box-shadow: 0 0 0 2px #0e5a77 inset!important;
+  color: whitesmoke;
+}
+
+.ui.inverted.blue.button:hover, .ui.inverted.blue.buttons:hover .button:hover{
+  background-color: transparent;
+  box-shadow: 0 0 0 2px #0e5a77 inset!important;
+  color: #0e5a77;
+}
+
+.cards {
+  color: #0e5a77;
+}
+
+.blue.button {
+  color: #ffffff;
+  background-color: #0e5a77;
+  border: 0.4px solid #0e5a77;
+}
+
+.blue.button:hover {
+  color: #0e5a77;
+  background-color: transparent;
+}
+
+.ui.accordion .content {
+  font-size: small;
+}
+
+
+.golden.button {
+  background-color: #cd9a36 !important;
+  color: white !important;
+}

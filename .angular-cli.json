@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "portal"
+    "name": "RiverLearn"
   },
   "apps": [
     {
@@ -19,9 +19,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "semantic/dist/semantic.min.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "semantic/dist/semantic.min.js",
+        "time_circles.js",
+        "scrollTo.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

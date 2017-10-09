@@ -1,0 +1,7 @@
+<h2>{{loggedInUser?.username}} details!</h2>
+<div>
+  <div>
+    Institution: {{ loggedInUser?.institution.name ? loggedInUser?.institution.name : "No InstitutionSupplied" }}
+  </div>
+</div>
+<button (click)="goBack()">Back</button>

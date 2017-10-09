@@ -1,0 +1,121 @@
+<div class="ui basic modal" id="student-created">
+  <div class="ui icon header">
+    <i class="green wizard icon"></i>
+    Student added!!
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button" (click)="showStudents()">
+      <i class="remove icon"></i>
+      Close
+    </div>
+  </div>
+</div>
+<form class="ui blue form message" [formGroup]="studentForm">
+  <div class="ui accordion">
+    <div class="ui active blue basic icon button title">
+      Student Information
+      <i class="icon dropdown"></i>
+    </div>
+    <div class="active content">
+      <div class="field">
+        <label>Name</label>
+        <div class="three fields">
+          <div class="required field">
+            <input type="text" name="first_name" placeholder="First Name" formControlName="first_name">
+          </div>
+          <div class="field">
+            <input type="text" name="middle_name" placeholder="Middle Name" formControlName="middle_name">
+          </div>
+          <div class="required field">
+            <input type="text" name="last_name" placeholder="Last Name" formControlName="last_name">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="three fields">
+          <div class="ui required field" [ngClass]="{'error': incorrectUsernameFormat || usernameTaken }">
+            <label>Username: </label>
+            <div class="ui left action right icon input">
+              <div class="ui large primary icon button">
+                <i class="at icon"></i>
+              </div>
+              <input id="username" (keyup)="onKey($event)" type="text" formControlName="username"
+                     placeholder="Student's unique username"
+                     name="username">
+              <i class="big blue notched circle loading icon" *ngIf="comparingUsernames"></i>
+              <i class="big green checkmark icon"
+                 *ngIf="!usernameTaken && !incorrectUsernameFormat && studentForm.get('username').status === 'VALID' && !comparingUsernames">
+              </i>
+              <i class="big red remove circle outline icon"
+                 *ngIf="( usernameTaken || incorrectUsernameFormat || studentForm.get('username').status === 'INVALID') && !comparingUsernames">
+              </i>
+
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="text" formControlName="email" placeholder="e.g. name@example.com">
+          </div>
+          <div class="required field">
+            <label>Password</label>
+            <input type="text" formControlName="password" placeholder="Student's Initial Password">
+          </div>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="required field">
+          <label>Gender</label>
+          <select class="ui fluid dropdown" formControlName="gender">
+            <option *ngFor="let gender of genders" [value]="gender.value">{{ gender.name }}</option>
+          </select>
+        </div>
+        <div class="required field">
+          <label>Current Class</label>
+          <select class="ui fluid dropdown" formControlName="class">
+            <option *ngFor="let class of classes" [value]="class.id">{{ class.name }}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Admission/Registration Number</label>
+          <input type="text" formControlName="registration_number">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui accordion">
+    <div class="ui basic blue icon inverse button title">
+      Assign to Existing Parent/Guardian
+      <i class="icon dropdown"></i>
+    </div>
+    <div class="ui content segment">
+      <div class="ui field">
+        <div class="ui search selection dropdown" id="searchInstitutions">
+          <i class="search icon"></i>
+          <div class="default text">Search for parent</div>
+          <div class="menu" >
+            <li *ngFor="let parent of parents" class="item" (click)="selectParent(parent)">
+              {{ parent.user?.first_name + ' ' + parent.user?.last_name }}
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="ui segment">
+        <div class="field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" name="gift" tabindex="0">
+            <label>Send email/sms with login details to parent</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui labeled icon primary button" tabindex="0" (click)="createStudent()">
+    Save Student
+    <i class="icon save"></i>
+  </div>
+
+</form>

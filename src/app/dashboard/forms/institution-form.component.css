@@ -1,0 +1,31 @@
+.selection.dropdown option {
+  color: #0e5a77 !important;
+}
+
+.title {
+  display: inline-flex;
+}
+
+.field > input {
+  color: #0e5a77 !important;
+  font-weight: bold;
+}
+
+#submit-button {
+  margin: 4px;
+  float: right;
+}
+
+#contactInfo {
+  display: inline-flex;
+}
+
+#contactInfo > label {
+  margin: 2em;
+}
+
+@media only screen and (min-width: 800px){
+  .toggle.checkbox {
+    margin-left: 12em;
+  }
+}

@@ -1,0 +1,131 @@
+.ui.fixed.top.menu .item {
+  height: auto;
+  text-align: center;
+  background-color: #0e5a77;
+}
+
+.sidebar {
+  background-color: #0e5a77 !important;
+}
+
+.ui.fixed.top.menu {
+  background-color: #0e5a77;
+}
+img {
+  background-color: white;
+}
+
+.logo.item {
+  background-color: white !important;
+}
+.ui.vertical.tabular.menu .active.item {
+  border: none;
+  color: #cd9a36 !important;
+  background: #0e5a77;
+  border-right: 6px solid #cd9a36 !important;
+  border-left: 6px solid #cd9a36 !important;
+  border-radius: 6px !important;
+}
+
+.ui.tabular.menu .item:hover {
+  background-color: transparent;
+  color: #84a4a5
+}
+.icon i {
+  color: #cd9a36;
+}
+
+.golden-border {
+  background: #0e5a77 !important;
+}
+
+.top-items {
+  overflow-x: auto;
+  display:block;
+  white-space:nowrap;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+#items-menu {
+  background: #0e5a77;
+  color: #FFFFFF;
+}
+
+#items-menu .item {
+  background: #0e5a77;
+  color: #ffffff;
+}
+
+a {
+  color: #0e5a77;
+}
+
+.ui.brown.segment {
+  padding-top: 40px;
+}
+
+.icon.title {
+  display: inline-block;
+  font-size: large;
+}
+
+.modal.content > p {
+  color: #cd9a36 !important;
+}
+
+.ui.search .prompt {
+  border-radius: 1em;
+}
+
+.ui.primary.button:hover, .ui.button:active, .ui.inverted.blue.buttons:hover .button:hover{
+  background-color: white !important;
+  box-shadow: 0 0 0 2px #0e5a77 inset!important;
+  color: #0e5a77;
+  font-weight: bold !important;
+}
+
+.ui.primary.button {
+  -webkit-transition: background-color 2s; /* Safari 3.1 to 6.0 */
+  transition: width 2s;
+}
+
+.fixed.top.menu {
+  box-shadow: 5px 5px 10px rgba(2, 3, 3, 0.16);
+}
+
+.ui.pointing.menu .active.item {
+  background: rgba(0,0,0,.05);
+  color: #0e5a77;
+  font-weight: bolder;
+  box-shadow: none;
+}
+
+.ui.pointing.menu .item {
+  position: relative;
+  vertical-align: middle;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: 0 0;
+  padding: .92857143em 1.14285714em;
+  text-transform: none;
+  color: #0e5a77;
+  font-weight: 600;
+  -webkit-transition: background .1s ease,box-shadow .1s ease,color .1s ease;
+  transition: background .1s ease,box-shadow .1s ease,color .1s ease;
+}
+
+@media only screen and (min-width: 800px) {
+  .ui.pointing.menu .chevron.item {
+    display: none;
+  }
+}

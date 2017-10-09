@@ -1,0 +1,55 @@
+<div class="ui blue message" *ngIf="requestSubmitted">
+  <i class="close icon"></i>
+  <div class="header">
+    Awaiting response
+  </div>
+  <p>You have already requested to join <b>{{ request?.institution.name }} </b>. Please wait for the administrators
+    of the school to grant you access.</p>
+</div>
+
+<div *ngIf="!requestSubmitted">
+  <div class="ui message">
+    <div class="ui primary-color header">
+      Access request
+    </div>
+    <p>Please search your institution below to request access</p>
+
+    <div class="ui content">
+      <div class="ui equal width stackable grid">
+        <div class="ui column">
+          <div class="ui fluid search selection dropdown" id="searchInstitutions">
+            <i class="search icon"></i>
+            <div class="default text">Search Institution</div>
+            <div class="menu" >
+              <li *ngFor="let institution of institutions" class="item" (click)="selectInstitution(institution)">
+                {{ institution.name }}
+              </li>
+            </div>
+          </div>
+        </div>
+        <div class="ui column" >
+          <button class="ui basic blue right labeled icon button" (click)="joinInstitution()"
+                  [disabled]="!selectedInstitution">
+            Request to Join
+            <i class="right arrow icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="user?.account_type?.name === 'Teacher'">
+    <div class="ui horizontal divider"> Or </div>
+
+    <div class="ui attached floating blue message" *ngIf="user?.account_type?.name === 'Teacher'">
+      <div class="header">
+        Register a new institution/school
+      </div>
+    </div>
+    <div class="ui bottom attached segment">
+      <institution-form>
+      </institution-form>
+    </div>
+  </div>
+</div>
+

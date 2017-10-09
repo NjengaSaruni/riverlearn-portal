@@ -1,0 +1,193 @@
+<div class="ui divided stackable grid">
+  <div class="ui row">
+    <div class="ui four wide center aligned middle aligned column">
+      <div class="ui horizontal divider">    {{ user?.institution.name }} </div>
+      <div class="ui image">
+        <img src="{{ user?.institution.logo }}" alt="{{ user?.institution.name }} 's logo">
+      </div>
+    </div>
+    <div class="ui six wide column">
+      <div class="ui fluid vertical menu">
+        <div class="item">
+          Institution Type
+          <div class="ui blue left pointing label">{{ user?.institution.type.name }}</div>
+        </div>
+        <div class="item">
+          Number of levels
+          <div class="ui blue left pointing label">{{ user?.institution.type.levels }}</div>
+        </div>
+        <div class="ui item">
+          Streams per level
+          <div class="ui blue left pointing label" id="streamsLength">{{ streams?.length }}</div>
+        </div>
+
+        <div class="ui fluid buttons">
+          <div class="ui basic blue icon labeled button" id="addStreamButton">
+            <i class="large icon add"></i>
+            Add new Stream
+          </div>
+          <div class="ui flowing fluid popup top left transition hidden" id="addStreamPopup">
+            <div class="ui form" [formGroup]="streamForm">
+              <div class="ui required field">
+                <label>Name</label>
+                <input type="text" placeholder="Name of the new stream" formControlName="name">
+
+              </div>
+              <div class="ui field">
+                <label>Color <span class="ui blue text">(optional)</span></label>
+                <div class="ui fluid search selection dropdown">
+                  <input type="hidden" name="user">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Search Color</div>
+                  <div class="fluid menu">
+                    <div class="item" data-value="" *ngFor="let color of colors" (click)="onSelectColor($event, color)">
+                      <div class="ui empty circular label" [style.background-color]="color?.hex"></div>
+                      {{ color.name | uppercase }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui field">
+                <button class="ui basic blue button" [disabled]="streamForm.status == 'INVALID'"
+                        (click)="createStream()">Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="ui basic blue icon labeled button" id="viewStreamsButton" (click)="toggleStreamsModal()">
+            <i class="large icon eye"></i>
+            View streams
+          </div>
+        </div>
+
+        <div class="ui modal" id="streamsModal">
+          <div class="ui header">Streams in {{ user?.institution.name }}</div>
+
+          <div class="ui scrolling content" *ngIf="streams?.length > 0">
+            <table class="ui blue table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Delete</th>
+                <th>Edit</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let stream of streams">
+                <td>{{ stream.name }}</td>
+                <td [ngStyle]="setBorderColor(stream)">{{ stream.color?.name }}</td>
+                <td>
+                  <div class="icon item" (click)="deleteStream($event, stream)">
+                    <i class="large red icon remove circle"></i>
+                  </div>
+                </td>
+                <td>
+                  <div class="icon item">
+                    <i class="large green edit icon"></i>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ui content" *ngIf="streams?.length == 0">
+            There are no streams.
+          </div>
+        </div>
+        <div class="ui modal" id="subjectsModal">
+          <div class="ui header">Subjects in {{ user?.institution.name }}</div>
+
+          <div class="ui scrolling content" *ngIf="subjects?.length > 0">
+            <table class="ui blue table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Field</th>
+                <th>Delete</th>
+                <th>Edit</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let subject of subjects">
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.field?.name }}</td>
+                <td>
+                  <div class="icon item" (click)="deleteSubject($event, subject)">
+                    <i class="large red icon remove circle"></i>
+                  </div>
+                </td>
+                <td>
+                  <div class="icon item">
+                    <i class="large green edit icon"></i>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ui content" *ngIf="subjects?.length == 0">
+            There are no subjects.
+          </div>
+        </div>
+
+        <div class="ui item">
+          Subjects Taught
+          <div class="ui blue left pointing label" id="subjectsLength">{{ subjects?.length }}</div>
+        </div>
+        <div class="ui fluid buttons">
+          <div class="ui basic blue icon labeled button" id="addSubjectButton">
+            <i class="large icon add"></i>
+            Add new subject
+          </div>
+          <div class="ui fluid popup top left transition hidden" id="addSubjectPopup">
+            <div class="ui form" [formGroup]="subjectForm">
+              <div class="ui required field">
+                <label>Field</label>
+                <div class="ui fluid search selection dropdown">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">E.g Science</div>
+                  <div class="fluid menu">
+                    <div class="item" *ngFor="let field of fields"
+                         (click)="onSelectField($event, field)">
+                      {{ field.name }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui required field">
+                <label>Name</label>
+                <input type="text" placeholder="E.g. Physics" formControlName="name">
+              </div>
+              <div class="ui field">
+                <button class="ui basic blue button" [disabled]="subjectForm.status == 'INVALID'"
+                        (click)="createSubject()">Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="ui basic blue icon labeled button" id="viewSubjectsButton" (click)="toggleSubjectsModal()">
+            <i class="large icon eye"></i>
+            View subjects
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="ui six wide column">
+      <div class="ui fluid vertical menu">
+        <div class="item">
+          Domain
+          <div class="ui blue left label">@{{ user?.institution.domain }}</div>
+        </div>
+        <div class="item">
+          Motto
+          <div class="ui blue left label">{{ user?.institution.motto }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

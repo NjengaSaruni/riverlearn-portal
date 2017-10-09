@@ -1,0 +1,104 @@
+<div class="ui attached message">
+  <div class="header">
+    Welcome to RiverLearn!
+  </div>
+  <p>Fill out the form below to sign-up for a new account</p>
+</div>
+<div id="serverErrorOccurredMessage" [ngClass]="{'hidden': !serverErrorOccured }"
+     class="ui icon attached orange floating message">
+  <i (click)="closeServerErrorOccuredMessage();" class="close icon"></i>
+  <div class="header">
+    {{ serverErrorMessageTitle }}
+  </div>
+  <div class="content">
+    {{ serverErrorMessage }}
+  </div>
+</div>
+
+<form class="ui form attached fluid segment" [formGroup]="registerForm" (ngSubmit)="createUser();" novalidate>
+  <div class="equal width fields">
+    <div class="required field">
+      <label>First Name:</label>
+      <input type="text" formControlName="first_name" name="first_name" (keyup)="onKey($event)" >
+    </div>
+
+    <div class="field">
+      <label>Middle Name:</label>
+      <input type="text" formControlName="middle_name">
+    </div>
+
+    <div class="required field">
+      <label>Last Name:</label>
+      <input type="text" formControlName="last_name" (keyup)="onKey($event)" >
+    </div>
+  </div>
+  <div class="three fields">
+    <div class="email field">
+      <label>Email:</label>
+      <input type="text" formControlName="email" placeholder="name@example.com"
+             (keyup)="onKeyEmail($event)" [ngClass]="{'error': !correctEmailFormat }">
+    </div>
+    <div class="required field">
+      <label>Account Type:</label>
+      <select formControlName="account_type" class="ui search selection dropdown" id="selectAccountType">
+        <option  *ngFor="let accountType of accountTypes" [value]="accountType.id">{{ accountType.name }}</option>
+      </select>
+    </div>
+    <div class="ui required field" [ngClass]="{'error': incorrectUsernameFormat}">
+      <label>Username: </label>
+      <div class="ui left action right icon input">
+        <div class="ui large primary icon button">
+          <i class="at icon"></i>
+        </div>
+        <input id="username" (keyup)="onKey($event)" type="text" formControlName="username"
+               placeholder="Your unique username"
+               name="username">
+        <i class="big blue notched circle loading icon" *ngIf="comparingUsernames"></i>
+        <i class="big green checkmark icon"
+           *ngIf="!usernameTaken && !incorrectUsernameFormat && registerForm.get('username').status === 'VALID' && !comparingUsernames">
+        </i>
+        <i class="big red remove circle outline icon"
+           *ngIf="( usernameTaken || incorrectUsernameFormat || registerForm.get('username').status === 'INVALID')
+            && !comparingUsernames">
+        </i>
+      </div>
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="required password field">
+      <label>Password:</label>
+      <input type="password" formControlName="password" placeholder="abc123!@#">
+    </div>
+    <div class="required password field" [ngClass]="{'error': !passwordsMatch}">
+      <label>Confirm password:</label>
+      <input type="password" formControlName="password_again" (keyup)="onKeyPasswordAgain($event)">
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="inline field">
+      <div class="ui checkbox">
+        <input type="checkbox" tabindex="0" formControlName="terms">
+        <label>I agree to the
+          <a (click)="redirectToTerms()" class="link">Terms and Conditions</a>
+        </label>
+      </div>
+    </div>
+    <div class="right field">
+      <div class="two fields">
+        <div class="field">
+          <button [disabled]="registerForm.status == 'INVALID' || incorrectUsernameFormat" class="ui fluid primary button" type="submit">Sign
+            Up</button>
+        </div>
+        <div class="right field">
+          <div (click)="closeRegistrationModal();" class="ui fluid secondary button">Cancel</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
+<div class="ui bottom attached message">
+  <i class="large icon help"></i>
+  Already signed up? <a class="link" (click)="closeOpenLogin();">Login here</a> instead.
+</div>
+

@@ -1,20 +1,181 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<!-- Following Menu -->
+<div class="ui large top hidden fixed menu" id="following_menu">
+  <div class="ui container">
+    <div routerLink="/home" routerLinkActive="active" class="item">
+      <img class="logo" src="./images/logo_icon.png">
+    </div>
+    <a class="ui item" routerLinkActive="active" routerLink="/blog">Blog</a>
+    <a class="ui item" routerLinkActive="active" routerLink="/about-us">About Us</a>
+    <div class="ui item" routerLink="/dashboard/graphs" routerLinkActive="active">
+      <i class="icon book"></i>
+      Teachers' Portal
+    </div>
+    <div (click)="dimmer.show({opacity: .8, transition: 'slide down'})" class="item" routerLinkActive="active">
+      <i class="icon student"></i>
+      Students' Portal
+    </div>
+    <div (click)="dimmer_parents.show({opacity: .8, transition: 'slide'})" class="item" routerLinkActive="active">
+      <i class="icon child"></i>
+      Parents' Portal
+    </div>
+    <div class="right inverted item">
+      <div class="ui buttons">
+        <button class="ui icon button primary" (click)="toggleLoginModal();">
+          <i class="icon user"></i>
+          Log In
+        </button>
+        <div class="or"></div>
+        <button class="ui icon button secondary" (click)="toggleRegisterModal();">
+          Sign Up
+          <i class="icon add user"></i>
+        </button>
+        <div class="ui item" routerLink="/dashboard/graphs" routerLinkActive="active">
+          <i class="icon book"></i>
+          Teachers' Portal
+        </div>
+        <div (click)="dimmer.show({opacity: .8, transition: 'slide down'})" class="item" routerLinkActive="active">
+          <i class="icon student"></i>
+          Students' Portal
+        </div>
+        <div (click)="dimmer_parents.show({opacity: .8, transition: 'slide'})" class="item" routerLinkActive="active">
+          <i class="icon child"></i>
+          Parents' Portal
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="ui dimmer" #dimmer>
+  <div class="center">
+    <h2 class="ui inverted icon header">
+      <i class="time icon"></i>
+      Work on-going
+      <div class="sub header">Students' portal will be opened soon...</div>
+    </h2>
+  </div>
+</div>
 
+<div class="ui dimmer" #dimmer_parents>
+  <div class="center">
+    <h2 class="ui inverted icon header">
+      <i class="time icon"></i>
+      Work on-going
+      <div class="sub header">Parents' portal will be opened soon...</div>
+    </h2>
+  </div>
+</div>
+
+<!-- Sidebar Menu -->
+<div id="sidebar_menu" class="ui vertical sidebar menu">
+  <a class="active item" routerLinkActive="active" routerLink="/home">Home</a>
+  <a class="item" routerLink="/blog" routerLinkActive="active">Blog</a>
+  <a class="item" routerLink="/about-us" routerLinkActive="active">Abouts Us</a>
+  <div class="ui item" routerLink="/dashboard/graphs" routerLinkActive="active">
+    <i class="icon book"></i>
+    Teachers' Portal
+  </div>
+  <div (click)="dimmer.show({opacity: .8, transition: 'slide down'})" class="item" routerLinkActive="active">
+    <i class="icon student"></i>
+    Students' Portal
+  </div>
+  <div (click)="dimmer_parents.show({opacity: .8, transition: 'slide'})" class="item" routerLinkActive="active">
+    <i class="icon child"></i>
+    Parents' Portal
+  </div>
+  <a class="item" routerLinkActive="active" (click)="toggleLoginModal();">Login</a>
+  <a class="item" (click)="toggleRegisterModal();">Signup</a>
+</div>
+
+<div class="pusher">
+  <div class="ui center aligned">
+    <div class="ui massive secondary pointing menu" id="main_menu">
+      <div class="ui container">
+        <a class="toc item">
+          <i class="sidebar icon"></i>
+        </a>
+        <div routerLink="/home" routerLinkActive="active" class="header item">
+          <img class="logo" src="./images/logo_icon.png">
+        </div>
+        <div class="item" routerLink="/blog" routerLinkActive="active" >Blog</div>
+        <div routerLink="/about-us" routerLinkActive="active" class="item">About Us</div>
+        <div class="ui item" routerLink="/dashboard/graphs" routerLinkActive="active">
+          <i class="icon book"></i>
+          Teachers' Portal
+        </div>
+        <div (click)="dimmer.show({opacity: .8, transition: 'slide down'})" class="item" routerLinkActive="active">
+          <i class="icon student"></i>
+          Students' Portal
+        </div>
+        <div (click)="dimmer_parents.show({opacity: .8, transition: 'slide'})" class="item" routerLinkActive="active">
+          <i class="icon child"></i>
+          Parents' Portal
+        </div>
+        <div class="right inverted item">
+          <div class="ui buttons">
+            <button class="ui icon button primary" (click)="toggleLoginModal();">
+              <i class="icon user"></i>
+              Log In
+            </button>
+            <div class="or"></div>
+            <button class="ui icon button secondary" (click)="toggleRegisterModal();">
+              Sign Up
+              <i class="icon add user"></i>
+            </button>
+            <div class="ui item" routerLink="/dashboard/graphss" routerLinkActive="active">
+              <i class="icon book"></i>
+              Teachers' Portal
+            </div>
+            <div (click)="dimmer.show({opacity: .8, transition: 'slide down'})" class="item"
+                 routerLinkActive="active">
+              <i class="icon student"></i>
+              Students' Portal
+            </div>
+            <div (click)="dimmer_parents.show({opacity: .8, transition: 'slide'})" class="item" routerLinkActive="active">
+              <i class="icon child"></i>
+              Parents' Portal
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet (click)="hideModals();" id="outlet"></router-outlet>
+
+<div (clickOutside)="close();"  id="loginModal" title="User Login"
+     class="ui small modal"
+     icon="unlock">
+  <div class="content">
+    <login (onLoginLoad)="setTitle(title)" (onLogin)="onUserLoggedIn($event);">Loading...</login>
+  </div>
+</div>
+
+<div (clickOutside)="close();" (orRegister)="userRegistered(userRegistered)" id="registerModal" title="Register"
+     class="ui inverted modal"
+     icon="add user" >
+  <div class="content">
+    <register (onCreateAccount)="onUserCreateAccount(password);">Loading...</register>
+
+  </div>
+</div>
+
+<!--<sm-menu class="ui bottom fixed">-->
+<!--<div class="item">-->
+<!--<a routerLink='/home' class="logo">-->
+<!--<img class="ui avatar image" src="edu.svg">-->
+<!--LEXXINET-->
+<!--</a>-->
+<!--</div>-->
+<!--<a class="inverted item">Features</a>-->
+<!--<a class="item">Testimonials</a>-->
+<!--<a class="item">Teachers</a>-->
+<!--<a class="item">Schools</a>-->
+<!--<a class="item">Parents</a>-->
+<!--<a class="item">Collaborate</a>-->
+<!--</sm-menu>-->
+
+<!--<jqxBarGauge-->
+  <!--[width]="600" [height]="600" [colorScheme]="'scheme02'"-->
+  <!--[max]="150" [values]="values">-->
+<!--</jqxBarGauge>-->

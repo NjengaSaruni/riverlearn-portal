@@ -1,0 +1,13 @@
+.ui.steps .step .description {
+  font-weight: 400;
+  font-size: .92857143em;
+  color: #0e5a77;
+}
+
+.ui.steps .step {
+  color: #0e5a77;
+}
+
+.ui.steps .step .active {
+  color: #cd9a36;
+}

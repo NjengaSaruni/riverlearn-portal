@@ -1,0 +1,39 @@
+.ui.cards>.card>.content>a.header {
+  color: #0e5a77;
+}
+
+.ui.card .meta, .ui.cards>.card .meta {
+  color: #cd9a36;
+}
+
+.ui.accordion .content {
+  font-size: small;
+}
+
+.ui.basic.blue.button, .ui.basic.blue.buttons .button {
+  box-shadow: 0 0 0 1px #0e5a77 inset!important;
+  color: #0e5a77!important;
+}
+
+.button {
+  font-size: initial;
+}
+
+.golden.button {
+  background-color: #cd9a36;
+  color: white;
+}
+
+
+.ui.table {
+  color: #0e5a77 !important;
+  font-size: 110%;
+  font-weight: 200;
+  overflow-y: auto;
+}
+
+.ui.text.loader {
+  color: #cd9a36 !important;
+}
+
+
