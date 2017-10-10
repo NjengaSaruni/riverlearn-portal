@@ -21,9 +21,14 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "semantic/dist/semantic.min.css"
+        "semantic/dist/semantic.min.css",
+        "../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.base.css"
       ],
       "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jqwidgets-framework/jqwidgets/jqxcore.js",
+        "../node_modules/jqwidgets-framework/jqwidgets/jqxdraw.js",
+        "../node_modules/jqwidgets-framework/jqwidgets/jqxbargauge.js",
         "semantic/dist/semantic.min.js",
         "time_circles.js",
         "scrollTo.js"
