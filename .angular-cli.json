@@ -29,6 +29,7 @@
         "../node_modules/jqwidgets-framework/jqwidgets/jqxcore.js",
         "../node_modules/jqwidgets-framework/jqwidgets/jqxdraw.js",
         "../node_modules/jqwidgets-framework/jqwidgets/jqxbargauge.js",
+        "../node_modules/jqwidgets-framework/jqwidgets/jqxscheduler.js",
         "semantic/dist/semantic.min.js",
         "time_circles.js",
         "scrollTo.js"

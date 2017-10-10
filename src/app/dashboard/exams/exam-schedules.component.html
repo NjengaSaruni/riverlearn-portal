@@ -1,4 +1,11 @@
-<jqxBarGauge
-  [width]="600" [height]="600" [colorScheme]="'scheme02'"
-  [max]="150" [values]="values">
-</jqxBarGauge>
+<div class="ui segment">
+  <jqxBarGauge #barGaugeReference>
+  </jqxBarGauge>
+</div>
+<div class="ui segment">
+ <jqxScheduler
+   #schedulerReference
+   [date]="date" [width]="800" [height]="600" [source]="dataAdapter" [showLegend]="true" [view]="'weekView'"
+   [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views">
+ </jqxScheduler>
+</div>

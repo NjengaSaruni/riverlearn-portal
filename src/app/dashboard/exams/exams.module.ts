@@ -10,7 +10,7 @@ import {AdminGuard} from '../../common/services/auth-guard.service';
 import {ExamService} from '../../common/services/exams.service';
 import {examComponents, examRoutingModule} from './exams-routing.module';
 import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxbargauge';
-
+import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
 
 @NgModule({
   imports: [
@@ -26,7 +26,8 @@ import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_j
   ],
   declarations: [
     examComponents,
-    jqxBarGaugeComponent
+    jqxBarGaugeComponent,
+    jqxSchedulerComponent
 ],
 
 })
