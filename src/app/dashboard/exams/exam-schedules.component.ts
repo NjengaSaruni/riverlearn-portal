@@ -2,11 +2,10 @@
  * Created by saruni on 10/3/17.
  */
 
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {ExamService} from '../../common/services/exams.service';
 import {Exam, ExamPaper} from '../../common/models/exams.models';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
-import {Appointment} from "../../common/models/widgets.models";
 
 declare var $: any;
 
@@ -39,45 +38,44 @@ export class ExamSchedulesComponent implements OnInit {
       )
   }
 
-  getExamPapers(): void {
-    this.examService.getExamPapers()
-      .subscribe(
-        papers => {
-          this.examPapers = papers;
-          for(let paper of papers){
-            this.addNewAppointment(paper);
-          }
-        },
-        error => alert(error)
-      );
-
-  }
   ngOnInit () {
     this.getExams();
     this.getExamPapers();
   }
 
+  getExamPapers(): void {
+    this.examService.getExamPapers()
+      .subscribe(
+        papers => {
+          this.examPapers = papers;
+          for (let paper of papers) {
+            this.addNewAppointment(paper);
+          }
+        },
+        error => alert(error)
+      );
+  }
+
   updateAppointments(): void {
-    // this.getExamPapers();
     this.source['localData'] = this.appointments;
     this.dataAdapter = new jqx.dataAdapter(this.source);
-    this.scheduler.ensureAppointmentVisible(this.examPapers[0].id);
+    try {
+      this.scheduler.ensureAppointmentVisible(this.examPapers[0].id);
+    }
+    catch(err){
+      // TODO what to do with this error?
+    }
   }
 
   addNewAppointment(paper: ExamPaper): any {
-    // let appointment = new Appointment(
-    //   paper.id, paper.exam.description, "Some string", "Class 4", new Date(2016, 10, 26, 14, 0, 0), new Date(2016, 10, 26, 16, 0, 0)
-    // );
-    console.log(paper.start_time);
-    console.log(paper.exam.start_date);
     let appointment = {
       "id" : paper.id,
       "description": paper.exam.description,
-      "location": paper.location.name,
+      "room": paper.location.name,
       "subject": paper.subject.name,
-      "class": "Class 1",
-      'start': new Date(2017, 9, 26, 14, 0, 0),
-      'end': new Date(2017, 9, 26, 16, 0, 0)
+      "class": paper.csv_file.title,
+      'start': paper.start,
+      'end': paper.end
     };
 
     this.appointments.push(appointment);
@@ -90,7 +88,7 @@ export class ExamSchedulesComponent implements OnInit {
       dataFields: [
         { name: 'id', type: 'string' },
         { name: 'description', type: 'string' },
-        { name: 'location', type: 'string' },
+        { name: 'room', type: 'string' },
         { name: 'subject', type: 'string' },
         { name: 'class', type: 'string' },
         { name: 'start', type: 'date' },
@@ -100,14 +98,13 @@ export class ExamSchedulesComponent implements OnInit {
       localData: this.appointments
     };
   dataAdapter: any = new jqx.dataAdapter(this.source);
-  date: any = new jqx.date(2017, 10, 26);
   appointmentDataFields: any =
     {
       from: "start",
       to: "end",
       id: "id",
       description: "description",
-      location: "location",
+      room: "room",
       subject: "subject",
       resourceId: "class"
     };
@@ -119,6 +116,7 @@ export class ExamSchedulesComponent implements OnInit {
     };
   views: any[] =
     [
+      'agendaView',
       'dayView',
       'weekView',
       'monthView'

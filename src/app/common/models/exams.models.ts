@@ -19,7 +19,8 @@ export class Exam extends AbstractBase {
 export class ExamPaper extends AbstractBase {
   exam: Exam;
   subject: Subject;
-  start_time: Date;
+  start: Date;
+  end: Date;
   duration: string;
   total_mark: number;
   csv_file: File;
