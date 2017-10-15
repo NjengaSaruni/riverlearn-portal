@@ -1,6 +1,6 @@
 import {_Comment, AbstractBase, Subject} from './common.models';
-import {Level, Student} from './divisions.models';
-import DateTimeFormat = Intl.DateTimeFormat;
+import {ClassRoom, Level, Student} from './divisions.models';
+import {File} from "./uploads.models";
 
 /**
  * Created by saruni on 8/13/17.
@@ -19,10 +19,11 @@ export class Exam extends AbstractBase {
 export class ExamPaper extends AbstractBase {
   exam: Exam;
   subject: Subject;
-  start_time: DateTimeFormat;
+  start_time: Date;
   duration: string;
   total_mark: number;
-  csv_file: string;
+  csv_file: File;
+  location: ClassRoom;
 }
 
 export class StudentPaperPerformance extends AbstractBase{

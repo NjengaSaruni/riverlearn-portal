@@ -50,3 +50,9 @@ export class Teacher extends AbstractBase {
 export class InstitutionSubject extends AbstractBase {
   subject: Subject;
 }
+
+export class ClassRoom extends AbstractBase {
+  name: string;
+  occupants: number;
+  current_class: Class;
+}
