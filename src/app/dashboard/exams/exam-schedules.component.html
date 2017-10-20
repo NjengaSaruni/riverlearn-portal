@@ -1,8 +1,38 @@
-<div class="ui raised segment">
+<div class="ui long modal" id="new-exam-cycle-modal">
+  <div class="ui raised segment">
+    <exam-schedule-form></exam-schedule-form>
+  </div>
+</div>
+<div class="ui long modal" id="new-exam-paper-modal">
+  <div class="ui raised segment">
+    <exam-paper-form></exam-paper-form>
+  </div>
+</div>
+<div class="ui raised dimmable segment">
+  <div class="ui inverted active dimmer" *ngIf="!contentReady">
+    <div class="ui big text loader">
+      Loading...
+    </div>
+  </div>
  <jqxScheduler
    #schedulerReference
-   [width]="1260" [height]="520" [source]="dataAdapter" [showLegend]="true" [view]="'agendaView'"
-   [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views">
+   [width]="1260" [height]="520" [source]="dataAdapter"  [view]="'agendaView'"
+   [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+   (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
  </jqxScheduler>
 </div>
-<div class="ui primary button" (click)="updateAppointments()">Update</div>
+<div class="ui labeled icon primary button" (click)="updateAppointments()">
+  <i class="icon refresh"></i>
+  Update
+</div>
+<div class="ui labeled icon primary button" (click)="pdfExportClick()">
+  <i class="icon download"></i>
+  Download PDF
+</div>
+<div class="ui labeled icon primary button" (click)="toggleCycleModal($event)">
+  <i class="icon paper"></i>
+  New exam paper
+<div class="ui labeled icon primary button" (click)="toggleExamModal($event)">
+  <i class="icon add"></i>
+  New exam cycle
+</div>

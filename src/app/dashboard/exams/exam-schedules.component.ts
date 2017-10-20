@@ -31,7 +31,6 @@ export class ExamSchedulesComponent implements OnInit {
     this.examService.getExams()
       .subscribe(
         exams => {
-          this.contentReady = true;
           this.exams = exams;
         },
         error => alert(error)
@@ -48,6 +47,7 @@ export class ExamSchedulesComponent implements OnInit {
       .subscribe(
         papers => {
           this.examPapers = papers;
+          this.contentReady = true;
           for (let paper of papers) {
             this.addNewAppointment(paper);
           }
@@ -55,6 +55,15 @@ export class ExamSchedulesComponent implements OnInit {
         error => alert(error)
       );
   }
+
+  toggleCycleModal(event: any){
+    $('#new-exam-cycle-modal').modal('toggle')
+  }
+
+  togglePaperModal(event: any){
+    $('#new-exam-paper-modal').modal('toggle')
+  }
+
 
   updateAppointments(): void {
     this.source['localData'] = this.appointments;
@@ -69,17 +78,26 @@ export class ExamSchedulesComponent implements OnInit {
 
   addNewAppointment(paper: ExamPaper): any {
     let appointment = {
-      "id" : paper.id,
-      "description": paper.exam.description,
-      "room": paper.location.name,
-      "subject": paper.subject.name,
+      'id' : paper.id,
+      'description': paper.csv_file.title,
+      'location': paper.location.name,
+      'subject': paper.subject.name,
       "class": paper.csv_file.title,
       'start': paper.start,
-      'end': paper.end
+      'end': paper.end,
+      'style': 'dark'
     };
 
     this.appointments.push(appointment);
     this.updateAppointments();
+  }
+
+  pdfExportClick(): void {
+    this.scheduler.exportData('pdf');
+  };
+
+  openExam(event: any): void {
+    console.log(event.args.appointment)
   }
 
   source: any =
@@ -88,7 +106,7 @@ export class ExamSchedulesComponent implements OnInit {
       dataFields: [
         { name: 'id', type: 'string' },
         { name: 'description', type: 'string' },
-        { name: 'room', type: 'string' },
+        { name: 'location', type: 'string' },
         { name: 'subject', type: 'string' },
         { name: 'class', type: 'string' },
         { name: 'start', type: 'date' },
@@ -100,26 +118,37 @@ export class ExamSchedulesComponent implements OnInit {
   dataAdapter: any = new jqx.dataAdapter(this.source);
   appointmentDataFields: any =
     {
-      from: "start",
-      to: "end",
-      id: "id",
-      description: "description",
-      room: "room",
-      subject: "subject",
-      resourceId: "class"
+      from: 'start',
+      to: 'end',
+      id: 'id',
+      description: 'description',
+      location: 'location',
+      subject: 'subject',
+      resourceId: 'subject'
     };
   resources: any =
     {
-      colorScheme: "scheme01",
-      dataField: "class",
+      colorScheme: 'scheme01',
+      dataField: 'subject',
       source: new jqx.dataAdapter(this.source)
     };
   views: any[] =
     [
       'agendaView',
       'dayView',
-      'weekView',
-      'monthView'
+      {
+        type: 'weekView',
+        workTime : {
+          fromDayOfWeek: 1,
+          toDayOfWeek: 6,
+          fromHour: 7,
+          toHour: 18
+        }
+      },
+      {
+        type: 'monthView',
+        showWeekNumbers: true
+      }
     ];
 }
 

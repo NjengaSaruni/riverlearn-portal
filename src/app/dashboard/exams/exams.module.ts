@@ -11,6 +11,7 @@ import {ExamService} from '../../common/services/exams.service';
 import {examComponents, examRoutingModule} from './exams-routing.module';
 import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxbargauge';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
+import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxchart';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_
   declarations: [
     examComponents,
     jqxBarGaugeComponent,
+    jqxChartComponent,
     jqxSchedulerComponent
 ],
 

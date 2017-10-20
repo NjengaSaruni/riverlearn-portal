@@ -1,26 +1,26 @@
 <div class="ui three top attached steps">
-  <a class="step">
-    <i class="checked calendar icon"></i>
-    <div class="content">
-      <div class="title">Immediately past exam</div>
-      <div class="description">View results of immediately past exams</div>
-    </div>
-  </a>
   <a class="step" routerLink="schedules" routerLinkActive="active">
     <i class="wait icon"></i>
     <div class="content">
-      <div class="title">Ongoing exams</div>
-      <div class="description">Ongoing/upcoming exam schedule</div>
+      <div class="title">Schedules</div>
+      <div class="description">Ongoing/upcoming exam papers</div>
     </div>
   </a>
   <a class="step" routerLink="add" routerLinkActive="active">
-    <i class="blank calendar icon"></i>
+    <i class="checked calendar icon"></i>
     <div class="content">
-      <div class="title">Schedule new exam</div>
-      <div class="description">Create new exam cycle</div>
+      <div class="title">Submits results</div>
+      <div class="description">Results of past exams</div>
+    </div>
+  </a>
+  <a class="step" routerLink="results" routerLinkActive="active">
+    <i class="line graph icon"></i>
+    <div class="content">
+      <div class="title">View exam results</div>
+      <div class="description">View results of immediately past exams</div>
     </div>
   </a>
 </div>
-<div class="ui bottom attached segment">
+<div class="ui bottom attached dimmable segment">
   <router-outlet></router-outlet>
 </div>

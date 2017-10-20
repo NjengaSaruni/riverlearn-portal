@@ -5,6 +5,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Exam} from '../../common/models/exams.models';
 import {ExamService} from '../../common/services/exams.service';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 declare var $: any;
 
@@ -17,14 +18,25 @@ declare var $: any;
 export class ExamScheduleFormComponent implements OnInit {
   private contentReady: boolean = false;
   private exams: Exam[];
+  private examForm: FormGroup;
 
   constructor(
-    private examService: ExamService
+    private examService: ExamService,
+    private formBuilder: FormBuilder
   ) {}
 
 
   ngOnInit() {
     this.getExams();
+    this.examForm = this.formBuilder.group(
+      {
+        name: ['', Validators.required],
+        class_levels: ['', Validators.required],
+        note: [''],
+        start_date: ['', Validators.required],
+        end_date: ['', Validators.required]
+      }
+    )
   }
 
   getExams(): void {
