@@ -12,6 +12,11 @@ import {examComponents, examRoutingModule} from './exams-routing.module';
 import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxbargauge';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
 import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxchart';
+import {
+  MatDatepickerModule, MatFormFieldModule, MatIconModule, MatIconRegistry, MatInputModule, MatNativeDateModule,
+  MatProgressBarModule,
+  MatSidenavModule, MatTabsModule
+} from "@angular/material";
 
 @NgModule({
   imports: [
@@ -20,10 +25,19 @@ import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxc
     FormsModule,
     ReactiveFormsModule,
     examRoutingModule,
-  ],
+    MatIconModule,
+    MatProgressBarModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatTabsModule
+],
   providers: [
     ExamService,
-    AdminGuard
+    AdminGuard,
+    MatIconRegistry
   ],
   declarations: [
     examComponents,

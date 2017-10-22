@@ -23,7 +23,6 @@ import {AuthGuard} from './common/services/auth-guard.service';
     ReactiveFormsModule,
     HttpModule,
     JsonpModule,
-    // NgSemanticModule,
     AppRoutingModule
   ],
   declarations: [

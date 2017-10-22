@@ -1,19 +1,59 @@
-<form class="ui blue form">
-  <div class="ui three fields">
-    <div class="field">
-      <label>First Name</label>
-      <input type="text" name="first-name" placeholder="First Name">
+<form class="ui raised segment form" [formGroup]="examForm">
+  <div class="ui two fields">
+    <div class="required field">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" placeholder="E.g Mock 2 2017">
     </div>
-    <div class="field">
-      <label>Last Name</label>
-      <input type="text" name="last-name" placeholder="Last Name">
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" tabindex="0">
-        <label>I agree to the Terms and Conditions</label>
-      </div>
+    <div class="required field">
+      <label>Levels
+        <span>(at least one required)</span>
+      </label>
+      <select class="ui fluid selection dropdown" formControlName="class_levels" multiple="">
+        <option *ngFor="let level of levels" [value]="level.id">
+          {{ level.name }}
+        </option>
+      </select>
     </div>
   </div>
-  <button class="ui primary button" type="submit">Submit</button>
+  <div class="ui two fields">
+    <div class="required field">
+      <!--<label>Start Date</label>-->
+      <mat-form-field>
+        <input matInput [matDatepicker]="start_picker" placeholder="Choose start date"
+               formControlName="start_date" class="mat-input">
+        <mat-datepicker-toggle matSuffix [for]="start_picker"></mat-datepicker-toggle>
+        <mat-datepicker #start_picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="required field">
+      <mat-form-field>
+        <input matInput [matDatepicker]="end_picker" placeholder="Choose end date"
+               formControlName="end_date" class="mat-input">
+        <mat-datepicker-toggle matSuffix [for]="end_picker"></mat-datepicker-toggle>
+        <mat-datepicker #end_picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="ui field">
+    <mat-form-field>
+      <textarea matInput placeholder="Something to note about this exam" formControlName="notes" class="mat-input"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="ui red message" *ngIf="examForm.get('end_date').value < examForm.get('start_date').value &&
+        examForm.get('end_date').status == 'VALID'">
+    <div class="content">
+      <p>End date cannot be earlier than start date</p>
+    </div>
+  </div>
+  <div class="ui labeled primary icon button" (click)="saveExamCycle($event)">
+    <i class="icon save"></i>
+    Save
+  </div>
 </form>
+<mat-progress-bar *ngIf="savingExamCycle"
+  class="example-margin"
+  [color]="color"
+  [mode]="mode"
+  [value]="value"
+  [bufferValue]="bufferValue">
+</mat-progress-bar>

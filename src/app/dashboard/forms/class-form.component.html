@@ -38,11 +38,17 @@
         </form>
       </div>
       <div class="active content">
+        <div class="ui inverted active dimmer" *ngIf="!contentReady">
+          <mat-progress-bar
+            class="example-margin"
+            [color]="color"
+            [mode]="mode"
+            [value]="value"
+            [bufferValue]="bufferValue">
+          </mat-progress-bar>
+        </div>
         <div class="ui blue dimmable segment">
           <div class="ui cards">
-            <div class="ui inverted active dimmer" *ngIf="!contentReady">
-              <div class="ui loader"></div>
-            </div>
             <div class="ui card" *ngFor="let class of classes">
               <div class="content">
                 <i class="right floated ellipsis vertical icon"></i>

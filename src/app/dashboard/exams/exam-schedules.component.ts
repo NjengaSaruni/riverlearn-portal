@@ -6,6 +6,8 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import {ExamService} from '../../common/services/exams.service';
 import {Exam, ExamPaper} from '../../common/models/exams.models';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
+import {MatIconRegistry} from "@angular/material";
+import {DomSanitizer} from "@angular/platform-browser";
 
 declare var $: any;
 
@@ -21,11 +23,20 @@ export class ExamSchedulesComponent implements OnInit {
   private contentReady: boolean = false;
   private appointments = [];
   private examPapers: ExamPaper[] = [];
-  exams: Exam[];
+  private exams: Exam[];
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
 
   constructor(
-    private examService: ExamService
-  ) {}
+    private examService: ExamService,
+    private matIconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+  matIconRegistry.addSvgIcon(
+  'cake', sanitizer.bypassSecurityTrustResourceUrl('material-design-icons/social/svg/design/ic_cake_24px.svg'));
+}
 
   getExams(): void {
     this.examService.getExams()

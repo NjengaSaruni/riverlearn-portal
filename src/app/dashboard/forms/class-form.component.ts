@@ -36,6 +36,11 @@ export class ClassFormComponent implements OnInit {
 
   private errorMessage: string;
 
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
+
   constructor(
     public formBuilder: FormBuilder,
     private userService: UserService,

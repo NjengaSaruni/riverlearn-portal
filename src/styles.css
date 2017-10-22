@@ -9,6 +9,9 @@
  * URL: http://www.will-wallace.com
  * Designed and built based on Semantic-UI
  */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 body,
 html {
   font-size: 100%;

@@ -20,6 +20,11 @@ export class ParentsComponent implements OnInit {
   private searchTextEmpty: boolean;
   private searchText: string;
 
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
+
   constructor(
     private divisionService: DivisionService
   ) {}

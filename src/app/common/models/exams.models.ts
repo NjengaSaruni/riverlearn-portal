@@ -10,7 +10,7 @@ export class Exam extends AbstractBase {
   name: string;
   number: string;
   class_level: Level;
-  description: string;
+  notes: string;
   start_date: Date;
   end_date = Date;
   done: boolean;

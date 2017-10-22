@@ -1,4 +1,11 @@
-<div class="ui accordion">
+<mat-progress-bar *ngIf="!contentReady"
+                  class="example-margin"
+                  [color]="color"
+                  [mode]="mode"
+                  [value]="value"
+                  [bufferValue]="bufferValue">
+</mat-progress-bar>
+<div class="ui accordion" *ngIf="contentReady">
   <div class="ui primary button title" (click)="hideCards()">
     Add New Parent
     <i class="icon dropdown"></i>
@@ -16,11 +23,6 @@
     </div>
   </div>
   <div class="ui people shape">
-    <div class="ui inverted active dimmer" *ngIf="!contentReady">
-      <div class="ui text center inline loader">
-        Fetching parents
-      </div>
-    </div>
     <div class="active side" *ngFor="let parent of parents">
       <div class="image">
         <img src="/images/avatar/tom.jpg">

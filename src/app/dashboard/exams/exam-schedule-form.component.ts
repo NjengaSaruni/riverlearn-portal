@@ -6,6 +6,9 @@ import {Component, OnInit} from '@angular/core';
 import {Exam} from '../../common/models/exams.models';
 import {ExamService} from '../../common/services/exams.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Level} from "../../common/models/divisions.models";
+import {DivisionService} from "../../common/services/divisions.service";
+import {sendRequest} from "selenium-webdriver/http";
 
 declare var $: any;
 
@@ -16,11 +19,20 @@ declare var $: any;
 })
 
 export class ExamScheduleFormComponent implements OnInit {
-  private contentReady: boolean = false;
-  private exams: Exam[];
-  private examForm: FormGroup;
+  protected contentReady: boolean = false;
+  protected savingExamCycle: boolean = false;
+  protected exams: Exam[];
+  protected levels: Level[];
+  protected examForm: FormGroup;
+
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
+
 
   constructor(
+    private divisionService: DivisionService,
     private examService: ExamService,
     private formBuilder: FormBuilder
   ) {}
@@ -28,15 +40,20 @@ export class ExamScheduleFormComponent implements OnInit {
 
   ngOnInit() {
     this.getExams();
+    this.getLevels();
     this.examForm = this.formBuilder.group(
       {
         name: ['', Validators.required],
         class_levels: ['', Validators.required],
-        note: [''],
+        notes: [''],
         start_date: ['', Validators.required],
         end_date: ['', Validators.required]
       }
     )
+
+    $(document).ready(function () {
+      $('.ui.dropdown').dropdown();
+    })
   }
 
   getExams(): void {
@@ -48,6 +65,34 @@ export class ExamScheduleFormComponent implements OnInit {
         },
         error => alert(error)
       )
+  }
+
+  getLevels(): void {
+    this.divisionService.getLevels()
+      .subscribe(
+        levels => this.levels = levels,
+        error => alert(error)
+      )
+  }
+
+  saveExamCycle(event: any) {
+    this.savingExamCycle = true;
+
+    let name = this.examForm.get('name').value;
+    let class_levels = this.examForm.get('class_levels').value;
+    let notes = this.examForm.get('notes').value;
+    let start_date = this.examForm.get('start_date').value;
+    let end_date = this.examForm.get('end_date').value;
+
+    this.examService.createExam(name, class_levels, notes, start_date, end_date)
+      .subscribe(
+        exam => {
+          console.log(exam);
+          this.savingExamCycle = false;
+        },
+        error => alert(error)
+      )
+
   }
 }
 

@@ -8,6 +8,7 @@ import { CommonModule }   from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormRoutingModule, formsComponents} from './forms-routing.module';
 import {UploadService} from '../../common/services/uploads.service';
+import {MatProgressBarModule} from "@angular/material";
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import {UploadService} from '../../common/services/uploads.service';
     CommonModule,
     ReactiveFormsModule,
     FormRoutingModule,
+    MatProgressBarModule
   ],
   providers: [
     UploadService

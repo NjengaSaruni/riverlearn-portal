@@ -67,13 +67,12 @@ export class ExamService extends CommonService {
 
   createExam(
     name: string = null,
-    class_level: Level = null,
-    description: string = null,
+    class_levels: string[] = null,
+    notes: string = null,
     start_date: string = null,
     end_date: string = null,
-    done: boolean = false
   ): Observable<Response> {
-    return this.makeRequest(this.examsUrl, 'POST', {name, class_level, description, start_date, end_date, done});
+    return this.makeRequest(this.examsUrl, 'POST', {name, class_levels, notes, start_date, end_date});
   }
 
   getExam(id: string): Observable<Exam> {

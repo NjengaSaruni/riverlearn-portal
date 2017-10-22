@@ -1,4 +1,4 @@
-<div class="ui long modal" id="new-exam-cycle-modal">
+<div class="ui small modal" id="new-exam-cycle-modal">
   <div class="ui raised segment">
     <exam-schedule-form></exam-schedule-form>
   </div>
@@ -8,31 +8,75 @@
     <exam-paper-form></exam-paper-form>
   </div>
 </div>
-<div class="ui raised dimmable segment">
-  <div class="ui inverted active dimmer" *ngIf="!contentReady">
-    <div class="ui big text loader">
-      Loading...
+<div class="ui inverted active dimmer" *ngIf="!contentReady">
+  <mat-progress-bar
+    class="example-margin"
+    [color]="color"
+    [mode]="mode"
+    [value]="value"
+    [bufferValue]="bufferValue">
+  </mat-progress-bar>
+</div>
+
+<mat-tab-group class="demo-tab-group">
+  <mat-tab label="Scheduled papers">
+    <div class="demo-tab-content">
+      <div class="ui raised dimmable top attached segment">
+        <jqxScheduler
+          #schedulerReference
+          [width]="1260" [height]="520" [source]="dataAdapter"  [view]="'agendaView'"
+          [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+          (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
+        </jqxScheduler>
+      </div>
+      <div class="ui bottom attached segment">
+        <div class="ui primary button" (click)="pdfExportClick()">
+          Download PDF
+        </div>
+        <div class="ui primary button" (click)="toggleCycleModal($event)">
+          New exam cycle
+        </div>
+        <div class="ui primary button" (click)="togglePaperModal($event)">
+          New exam paper
+        </div>
+      </div>
     </div>
-  </div>
- <jqxScheduler
-   #schedulerReference
-   [width]="1260" [height]="520" [source]="dataAdapter"  [view]="'agendaView'"
-   [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
-   (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
- </jqxScheduler>
-</div>
-<div class="ui labeled icon primary button" (click)="updateAppointments()">
-  <i class="icon refresh"></i>
-  Update
-</div>
-<div class="ui labeled icon primary button" (click)="pdfExportClick()">
-  <i class="icon download"></i>
-  Download PDF
-</div>
-<div class="ui labeled icon primary button" (click)="toggleCycleModal($event)">
-  <i class="icon paper"></i>
-  New exam paper
-<div class="ui labeled icon primary button" (click)="toggleExamModal($event)">
-  <i class="icon add"></i>
-  New exam cycle
-</div>
+  </mat-tab>
+  <mat-tab label="Tab 2">
+    <ng-template mat-tab-label>
+      ⭐
+    </ng-template>
+    <div class="demo-tab-content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
+      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
+      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
+      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+    </div>
+  </mat-tab>
+<!--  <mat-tab label="Tab 3" disabled>
+    No content
+  </mat-tab>
+  <mat-tab label="Tab 4">
+    <div class="demo-tab-content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
+      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
+      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
+      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+      <br />
+      <br />
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
+      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
+      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
+      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+    </div>
+  </mat-tab>
+  <mat-tab label="Tab 5">
+    No content
+  </mat-tab>
+  <mat-tab label="Tab 6">
+    No content
+  </mat-tab>-->
+</mat-tab-group>
