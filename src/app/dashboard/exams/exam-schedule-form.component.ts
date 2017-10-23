@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Level} from "../../common/models/divisions.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {sendRequest} from "selenium-webdriver/http";
+import {MatSnackBar} from "@angular/material";
 
 declare var $: any;
 
@@ -34,9 +35,15 @@ export class ExamScheduleFormComponent implements OnInit {
   constructor(
     private divisionService: DivisionService,
     private examService: ExamService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public snackBar: MatSnackBar
   ) {}
 
+  openSnackBar(message? : string, duration: number = 3000) {
+    let snackBarRef = this.snackBar.open(message,'Dismiss' ,{
+      duration: duration
+    });
+  }
 
   ngOnInit() {
     this.getExams();
@@ -49,7 +56,7 @@ export class ExamScheduleFormComponent implements OnInit {
         start_date: ['', Validators.required],
         end_date: ['', Validators.required]
       }
-    )
+    );
 
     $(document).ready(function () {
       $('.ui.dropdown').dropdown();
@@ -78,6 +85,11 @@ export class ExamScheduleFormComponent implements OnInit {
   saveExamCycle(event: any) {
     this.savingExamCycle = true;
 
+    if(this.examForm.status == "INVALID"){
+      this.openSnackBar("Please fill in all required fields and/or correct errors", 3000);
+      this.savingExamCycle = false;
+      return;
+    }
     let name = this.examForm.get('name').value;
     let class_levels = this.examForm.get('class_levels').value;
     let notes = this.examForm.get('notes').value;
@@ -87,7 +99,7 @@ export class ExamScheduleFormComponent implements OnInit {
     this.examService.createExam(name, class_levels, notes, start_date, end_date)
       .subscribe(
         exam => {
-          console.log(exam);
+          this.openSnackBar("Exam cycle saved", 2000);
           this.savingExamCycle = false;
         },
         error => alert(error)
@@ -95,4 +107,3 @@ export class ExamScheduleFormComponent implements OnInit {
 
   }
 }
-

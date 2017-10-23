@@ -3,7 +3,7 @@
     <exam-schedule-form></exam-schedule-form>
   </div>
 </div>
-<div class="ui long modal" id="new-exam-paper-modal">
+<div class="ui modal" id="new-exam-paper-modal">
   <div class="ui raised segment">
     <exam-paper-form></exam-paper-form>
   </div>
@@ -19,64 +19,83 @@
 </div>
 
 <mat-tab-group class="demo-tab-group">
-  <mat-tab label="Scheduled papers">
-    <div class="demo-tab-content">
-      <div class="ui raised dimmable top attached segment">
-        <jqxScheduler
-          #schedulerReference
-          [width]="1260" [height]="520" [source]="dataAdapter"  [view]="'agendaView'"
-          [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
-          (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
-        </jqxScheduler>
-      </div>
-      <div class="ui bottom attached segment">
-        <div class="ui primary button" (click)="pdfExportClick()">
-          Download PDF
-        </div>
-        <div class="ui primary button" (click)="toggleCycleModal($event)">
-          New exam cycle
-        </div>
-        <div class="ui primary button" (click)="togglePaperModal($event)">
-          New exam paper
-        </div>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab label="Tab 2">
+  <mat-tab>
     <ng-template mat-tab-label>
-      ⭐
+      <div class="ui labeled inline icon title">
+        <i class="small icon calendar"></i>
+        Exam timetable
+      </div>
     </ng-template>
     <div class="demo-tab-content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
-      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
-      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
-      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+      <jqxScheduler
+        #schedulerReference
+        [width]="1260" [height]="520" [source]="dataAdapter"  [view]="'agendaView'"
+        [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+        (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
+      </jqxScheduler>
+
     </div>
   </mat-tab>
-<!--  <mat-tab label="Tab 3" disabled>
-    No content
-  </mat-tab>
-  <mat-tab label="Tab 4">
-    <div class="demo-tab-content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
-      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
-      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
-      orci enim rutrum enim, vel tempor sapien arcu a tellus.
-      <br />
-      <br />
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
-      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
-      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
-      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+  <mat-tab >
+    <!--<ng-template mat-tab-label>-->
+    <!--⭐-->
+    <!--</ng-template>-->
+    <ng-template mat-tab-label>
+      <div class="ui labeled inline icon title">
+        <i class="icon list"></i>
+        Exam cycles
+      </div>
+    </ng-template>
+    <div class="ui grid">
+      <div class="four wide column">
+        <div class="ui vertical fluid tabular menu">
+          <div class="ui left labeled item" *ngFor="let exam of exams" [ngClass]="{'active': exam?.selected }"
+               (click)="onSelectExam($event, exam)">
+            {{ exam?.name }}
+          </div>
+        </div>
+      </div>
+      <div class="twelve wide stretched column">
+        <div>
+          <div class="ui dividing header">Name</div>
+          {{ selectedExam?.name }}
+          <br><br>
+          <div class="ui dividing header">Duration</div>
+          {{ selectedExam?.start_date | date }} - {{ selectedExam?.end_date | date }}
+
+          <br><br>
+          <div class="ui dividing header">Exam Papers</div>
+          <div class="ui list">
+            <div class="item" *ngFor="let paper of selectedExam?.papers">
+              <div class="ui circular empty blue label"></div>
+              {{ paper?.subject?.name }} - {{ paper?.start | date}} to {{ paper?.end | date }}
+            </div>
+          </div>
+
+          <br><br>
+          <div class="ui dividing header">Classes</div>
+          <div class="ui list">
+            <div class="item" *ngFor="let class of selectedExam?.class_levels">
+              <div class="ui circular empty green label"></div>
+              {{ class?.name }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </mat-tab>
-  <mat-tab label="Tab 5">
-    No content
-  </mat-tab>
-  <mat-tab label="Tab 6">
-    No content
-  </mat-tab>-->
 </mat-tab-group>
+<div class="ui horizontal divider"></div>
+<div class="ui labeled icon primary button" (click)="toggleCycleModal($event)">
+  <i class="icon calendar outline"></i>
+  Add examinations
+</div>
+<div class="ui labeled icon primary button" (click)="togglePaperModal($event)">
+  <i class="icon write"></i>
+  Add exam paper
+</div>
+<div class="ui labeled icon primary button" (click)="pdfExportClick()">
+  <i class="icon download"></i>
+  Download PDF
+</div>
+

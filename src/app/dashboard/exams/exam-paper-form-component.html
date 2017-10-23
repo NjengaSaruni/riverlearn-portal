@@ -1,32 +1,39 @@
-<mat-sidenav-container class="example-sidenav-fab-container">
-  <mat-sidenav #sidenav mode="side" opened="true">
-    <button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">
-      <mat-icon>add</mat-icon>
-    </button>
-    <div class="example-scrolling-content">
-      Lorem ipsum dolor sit amet, pede a libero aenean phasellus, lectus metus sint ut risus,
-      fusce vel in pellentesque. Nisl rutrum etiam morbi consectetuer tempor magna, aenean nullam
-      nunc id, neque vivamus interdum sociis nulla scelerisque sem, dolor id wisi turpis magna
-      aliquam magna. Risus accumsan hac eget etiam donec sed, senectus erat mattis quam, tempor
-      vel urna occaecat cras, metus urna augue nec at. Et morbi amet dui praesent, nec eu at,
-      ligula ipsum dui sollicitudin, quis nisl massa viverra ligula, mauris fermentum orci arcu
-      enim fringilla. Arcu erat nulla in aenean lacinia ullamcorper, urna ante nam et sagittis,
-      tristique vehicula nibh ipsum vivamus, proin proin. Porta commodo nibh quis libero amet.
-      Taciti dui, sapien consectetuer.
-    </div>
-  </mat-sidenav>
-  <button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">
-    <mat-icon>add</mat-icon>
-  </button>
-  <div class="example-scrolling-content">
-    Lorem ipsum dolor sit amet, pede a libero aenean phasellus, lectus metus sint ut risus, fusce
-    vel in pellentesque. Nisl rutrum etiam morbi consectetuer tempor magna, aenean nullam nunc id,
-    neque vivamus interdum sociis nulla scelerisque sem, dolor id wisi turpis magna aliquam magna.
-    Risus accumsan hac eget etiam donec sed, senectus erat mattis quam, tempor vel urna occaecat
-    cras, metus urna augue nec at. Et morbi amet dui praesent, nec eu at, ligula ipsum dui
-    sollicitudin, quis nisl massa viverra ligula, mauris fermentum orci arcu enim fringilla. Arcu
-    erat nulla in aenean lacinia ullamcorper, urna ante nam et sagittis, tristique vehicula nibh
-    ipsum vivamus, proin proin. Porta commodo nibh quis libero amet. Taciti dui, sapien
-    consectetuer.
+<div class="ui raised blue segment">
+  <div class="ui dividing header">
+    <h3>Add exam paper</h3>
   </div>
-</mat-sidenav-container>
+  <form class="ui form" [formGroup]="paperForm">
+    <div class="ui two fields">
+      <div class="required field">
+        <label>Exam</label>
+        <select class="ui fluid selection dropdown" formControlName="exam">
+          <option *ngFor="let exam of exams" [value]="exam.id">
+            {{ exam.name }}
+          </option>
+        </select>
+      </div>
+      <div class="required field">
+        <label>Subject</label>
+        <select class="ui fluid selection dropdown" formControlName="subject">
+          <option *ngFor="let subject of subjects" [value]="subject.id">
+            {{ subject.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ui two fields">
+      <div class="required field">
+        <label>
+          Class <span>(At least one required)</span>
+        </label>
+        <select class="ui fluid selection dropdown" formControlName="classes" multiple=""
+                [disabled]="paperForm.get('exam').status == 'INVALID'">
+          <option *ngFor="let class of classes" [value]="class.id">
+            {{ class.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+<p>{{ paperForm.get('exam').status == 'INVALID' }}</p>

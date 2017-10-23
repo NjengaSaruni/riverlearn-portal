@@ -9,11 +9,13 @@ import {File} from "./uploads.models";
 export class Exam extends AbstractBase {
   name: string;
   number: string;
-  class_level: Level;
+  class_levels: Level[];
   notes: string;
   start_date: Date;
   end_date = Date;
   done: boolean;
+  selected: boolean;
+  papers: ExamPaper[];
 }
 
 export class ExamPaper extends AbstractBase {

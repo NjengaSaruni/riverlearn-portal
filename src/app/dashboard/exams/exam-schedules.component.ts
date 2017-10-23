@@ -18,24 +18,34 @@ declare var $: any;
 })
 
 export class ExamSchedulesComponent implements OnInit {
-  @ViewChild('schedulerReference') scheduler: jqxSchedulerComponent;
+  protected selectedExam: Exam = null;
+  @ViewChild('schedulerReference') schedulerReference: jqxSchedulerComponent;
 
   private contentReady: boolean = false;
   private appointments = [];
   private examPapers: ExamPaper[] = [];
-  private exams: Exam[];
+  protected exams: Exam[];
   protected color = 'primary';
   protected mode = 'indeterminate';
   protected value = 50;
   protected bufferValue = 75;
 
+  notes = [
+    {
+      name: 'Vacation Itinerary',
+      updated: new Date('2/20/16'),
+    },
+    {
+      name: 'Kitchen Remodel',
+      updated: new Date('1/18/16'),
+    }
+  ];
+
   constructor(
     private examService: ExamService,
-    private matIconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+
   ) {
-  matIconRegistry.addSvgIcon(
-  'cake', sanitizer.bypassSecurityTrustResourceUrl('material-design-icons/social/svg/design/ic_cake_24px.svg'));
+
 }
 
   getExams(): void {
@@ -43,6 +53,8 @@ export class ExamSchedulesComponent implements OnInit {
       .subscribe(
         exams => {
           this.exams = exams;
+          this.exams[0].selected = true;
+          this.selectedExam = this.exams[0];
         },
         error => alert(error)
       )
@@ -51,6 +63,23 @@ export class ExamSchedulesComponent implements OnInit {
   ngOnInit () {
     this.getExams();
     this.getExamPapers();
+
+    $('.ui.sticky .menu').visibility({
+      type: 'fixed',
+      offset: 80
+    });
+
+    $('#ellipsis')
+      .popup({
+        on    : 'click',
+        inline: true,
+        hoverable  : true,
+        position   : 'bottom left',
+        delay: {
+          show: 300,
+          hide: 800
+        }
+      })
   }
 
   getExamPapers(): void {
@@ -80,7 +109,7 @@ export class ExamSchedulesComponent implements OnInit {
     this.source['localData'] = this.appointments;
     this.dataAdapter = new jqx.dataAdapter(this.source);
     try {
-      this.scheduler.ensureAppointmentVisible(this.examPapers[0].id);
+      this.schedulerReference.ensureAppointmentVisible(this.examPapers[0].id);
     }
     catch(err){
       // TODO what to do with this error?
@@ -103,8 +132,20 @@ export class ExamSchedulesComponent implements OnInit {
     this.updateAppointments();
   }
 
+  onSelectExam(event: any, selected_exam: Exam): void {
+    this.exams.find(exam => exam.id == selected_exam.id).selected = true;
+    this.selectedExam = this.exams.find(exam => exam.id == selected_exam.id);
+
+    this.exams.filter(exam => {
+      if(exam.id != selected_exam.id){
+        exam.selected = false;
+        return exam;
+      }
+    });
+  }
+
   pdfExportClick(): void {
-    this.scheduler.exportData('pdf');
+    this.schedulerReference.exportData('pdf');
   };
 
   openExam(event: any): void {

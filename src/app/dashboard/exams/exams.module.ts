@@ -13,9 +13,11 @@ import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_j
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
 import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxchart';
 import {
-  MatDatepickerModule, MatFormFieldModule, MatIconModule, MatIconRegistry, MatInputModule, MatNativeDateModule,
+  MatCardModule,
+  MatDatepickerModule, MatFormFieldModule, MatIconModule, MatIconRegistry, MatInputModule, MatListModule,
+  MatNativeDateModule,
   MatProgressBarModule,
-  MatSidenavModule, MatTabsModule
+  MatSidenavModule, MatSnackBarModule, MatTabsModule
 } from "@angular/material";
 
 @NgModule({
@@ -25,14 +27,17 @@ import {
     FormsModule,
     ReactiveFormsModule,
     examRoutingModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatNativeDateModule,
     MatProgressBarModule,
     MatSidenavModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatTabsModule
+    MatSnackBarModule,
+    MatTabsModule,
 ],
   providers: [
     ExamService,

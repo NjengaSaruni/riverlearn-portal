@@ -48,6 +48,7 @@ export class Teacher extends AbstractBase {
 
 
 export class InstitutionSubject extends AbstractBase {
+  name: string;
   subject: Subject;
 }
 
