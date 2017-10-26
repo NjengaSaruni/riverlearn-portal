@@ -6,7 +6,7 @@
     <div class="ui two fields">
       <div class="required field">
         <label>Exam</label>
-        <select class="ui fluid selection dropdown" formControlName="exam">
+        <select class="ui fluid selection dropdown" formControlName="exam" (change)="onExamChange($event)">
           <option *ngFor="let exam of exams" [value]="exam.id">
             {{ exam.name }}
           </option>
@@ -21,19 +21,33 @@
         </select>
       </div>
     </div>
-    <div class="ui two fields">
-      <div class="required field">
+    <div class="ui three fields">
+      <div class="ui required field">
         <label>
           Class <span>(At least one required)</span>
         </label>
-        <select class="ui fluid selection dropdown" formControlName="classes" multiple=""
-                [disabled]="paperForm.get('exam').status == 'INVALID'">
-          <option *ngFor="let class of classes" [value]="class.id">
+        <select class="ui fluid selection dropdown" formControlName="classes" multiple="">
+          <option *ngFor="let class of classes" [value]="class.id" >
             {{ class.name }}
           </option>
         </select>
       </div>
-    </div>
+      <div class="ui required field">
+        <label>Duration</label>
+        <div class="two fields">
+          <div class="ui field">
+            <input placeholder="Hours" type="number" >
+          </div>
+          <div class="ui field">
+            <input placeholder="Minutes" type="number" (change)="setMinutes()">
+          </div>
+        </div>
+      </div>
+      <div class="ui required field">
+        <label>Date and start time</label>
+          <date-picker formControlName="start" mode="datetime"></date-picker>
+        </div>
+      </div>
+
   </form>
 </div>
-<p>{{ paperForm.get('exam').status == 'INVALID' }}</p>

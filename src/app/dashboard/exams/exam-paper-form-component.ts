@@ -2,7 +2,7 @@
  * Created by saruni on 10/20/17.
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {ExamService} from "../../common/services/exams.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Exam} from "../../common/models/exams.models";
@@ -16,7 +16,8 @@ declare var $: any;
   templateUrl: './exam-paper-form-component.html',
   styleUrls: ['./exam-paper-form-component.css']
 })
-export class ExamPaperFormComponent implements OnInit{
+export class ExamPaperFormComponent implements OnInit {
+  allClasses: Class[];
   classes: Class[];
   subjects: InstitutionSubject[];
   exams: Exam[];
@@ -25,14 +26,16 @@ export class ExamPaperFormComponent implements OnInit{
   constructor(
     private examService: ExamService,
     private divisionService: DivisionService,
-    private formBuilder: FormBuilder
-  )
-  {}
+    private formBuilder: FormBuilder,
+  ){}
 
   ngOnInit(): void {
     $(document).ready(function () {
       $('.ui.dropdown').dropdown();
+
+      $('.ui.calendar').calendar();
     });
+
 
     this.getExams();
     this.getSubjects();
@@ -42,7 +45,7 @@ export class ExamPaperFormComponent implements OnInit{
       exam: ['', Validators.required],
       classes: ['', Validators.required ],
       subject: ['', Validators.required],
-      start: ['', Validators.required],
+      start: [new Date(), Validators.required],
       duration: ['', Validators.required],
       total_mark: [100],
       csv_file: [''],
@@ -72,8 +75,25 @@ export class ExamPaperFormComponent implements OnInit{
   getClasses(): void {
     this.divisionService.getClasses()
       .subscribe(
-        classes => this.classes = classes,
+        classes => {
+          this.classes = classes;
+          this.allClasses = classes;
+        },
         error => alert(error)
       )
   }
+
+  onExamChange(event: any){
+    this.paperForm.patchValue({classes: []});
+    this.classes = this.allClasses;
+    let exam = this.exams.find(exam => exam.id == this.paperForm.get('exam').value);
+    this.classes = this.classes.filter(cls => {
+      for(let level of exam.class_levels){
+        return cls.level.id == level.id;
+      }
+    });
+    console.log(this.paperForm.get('classes').value);
+  }
+
+
 }

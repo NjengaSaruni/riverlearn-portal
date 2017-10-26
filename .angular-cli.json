@@ -21,13 +21,15 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "semantic/dist/semantic.min.css",
-        "../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.base.css"
+        "semantic/dist/semantic.css",
+        "../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.base.css",
+        "../node_modules/semantic-ui-calendar/dist/calendar.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/jqwidgets-framework/jqwidgets/jqx-all.js",
-        "semantic/dist/semantic.min.js",
+        "semantic/dist/semantic.js",
+        "../node_modules/semantic-ui-calendar/dist/calendar.js",
         "time_circles.js",
         "scrollTo.js"
       ],

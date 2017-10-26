@@ -18,7 +18,7 @@ import {MatProgressBarModule} from "@angular/material";
     FormsModule,
     ReactiveFormsModule,
     routing,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   providers: [
     ExamService,

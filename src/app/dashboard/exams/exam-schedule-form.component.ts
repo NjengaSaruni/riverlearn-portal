@@ -2,13 +2,12 @@
  * Created by saruni on 10/5/17.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
 import {Exam} from '../../common/models/exams.models';
 import {ExamService} from '../../common/services/exams.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Level} from "../../common/models/divisions.models";
 import {DivisionService} from "../../common/services/divisions.service";
-import {sendRequest} from "selenium-webdriver/http";
 import {MatSnackBar} from "@angular/material";
 
 declare var $: any;
@@ -31,6 +30,7 @@ export class ExamScheduleFormComponent implements OnInit {
   protected value = 50;
   protected bufferValue = 75;
 
+  protected errors: string[];
 
   constructor(
     private divisionService: DivisionService,
@@ -87,6 +87,12 @@ export class ExamScheduleFormComponent implements OnInit {
 
     if(this.examForm.status == "INVALID"){
       this.openSnackBar("Please fill in all required fields and/or correct errors", 3000);
+      this.savingExamCycle = false;
+      return;
+    }
+    if(this.examForm.get('end_date').value < this.examForm.get('start_date').value &&
+      this.examForm.get('end_date').status == 'VALID'){
+      this.openSnackBar("Error: Start date cannot be later than end date", 3000);
       this.savingExamCycle = false;
       return;
     }

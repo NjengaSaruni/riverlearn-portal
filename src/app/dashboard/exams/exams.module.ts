@@ -12,13 +12,18 @@ import {examComponents, examRoutingModule} from './exams-routing.module';
 import { jqxBarGaugeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxbargauge';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
 import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxchart';
+import { jqxDateTimeInputComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxdatetimeinput';
 import {
   MatCardModule,
   MatDatepickerModule, MatFormFieldModule, MatIconModule, MatIconRegistry, MatInputModule, MatListModule,
   MatNativeDateModule,
   MatProgressBarModule,
-  MatSidenavModule, MatSnackBarModule, MatTabsModule
+  MatSnackBarModule, MatTabsModule
 } from "@angular/material";
+import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
+import {CalendarOptions} from "./calendar.options";
+import {DatePickerModule} from "angular-io-datepicker";
+import {OverlayModule} from "angular-io-overlay";
 
 @NgModule({
   imports: [
@@ -35,20 +40,23 @@ import {
     MatListModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    MatSidenavModule,
     MatSnackBarModule,
     MatTabsModule,
+    OverlayModule,
+    DatePickerModule
 ],
   providers: [
     ExamService,
     AdminGuard,
-    MatIconRegistry
+    MatIconRegistry,
+    CalendarOptions
   ],
   declarations: [
     examComponents,
     jqxBarGaugeComponent,
     jqxChartComponent,
-    jqxSchedulerComponent
+    jqxSchedulerComponent,
+    jqxDateTimeInputComponent
 ],
 
 })

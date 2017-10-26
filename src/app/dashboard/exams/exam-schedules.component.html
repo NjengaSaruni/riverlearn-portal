@@ -64,20 +64,20 @@
           {{ selectedExam?.start_date | date }} - {{ selectedExam?.end_date | date }}
 
           <br><br>
-          <div class="ui dividing header">Exam Papers</div>
-          <div class="ui list">
-            <div class="item" *ngFor="let paper of selectedExam?.papers">
-              <div class="ui circular empty blue label"></div>
-              {{ paper?.subject?.name }} - {{ paper?.start | date}} to {{ paper?.end | date }}
-            </div>
-          </div>
-
-          <br><br>
           <div class="ui dividing header">Classes</div>
           <div class="ui list">
             <div class="item" *ngFor="let class of selectedExam?.class_levels">
               <div class="ui circular empty green label"></div>
               {{ class?.name }}
+            </div>
+          </div>
+
+          <br><br>
+          <div class="ui dividing header">Exam Papers</div>
+          <div class="ui list">
+            <div class="item" *ngFor="let paper of selectedExam?.papers">
+              <div class="ui circular empty blue label"></div>
+              {{ paper?.subject?.name }} - {{ paper?.start | date}} to {{ paper?.end | date }}
             </div>
           </div>
         </div>
