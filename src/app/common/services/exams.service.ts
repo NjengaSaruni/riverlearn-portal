@@ -46,14 +46,24 @@ export class ExamService extends CommonService {
   }
 
   createExamPaper(
-    exam: Exam = null,
-    subject: Subject = null,
-    start_time: DateTimeFormat = null,
-    duration: number,
-    total_mark: number,
-    csv_file: File = null
+    exam: string = null,
+    subject: string = null,
+    start_time: string = null,
+    duration: string = null,
+    total_mark: string = null,
+    classes = null,
+    csv_file: any = null
   ): Observable<Response> {
-    return this.makeRequest(this.examPapersUrl,'POST' ,{exam, subject, start_time, duration, total_mark, csv_file});
+
+    let input = new FormData();
+    input.append('exam', exam);
+    input.append('subject', subject);
+    input.append('start_time', start_time);
+    input.append('duration', duration);
+    input.append('total_mark', total_mark);
+    input.append('classes', classes);
+    input.append('csv_file', csv_file);
+    return this.makeRequest(this.examPapersUrl,'POST' , input);
   }
 
   getExamPaper(id: string): Observable<ExamPaper> {

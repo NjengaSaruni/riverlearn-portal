@@ -10,7 +10,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {CommonService} from './common.service';
-import {Class, InstitutionSubject, Level, Parent, Stream, Student, Teacher} from '../models/divisions.models';
+import {
+  Class, ClassRoom, InstitutionSubject, Level, Parent, Stream, Student,
+  Teacher
+} from '../models/divisions.models';
 import {User} from '../models/users.models';
 import {Subject} from '../models/common.models';
 
@@ -24,6 +27,7 @@ export class DivisionService extends CommonService {
   private parentsUrl = this.divisionsUrl + 'parents/';
   private teachersUrl = this.divisionsUrl + 'teachers/';
   private subjectsUrl = this.divisionsUrl + 'subjects/';
+  private classRoomsUrl = this.divisionsUrl + 'class_rooms/';
 
   getTeachers(): Observable<Teacher[]> {
     return this.makeRequest(this.teachersUrl, 'GET');
@@ -128,6 +132,24 @@ export class DivisionService extends CommonService {
   getSubject(id: string): Observable<InstitutionSubject> {
     id += '/';
     return this.makeRequest(this.subjectsUrl + id , 'GET');
+  }
+
+  getClassRooms(): Observable<ClassRoom[]> {
+    return this.makeRequest(this.classRoomsUrl, 'GET');
+  }
+
+  createClassRoom(field: string, name: string): Observable<ClassRoom> {
+    return this.makeRequest(this.classRoomsUrl,'POST' , { name, field });
+  }
+
+  deleteClassRoom(id: string): Observable<ClassRoom> {
+    id += '/';
+    return this.makeRequest(this.classRoomsUrl + id, 'DELETE')
+  }
+
+  getClassRoom(id: string): Observable<ClassRoom> {
+    id += '/';
+    return this.makeRequest(this.classRoomsUrl + id , 'GET');
   }
 
 }

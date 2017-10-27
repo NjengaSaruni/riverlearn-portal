@@ -2,11 +2,11 @@
   <div class="ui dividing header">
     <h3>Add exam paper</h3>
   </div>
-  <form class="ui form" [formGroup]="paperForm">
+  <form class="ui form" [formGroup]="paperForm" #form="ngForm">
     <div class="ui two fields">
       <div class="required field">
         <label>Exam</label>
-        <select class="ui fluid selection dropdown" formControlName="exam" (change)="onExamChange($event)">
+        <select class="ui fluid selection dropdown" formControlName="exam" (change)="onExamChange($event)" id="exam">
           <option *ngFor="let exam of exams" [value]="exam.id">
             {{ exam.name }}
           </option>
@@ -14,7 +14,7 @@
       </div>
       <div class="required field">
         <label>Subject</label>
-        <select class="ui fluid selection dropdown" formControlName="subject">
+        <select class="ui fluid selection dropdown" formControlName="subject" >
           <option *ngFor="let subject of subjects" [value]="subject.id">
             {{ subject.name }}
           </option>
@@ -26,28 +26,54 @@
         <label>
           Class <span>(At least one required)</span>
         </label>
-        <select class="ui fluid selection dropdown" formControlName="classes" multiple="">
+        <select class="ui fluid selection dropdown" formControlName="classes" multiple="" id="classes">
           <option *ngFor="let class of classes" [value]="class.id" >
             {{ class.name }}
           </option>
         </select>
       </div>
       <div class="ui required field">
+        <label>Date and start time</label>
+        <date-picker formControlName="start" mode="datetime"></date-picker>
+      </div>
+      <div class="ui required field">
         <label>Duration</label>
         <div class="two fields">
           <div class="ui field">
-            <input placeholder="Hours" type="number" >
+            <input placeholder="Hours" type="number" formControlName="duration_h" min="0">
           </div>
           <div class="ui field">
-            <input placeholder="Minutes" type="number" (change)="setMinutes()">
+            <input placeholder="Minutes" type="number" min="0" max="59"
+                   formGroupName="duration_m" (change)="setMinutes($event)">
           </div>
         </div>
       </div>
-      <div class="ui required field">
-        <label>Date and start time</label>
-          <date-picker formControlName="start" mode="datetime"></date-picker>
+    </div>
+    <div class="three fields">
+      <div class="ui field">
+        <label>Total Mark</label>
+        <input placeholder="e.g. 100" formControlName="total_mark" type="number">
+      </div>
+      <div class="ui field">
+        <label>PDF</label>
+        <input type="file" #fileInput type="file" formControlName="csv_file">
+      </div>
+      <div class="ui field">
+        <label>Location of exam</label>
+        <select class="ui fluid selection dropdown" formControlName="location">
+          <option *ngFor="let classRoom of classRooms" [value]="classRoom.id" >
+            {{ classRoom.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ui fields">
+      <div class="ui field">
+        <div class="ui primary labeled icon button" (click)="savePaper()">
+          <i class="icon save"></i>
+          Save
         </div>
       </div>
-
+    </div>
   </form>
 </div>

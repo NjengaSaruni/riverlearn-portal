@@ -5,7 +5,7 @@ import {AbstractBase} from './common.models';
 
 export class File extends AbstractBase {
   title: string;
-  url: string;
+  url: any;
   description: string
 }
 

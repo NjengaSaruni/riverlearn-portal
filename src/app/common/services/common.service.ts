@@ -18,7 +18,6 @@ import "rxjs/add/observable/defer";
 import "rxjs/add/operator/mergeMap";
 import {Router} from '@angular/router';
 import {Color, Subject} from '../models/common.models';
-import {capitalize} from '../utils';
 
 export const localUrl = 'http://0.0.0.0:8001/api/v1/';
 export const onlineUrl = 'http://35.187.38.114:8000/api/v1/';
@@ -65,7 +64,6 @@ export class CommonService {
   getFields(): Observable<Subject[]> {
     return this.makeRequest(this.fieldsUrl, 'GET');
   }
-
 
   /**
    * Makes the HTTP request and returns an Observable
@@ -120,7 +118,7 @@ export function handleError(error: Response | any) {
     errMsg = error.message ? error.message : error.toString();
   }
   console.error(errMsg);
-  return Observable.throw(error);
+  return Observable.throw(errMsg);
 }
 
 export function extractData(res: Response) {
