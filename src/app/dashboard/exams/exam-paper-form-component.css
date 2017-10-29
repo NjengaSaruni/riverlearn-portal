@@ -1,3 +1,13 @@
 span {
   color: #cd9a36;
 }
+
+.mat-input {
+  border: none !important;
+  padding: 7px !important;
+  color: #0e5a77;
+}
+
+.mat-form-field {
+  width: 100%;
+}

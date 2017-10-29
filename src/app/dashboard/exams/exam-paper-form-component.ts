@@ -9,8 +9,6 @@ import {Exam} from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, ClassRoom, InstitutionSubject} from "../../common/models/divisions.models";
 import {MatSnackBar} from "@angular/material";
-import {File} from "../../common/models/uploads.models";
-import {CommonService} from "../../common/services/common.service";
 
 declare var $: any;
 
@@ -33,10 +31,8 @@ export class ExamPaperFormComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private divisionService: DivisionService,
-    private commonService: CommonService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar
-
   ){}
 
   ngOnInit(): void {
@@ -55,11 +51,11 @@ export class ExamPaperFormComponent implements OnInit {
       exam: [[], Validators.required],
       classes: [[], Validators.required],
       subject: ['', Validators.required],
-      start: ['', Validators.required],
+      start: [new Date(), Validators.required],
       duration_h: [],
       duration_m: [],
       total_mark: [100],
-      csv_file: [''],
+      url: [''],
       location: [''],
     });
   }
@@ -70,7 +66,7 @@ export class ExamPaperFormComponent implements OnInit {
         exams => {
           this.exams = exams;
         },
-        error => alert(error)
+        error => this.openSnackBar(error)
       )
   }
 
@@ -78,7 +74,7 @@ export class ExamPaperFormComponent implements OnInit {
     this.divisionService.getSubjects()
       .subscribe(
         subjects => this.subjects = subjects,
-        error => alert(error)
+        error => this.openSnackBar(error)
       )
   }
 
@@ -89,7 +85,7 @@ export class ExamPaperFormComponent implements OnInit {
           this.classes = classes;
           this.allClasses = classes;
         },
-        error => alert(error)
+        error => this.openSnackBar(error)
       )
   }
 
@@ -127,16 +123,14 @@ export class ExamPaperFormComponent implements OnInit {
     let classes = this.paperForm.get('classes').value;
     let subject = this.paperForm.get('subject').value;
     let start = this.paperForm.get('start').value;
-    let duration = this.paperForm.get('duration_h').value + ':' + this.paperForm.get('duration_m').value;
+    let duration = this.paperForm.get('duration_h').value + ':' + this.paperForm.get('duration_m').value + ':00';
     let total_mark = this.paperForm.get('total_mark').value;
     let location = this.paperForm.get('location').value;
-
-    let csv_file = new File();
-    csv_file.title = this.selectedExam.name;
+    let url: any;
 
     let fi = this.fileInput.nativeElement;
     if (fi.files && fi.files[0]) {
-      csv_file.url = fi.files[0];
+      url = fi.files[0];
     }
 
     this.examService.createExamPaper(
@@ -146,7 +140,8 @@ export class ExamPaperFormComponent implements OnInit {
       duration,
       total_mark,
       classes,
-      csv_file).subscribe(
+      url,
+      location).subscribe(
         paper => this.openSnackBar("Paper saved successfully!!"),
         error => this.openSnackBar(error, 10000)
     )

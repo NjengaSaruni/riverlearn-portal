@@ -6,6 +6,7 @@ import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {User} from '../../common/models/users.models';
 import {UserService} from '../../common/services/user.service';
+import {MatSnackBar} from "@angular/material";
 
 declare var $: any;
 
@@ -20,18 +21,26 @@ export class ExamsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private titleService: Title
+    private titleService: Title,
+    public snackBar: MatSnackBar
   ) {}
 
   public ngOnInit(){
     this.titleService.setTitle("Examinations");
   }
 
+  openSnackBar(message? : string, duration: number = 3000) {
+    let snackBarRef = this.snackBar.open(message, 'Dismiss' ,{
+      duration: duration
+    });
+  }
+
   getUser(): void {
     this.userService.getLoggedInUser()
       .subscribe(
         user => this.user = user,
-        error => this.errorMessage = <any>error);
+        error => this.openSnackBar(error)
+      )
   }
 
 }

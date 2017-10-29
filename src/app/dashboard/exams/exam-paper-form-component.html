@@ -33,8 +33,12 @@
         </select>
       </div>
       <div class="ui required field">
-        <label>Date and start time</label>
-        <date-picker formControlName="start" mode="datetime"></date-picker>
+        <mat-form-field>
+          <input matInput [matDatepicker]="start_picker" placeholder="Choose date of exam paper"
+                 formControlName="start" class="mat-input">
+          <mat-datepicker-toggle matSuffix [for]="start_picker"></mat-datepicker-toggle>
+          <mat-datepicker #start_picker></mat-datepicker>
+        </mat-form-field>
       </div>
       <div class="ui required field">
         <label>Duration</label>
@@ -44,7 +48,7 @@
           </div>
           <div class="ui field">
             <input placeholder="Minutes" type="number" min="0" max="59"
-                   formGroupName="duration_m" (change)="setMinutes($event)">
+                   formControlName="duration_m" (change)="setMinutes($event)">
           </div>
         </div>
       </div>
@@ -56,7 +60,7 @@
       </div>
       <div class="ui field">
         <label>PDF</label>
-        <input type="file" #fileInput type="file" formControlName="csv_file">
+        <input type="file" #fileInput type="file" formControlName="url">
       </div>
       <div class="ui field">
         <label>Location of exam</label>

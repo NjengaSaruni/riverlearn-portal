@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import {ExamService} from '../../common/services/exams.service';
 import {Exam, ExamPaper} from '../../common/models/exams.models';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
-import {MatIconRegistry} from "@angular/material";
+import {MatIconRegistry, MatSnackBar} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 
 declare var $: any;
@@ -43,10 +43,14 @@ export class ExamSchedulesComponent implements OnInit {
 
   constructor(
     private examService: ExamService,
+    public snackBar: MatSnackBar
+  ) {}
 
-  ) {
-
-}
+  openSnackBar(message? : string, duration: number = 3000) {
+    let snackBarRef = this.snackBar.open(message, 'Dismiss' ,{
+      duration: duration
+    });
+  }
 
   getExams(): void {
     this.examService.getExams()
@@ -56,7 +60,7 @@ export class ExamSchedulesComponent implements OnInit {
           this.exams[0].selected = true;
           this.selectedExam = this.exams[0];
         },
-        error => alert(error)
+        error => this.openSnackBar(error)
       )
   }
 
@@ -92,7 +96,7 @@ export class ExamSchedulesComponent implements OnInit {
             this.addNewAppointment(paper);
           }
         },
-        error => alert(error)
+        error => this.openSnackBar(error)
       );
   }
 
@@ -119,10 +123,8 @@ export class ExamSchedulesComponent implements OnInit {
   addNewAppointment(paper: ExamPaper): any {
     let appointment = {
       'id' : paper.id,
-      'description': paper.csv_file.title,
       'location': paper.location.name,
       'subject': paper.subject.name,
-      "class": paper.csv_file.title,
       'start': paper.start,
       'end': paper.end,
       'style': 'dark'

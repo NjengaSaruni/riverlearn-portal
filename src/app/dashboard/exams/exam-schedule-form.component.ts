@@ -70,7 +70,7 @@ export class ExamScheduleFormComponent implements OnInit {
           this.contentReady = true;
           this.exams = exams;
         },
-        error => alert(error)
+        error => this.openSnackBar(error)
       )
   }
 
@@ -78,7 +78,7 @@ export class ExamScheduleFormComponent implements OnInit {
     this.divisionService.getLevels()
       .subscribe(
         levels => this.levels = levels,
-        error => alert(error)
+        error => this.openSnackBar(error)
       )
   }
 

@@ -52,7 +52,8 @@ export class ExamService extends CommonService {
     duration: string = null,
     total_mark: string = null,
     classes = null,
-    csv_file: any = null
+    csv_file: any = null,
+    location: string = null
   ): Observable<Response> {
 
     let input = new FormData();
@@ -62,7 +63,9 @@ export class ExamService extends CommonService {
     input.append('duration', duration);
     input.append('total_mark', total_mark);
     input.append('classes', classes);
-    input.append('csv_file', csv_file);
+    input.append('url', csv_file);
+    input.append('location', location);
+
     return this.makeRequest(this.examPapersUrl,'POST' , input);
   }
 

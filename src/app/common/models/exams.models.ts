@@ -25,7 +25,7 @@ export class ExamPaper extends AbstractBase {
   end: Date;
   duration: string;
   total_mark: number;
-  csv_file: File;
+  url: string;
   location: ClassRoom;
 }
 
