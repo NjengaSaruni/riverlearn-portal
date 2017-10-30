@@ -311,3 +311,7 @@ body {
   background-color: #cd9a36 !important;
   color: white !important;
 }
+
+.ui.selection.dropdown {
+  min-width: 0 !important;
+}

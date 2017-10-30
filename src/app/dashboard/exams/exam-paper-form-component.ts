@@ -2,7 +2,7 @@
  * Created by saruni on 10/20/17.
  */
 
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, EventEmitter} from '@angular/core';
 import {ExamService} from "../../common/services/exams.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Exam} from "../../common/models/exams.models";
@@ -15,7 +15,8 @@ declare var $: any;
 @Component({
   selector: 'exam-paper-form',
   templateUrl: './exam-paper-form-component.html',
-  styleUrls: ['./exam-paper-form-component.css']
+  styleUrls: ['./exam-paper-form-component.css'],
+  outputs: ['onSavePaper']
 })
 export class ExamPaperFormComponent implements OnInit {
   classRooms: ClassRoom[];
@@ -24,9 +25,12 @@ export class ExamPaperFormComponent implements OnInit {
   subjects: InstitutionSubject[];
   exams: Exam[];
 
+  protected selectedDate: Date;
   protected paperForm: FormGroup;
   @ViewChild('fileInput') fileInput : any;
   private selectedExam: Exam;
+
+  onSavePaper = new EventEmitter<any>();
 
   constructor(
     private examService: ExamService,
@@ -52,8 +56,11 @@ export class ExamPaperFormComponent implements OnInit {
       classes: [[], Validators.required],
       subject: ['', Validators.required],
       start: [new Date(), Validators.required],
-      duration_h: [],
-      duration_m: [],
+      time_hour: [''],
+      time_minute: [''],
+      time_period: [''],
+      duration_hours: [],
+      duration_minutes: [],
       total_mark: [100],
       url: [''],
       location: [''],
@@ -118,12 +125,15 @@ export class ExamPaperFormComponent implements OnInit {
     event.target.value = event.target.value % 60;
   }
 
-  savePaper(): void {
+  savePaper(event: any): void {
     let exam = this.paperForm.get('exam').value;
     let classes = this.paperForm.get('classes').value;
     let subject = this.paperForm.get('subject').value;
-    let start = this.paperForm.get('start').value;
-    let duration = this.paperForm.get('duration_h').value + ':' + this.paperForm.get('duration_m').value + ':00';
+    let start = new Date(this.paperForm.get('start').value);
+    console.log(start);
+    let time_hour = +this.paperForm.get('time_hour').value;
+    let time_minute = +this.paperForm.get('time_minute').value;
+    let duration = this.paperForm.get('duration_hours').value + ':' + this.paperForm.get('duration_minutes').value + ':00';
     let total_mark = this.paperForm.get('total_mark').value;
     let location = this.paperForm.get('location').value;
     let url: any;
@@ -133,7 +143,7 @@ export class ExamPaperFormComponent implements OnInit {
       url = fi.files[0];
     }
 
-    this.examService.createExamPaper(
+    /*this.examService.createExamPaper(
       exam,
       subject,
       start,
@@ -142,9 +152,12 @@ export class ExamPaperFormComponent implements OnInit {
       classes,
       url,
       location).subscribe(
-        paper => this.openSnackBar("Paper saved successfully!!"),
+      paper => {
+        this.openSnackBar("Paper saved successfully!!");
+        this.onSavePaper.emit(event);
+      },
         error => this.openSnackBar(error, 10000)
-    )
+    )*/
   }
 
   openSnackBar(message? : string, duration: number = 3000) {

@@ -11,3 +11,23 @@ span {
 .mat-form-field {
   width: 100%;
 }
+
+.ui.selection.dropdown {
+  cursor: pointer;
+  word-wrap: break-word;
+  line-height: 1em;
+  white-space: normal;
+  outline: 0;
+  -webkit-transform: rotateZ(0deg);
+  transform: rotateZ(0deg);
+  min-width: initial;
+  min-height: 2.71428571em;
+  background: #FFFFFF;
+  display: inline-block;
+  padding: 0.78571429em 2.1em 0.78571429em 1em;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: none;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.28571429rem;
+  transition: box-shadow 0.1s ease, width 0.1s ease;
+}

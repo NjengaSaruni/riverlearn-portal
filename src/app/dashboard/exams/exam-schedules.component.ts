@@ -30,17 +30,6 @@ export class ExamSchedulesComponent implements OnInit {
   protected value = 50;
   protected bufferValue = 75;
 
-  notes = [
-    {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    }
-  ];
-
   constructor(
     private examService: ExamService,
     public snackBar: MatSnackBar
@@ -87,6 +76,7 @@ export class ExamSchedulesComponent implements OnInit {
   }
 
   getExamPapers(): void {
+    this.contentReady = false;
     this.examService.getExamPapers()
       .subscribe(
         papers => {
@@ -144,6 +134,11 @@ export class ExamSchedulesComponent implements OnInit {
         return exam;
       }
     });
+  }
+
+  onPaperSaved(event: any) {
+    this.getExamPapers();
+    $('#new-exam-paper-modal').modal('hide');
   }
 
   pdfExportClick(): void {

@@ -5,7 +5,7 @@
 </div>
 <div class="ui modal" id="new-exam-paper-modal">
   <div class="ui raised segment">
-    <exam-paper-form></exam-paper-form>
+    <exam-paper-form (onSavePaper)="onPaperSaved($event);"></exam-paper-form>
   </div>
 </div>
 <div class="ui inverted active dimmer" *ngIf="!contentReady">

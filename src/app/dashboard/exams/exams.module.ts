@@ -4,7 +4,6 @@
 
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
-import { ChartsModule } from 'ng2-charts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminGuard} from '../../common/services/auth-guard.service';
 import {ExamService} from '../../common/services/exams.service';
@@ -21,13 +20,9 @@ import {
   MatSnackBarModule, MatTabsModule
 } from "@angular/material";
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
-import {CalendarOptions} from "./calendar.options";
-import {DatePickerModule} from "angular-io-datepicker";
-import {OverlayModule} from "angular-io-overlay";
 
 @NgModule({
   imports: [
-    ChartsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -42,14 +37,11 @@ import {OverlayModule} from "angular-io-overlay";
     MatProgressBarModule,
     MatSnackBarModule,
     MatTabsModule,
-    OverlayModule,
-    DatePickerModule
 ],
   providers: [
     ExamService,
     AdminGuard,
-    MatIconRegistry,
-    CalendarOptions
+    MatIconRegistry
   ],
   declarations: [
     examComponents,

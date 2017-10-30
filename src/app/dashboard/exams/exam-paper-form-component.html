@@ -3,7 +3,7 @@
     <h3>Add exam paper</h3>
   </div>
   <form class="ui form" [formGroup]="paperForm" #form="ngForm">
-    <div class="ui two fields">
+    <div class="ui three fields">
       <div class="required field">
         <label>Exam</label>
         <select class="ui fluid selection dropdown" formControlName="exam" (change)="onExamChange($event)" id="exam">
@@ -20,6 +20,10 @@
           </option>
         </select>
       </div>
+      <div class="ui field">
+        <label>Total Mark</label>
+        <input placeholder="e.g. 100" formControlName="total_mark" type="number">
+      </div>
     </div>
     <div class="ui three fields">
       <div class="ui required field">
@@ -31,32 +35,6 @@
             {{ class.name }}
           </option>
         </select>
-      </div>
-      <div class="ui required field">
-        <mat-form-field>
-          <input matInput [matDatepicker]="start_picker" placeholder="Choose date of exam paper"
-                 formControlName="start" class="mat-input">
-          <mat-datepicker-toggle matSuffix [for]="start_picker"></mat-datepicker-toggle>
-          <mat-datepicker #start_picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="ui required field">
-        <label>Duration</label>
-        <div class="two fields">
-          <div class="ui field">
-            <input placeholder="Hours" type="number" formControlName="duration_h" min="0">
-          </div>
-          <div class="ui field">
-            <input placeholder="Minutes" type="number" min="0" max="59"
-                   formControlName="duration_m" (change)="setMinutes($event)">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="three fields">
-      <div class="ui field">
-        <label>Total Mark</label>
-        <input placeholder="e.g. 100" formControlName="total_mark" type="number">
       </div>
       <div class="ui field">
         <label>PDF</label>
@@ -71,9 +49,54 @@
         </select>
       </div>
     </div>
+
+    <div class="ui three fields">
+      <div class="ui required field">
+        <mat-form-field>
+          <input matInput [matDatepicker]="start_picker" placeholder="Choose date of exam paper"
+                 formControlName="start" class="mat-input">
+          <mat-datepicker-toggle matSuffix [for]="start_picker"></mat-datepicker-toggle>
+          <mat-datepicker #start_picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="ui field">
+        <label>Start Time</label>
+        <div class="ui three fields">
+          <div class="ui field">
+            <input type="number" min="1" max="12" placeholder="HH" formControlName="time_hour">
+          </div>
+
+          <div class="ui field">
+            <input type="number" min="00" max="59" placeholder="MM" formControlName="time_minute">
+          </div>
+
+          <div class="ui field">
+            <select class="ui selection dropdown" formControlName="time_period">
+              <option value="1">AM</option>
+              <option value="2">PM</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui required field">
+        <label>Duration</label>
+        <div class="ui two fields">
+          <div class="ui field">
+            <input placeholder="Hours" type="number" formControlName="duration_hours" min="0">
+          </div>
+          <div class="ui field">
+            <input placeholder="Minutes" type="number" min="0" max="59"
+                   formControlName="duration_minutes" (change)="setMinutes($event)">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="ui fields">
       <div class="ui field">
-        <div class="ui primary labeled icon button" (click)="savePaper()">
+        <div class="ui primary labeled icon button" (click)="savePaper($event)">
           <i class="icon save"></i>
           Save
         </div>
