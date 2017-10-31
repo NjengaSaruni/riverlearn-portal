@@ -31,3 +31,10 @@ export class Color {
   name: string;
   hex: string;
 }
+
+export class UserError {
+  id: number;
+  title: string;
+  message: string;
+  active: boolean;
+}

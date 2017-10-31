@@ -31,7 +31,6 @@ const examRoutes: Routes = [
 ];
 
 
-
 export const examRoutingModule: ModuleWithProviders = RouterModule.forChild(examRoutes);
 export const examComponents = [
   ExamResultsComponent,

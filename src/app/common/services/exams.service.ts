@@ -59,7 +59,7 @@ export class ExamService extends CommonService {
     let input = new FormData();
     input.append('exam', exam);
     input.append('subject', subject);
-    input.append('start_time', start_time);
+    input.append('start', start_time);
     input.append('duration', duration);
     input.append('total_mark', total_mark);
     input.append('classes', classes);

@@ -40,8 +40,7 @@ import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
 ],
   providers: [
     ExamService,
-    AdminGuard,
-    MatIconRegistry
+    AdminGuard
   ],
   declarations: [
     examComponents,

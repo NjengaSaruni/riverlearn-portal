@@ -9,6 +9,7 @@ import {Exam} from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, ClassRoom, InstitutionSubject} from "../../common/models/divisions.models";
 import {MatSnackBar} from "@angular/material";
+import {UserError} from "../../common/models/common.models";
 
 declare var $: any;
 
@@ -19,13 +20,13 @@ declare var $: any;
   outputs: ['onSavePaper']
 })
 export class ExamPaperFormComponent implements OnInit {
+  errors: UserError[] = [];
   classRooms: ClassRoom[];
   allClasses: Class[];
   classes: Class[];
   subjects: InstitutionSubject[];
   exams: Exam[];
 
-  protected selectedDate: Date;
   protected paperForm: FormGroup;
   @ViewChild('fileInput') fileInput : any;
   private selectedExam: Exam;
@@ -55,7 +56,7 @@ export class ExamPaperFormComponent implements OnInit {
       exam: [[], Validators.required],
       classes: [[], Validators.required],
       subject: ['', Validators.required],
-      start: [new Date(), Validators.required],
+      start: ['', Validators.required],
       time_hour: [''],
       time_minute: [''],
       time_period: [''],
@@ -129,10 +130,18 @@ export class ExamPaperFormComponent implements OnInit {
     let exam = this.paperForm.get('exam').value;
     let classes = this.paperForm.get('classes').value;
     let subject = this.paperForm.get('subject').value;
-    let start = new Date(this.paperForm.get('start').value);
-    console.log(start);
+    let start: Date = this.paperForm.get('start').value;
+
     let time_hour = +this.paperForm.get('time_hour').value;
     let time_minute = +this.paperForm.get('time_minute').value;
+    let time_period = +this.paperForm.get('time_period').value;
+
+    if(time_period == 2) {
+      time_hour+=12;
+    }
+
+    start.setHours(time_hour, time_minute);
+
     let duration = this.paperForm.get('duration_hours').value + ':' + this.paperForm.get('duration_minutes').value + ':00';
     let total_mark = this.paperForm.get('total_mark').value;
     let location = this.paperForm.get('location').value;
@@ -143,10 +152,10 @@ export class ExamPaperFormComponent implements OnInit {
       url = fi.files[0];
     }
 
-    /*this.examService.createExamPaper(
+    this.examService.createExamPaper(
       exam,
       subject,
-      start,
+      start.toISOString(),
       duration,
       total_mark,
       classes,
@@ -157,7 +166,7 @@ export class ExamPaperFormComponent implements OnInit {
         this.onSavePaper.emit(event);
       },
         error => this.openSnackBar(error, 10000)
-    )*/
+    )
   }
 
   openSnackBar(message? : string, duration: number = 3000) {
@@ -166,4 +175,12 @@ export class ExamPaperFormComponent implements OnInit {
     });
   }
 
+  checkTime(): void {
+      if(this.paperForm.get('time_hour').value > 12) {
+        this.paperForm.patchValue({time_hour: "1"});
+      }
+      else if(this.paperForm.get('time_hour').value > 59) {
+        this.paperForm.patchValue({time_minute: "1"});
+      }
+  }
 }

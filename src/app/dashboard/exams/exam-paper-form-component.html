@@ -63,11 +63,13 @@
       <div class="ui field">
         <label>Start Time</label>
         <div class="ui three fields">
-          <div class="ui field">
-            <input type="number" min="1" max="12" placeholder="HH" formControlName="time_hour">
+          <div class="ui field"
+               [ngClass]="{ 'error' : paperForm.get('time_hour').value > 12 || paperForm.get('time_hour').value < 1}">
+            <input type="number" min="1" max="12" placeholder="HH" formControlName="time_hour" (keydown)="checkTime()">
           </div>
 
-          <div class="ui field">
+          <div class="ui field"
+               [ngClass]="{ 'error' : paperForm.get('time_minute').value > 59 || paperForm.get('time_minute').value < 0 }">
             <input type="number" min="00" max="59" placeholder="MM" formControlName="time_minute">
           </div>
 
@@ -103,4 +105,9 @@
       </div>
     </div>
   </form>
+  <div class="ui red message" *ngIf="errors.length > 0">
+    <div class="content">
+      <p *ngFor="let error of errors">{{ error }}</p>
+    </div>
+  </div>
 </div>
