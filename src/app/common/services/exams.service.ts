@@ -3,14 +3,13 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response } from '@angular/http';
+import {Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
-import {CommonService, extractData, handleError, localUrl, onlineUrl, useLocal} from './common.service';
-import {Level} from '../models/divisions.models';
+import {CommonService} from './common.service';
 import {Exam, ExamPaper, Result} from '../models/exams.models';
 import {Subject} from '../models/common.models';
 import DateTimeFormat = Intl.DateTimeFormat;
@@ -51,10 +50,9 @@ export class ExamService extends CommonService {
     start_time: string = null,
     duration: string = null,
     total_mark: string = null,
-    classes = null,
     csv_file: any = null,
     location: string = null
-  ): Observable<Response> {
+  ): Observable<ExamPaper> {
 
     let input = new FormData();
     input.append('exam', exam);
@@ -62,11 +60,16 @@ export class ExamService extends CommonService {
     input.append('start', start_time);
     input.append('duration', duration);
     input.append('total_mark', total_mark);
-    input.append('classes', classes);
     input.append('url', csv_file);
     input.append('location', location);
 
     return this.makeRequest(this.examPapersUrl,'POST' , input);
+
+  }
+
+  patchExamPaper(paper: string, classes?: string[]){
+    paper += '/';
+    return this.makeRequest(this.examPapersUrl + paper, 'PATCH', {classes})
   }
 
   getExamPaper(id: string): Observable<ExamPaper> {
@@ -74,8 +77,10 @@ export class ExamService extends CommonService {
     return this.makeRequest(this.examPapersUrl + id, 'GET');
   }
 
-  getExams(): Observable<Exam[]> {
-    return this.makeRequest(this.examsUrl, 'GET');
+  getExams(q: string = null): Observable<Exam[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', q);
+    return this.makeRequest(this.examsUrl, 'GET', null, params);
   }
 
   createExam(

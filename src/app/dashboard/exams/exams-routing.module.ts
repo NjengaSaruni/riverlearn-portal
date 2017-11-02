@@ -10,6 +10,7 @@ import {ExamSchedulesComponent} from './exam-schedules.component';
 import {ExamScheduleFormComponent} from './exam-schedule-form.component';
 import {ExamResultsComponent} from "./exam-results-component";
 import {ExamPaperFormComponent} from "./exam-paper-form-component";
+import {ExamResultsFormComponent} from "./exam-results-form.component";
 
 
 const examRoutes: Routes = [
@@ -23,6 +24,7 @@ const examRoutes: Routes = [
           { path: 'schedules', component: ExamSchedulesComponent },
           { path: 'add', component: ExamScheduleFormComponent },
           { path: 'results', component: ExamResultsComponent },
+          { path: 'submit', component: ExamResultsFormComponent},
           { path: '', redirectTo: '/dashboard/exams/schedules', pathMatch: 'full' },
         ]
       }
@@ -33,9 +35,10 @@ const examRoutes: Routes = [
 
 export const examRoutingModule: ModuleWithProviders = RouterModule.forChild(examRoutes);
 export const examComponents = [
+  ExamPaperFormComponent,
   ExamResultsComponent,
+  ExamResultsFormComponent,
   ExamScheduleFormComponent,
   ExamSchedulesComponent,
-  ExamsComponent,
-  ExamPaperFormComponent
+  ExamsComponent
 ];

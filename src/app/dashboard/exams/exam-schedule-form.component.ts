@@ -2,7 +2,7 @@
  * Created by saruni on 10/5/17.
  */
 
-import {Component,  OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Exam} from '../../common/models/exams.models';
 import {ExamService} from '../../common/services/exams.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -15,7 +15,8 @@ declare var $: any;
 @Component({
   selector: 'exam-schedule-form',
   templateUrl: './exam-schedule-form.component.html',
-  styleUrls: ['./exam-schedule-form.component.css' ]
+  styleUrls: ['./exam-schedule-form.component.css' ],
+  outputs: ['onSaveSchedule']
 })
 
 export class ExamScheduleFormComponent implements OnInit {
@@ -31,6 +32,8 @@ export class ExamScheduleFormComponent implements OnInit {
   protected bufferValue = 75;
 
   protected errors: string[];
+
+  onSaveSchedule = new EventEmitter<boolean>();
 
   constructor(
     private divisionService: DivisionService,
@@ -106,6 +109,7 @@ export class ExamScheduleFormComponent implements OnInit {
       .subscribe(
         exam => {
           this.openSnackBar("Exam cycle saved", 2000);
+          this.onSaveSchedule.emit(event);
           this.savingExamCycle = false;
         },
         error => alert(error)

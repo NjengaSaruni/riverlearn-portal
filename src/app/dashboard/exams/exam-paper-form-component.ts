@@ -152,21 +152,26 @@ export class ExamPaperFormComponent implements OnInit {
       url = fi.files[0];
     }
 
+
+    // TODO Ensure paper in proper time frame
     this.examService.createExamPaper(
       exam,
       subject,
       start.toISOString(),
       duration,
       total_mark,
-      classes,
       url,
       location).subscribe(
       paper => {
         this.openSnackBar("Paper saved successfully!!");
         this.onSavePaper.emit(event);
+        this.examService.patchExamPaper(paper.id, classes)
+          .subscribe()
       },
         error => this.openSnackBar(error, 10000)
     )
+
+    // TODO: ensure time for exam paper in exam period
   }
 
   openSnackBar(message? : string, duration: number = 3000) {

@@ -13,11 +13,10 @@ import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_
 import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxchart';
 import { jqxDateTimeInputComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxdatetimeinput';
 import {
-  MatCardModule,
-  MatDatepickerModule, MatFormFieldModule, MatIconModule, MatIconRegistry, MatInputModule, MatListModule,
+  MatDatepickerModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatNativeDateModule,
   MatProgressBarModule,
-  MatSnackBarModule, MatTabsModule
+  MatSnackBarModule, MatStepperModule, MatTabsModule,
 } from "@angular/material";
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
 
@@ -27,16 +26,16 @@ import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
     FormsModule,
     ReactiveFormsModule,
     examRoutingModule,
-    MatCardModule,
     MatDatepickerModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
     MatNativeDateModule,
     MatProgressBarModule,
     MatSnackBarModule,
     MatTabsModule,
+    MatStepperModule
 ],
   providers: [
     ExamService,

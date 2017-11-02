@@ -15,7 +15,6 @@ import {
   Teacher
 } from '../models/divisions.models';
 import {User} from '../models/users.models';
-import {Subject} from '../models/common.models';
 
 @Injectable()
 export class DivisionService extends CommonService {

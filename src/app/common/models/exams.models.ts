@@ -1,10 +1,9 @@
-import {_Comment, AbstractBase, Subject} from './common.models';
-import {ClassRoom, Level, Student} from './divisions.models';
-import {File} from "./uploads.models";
-
 /**
  * Created by saruni on 8/13/17.
  */
+
+import {_Comment, AbstractBase, Subject} from './common.models';
+import {Class, ClassRoom, Level, Student} from './divisions.models';
 
 export class Exam extends AbstractBase {
   name: string;
@@ -12,7 +11,7 @@ export class Exam extends AbstractBase {
   class_levels: Level[];
   notes: string;
   start_date: Date;
-  end_date = Date;
+  end_date: Date;
   done: boolean;
   selected: boolean;
   papers: ExamPaper[];
@@ -27,6 +26,7 @@ export class ExamPaper extends AbstractBase {
   total_mark: number;
   url: string;
   location: ClassRoom;
+  classes: Class;
 }
 
 export class StudentPaperPerformance extends AbstractBase{

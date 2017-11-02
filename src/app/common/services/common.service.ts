@@ -22,6 +22,11 @@ import {Color, Subject} from '../models/common.models';
 export const localUrl = 'http://0.0.0.0:8001/api/v1/';
 export const onlineUrl = 'http://35.187.38.114:8000/api/v1/';
 export const useLocal = true;
+export const color = 'primary';
+export const mode = 'indeterminate';
+export const value = 50;
+export const bufferValue = 75;
+
 
 export function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -84,6 +89,7 @@ export class CommonService {
       if (method == 'GET') {
         let options = new RequestOptions({ headers: this.headers });
         options.params = params;
+        console.log(options.params);
           return this._http.get(url, options)
             .map(extractData)
             .catch(handleError);

@@ -1,0 +1,67 @@
+
+<div class="ui dividing header">
+  <div class="ui right aligned category fluid search">
+    <div class="ui icon input">
+      <input class="fluid" type="text" placeholder="Search and select recent exams..." (keydown)="getExams($event)">
+      <i class="search icon"></i>
+    </div>
+    <div class="results"></div>
+  </div>
+</div>
+<div class="ui inverted active dimmer" *ngIf="!contentReady">
+  <mat-progress-bar
+    class="example-margin"
+    [color]="color"
+    [mode]="mode"
+    [value]="value"
+    [bufferValue]="bufferValue">
+  </mat-progress-bar>
+</div>
+
+
+<div class="ui long modal" id="results-modal">
+  <div class="ui blue message">
+    <div class="ui massive header">
+      {{ selectedExam?.name }}
+    </div>
+    <div class="ui header">
+      Select paper below
+    </div>
+  </div>
+</div>
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel hideToggle="true" *ngFor="let exam of exams">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ exam.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        FROM {{ exam.start_date | date }} TO {{ exam.end_date | date}}
+        <mat-icon>folder</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="list">
+      <div class="item" *ngFor="let paper of exam.papers" (click)="selectPaper(paper)">
+        <div class="ui header">
+          <i class="file icon"></i>
+          {{ paper.subject.name }}
+        </div>
+
+        <div class="content">
+          <div class="header" *ngFor="let class of paper.classes"> {{ class.name }}</div>
+        </div>
+      </div>
+    </div>
+
+    <mat-action-row>
+      <button mat-button color="primary" >Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+
+</mat-accordion>
+
+
+

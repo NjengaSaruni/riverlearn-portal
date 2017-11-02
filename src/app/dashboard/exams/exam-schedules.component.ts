@@ -6,8 +6,7 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import {ExamService} from '../../common/services/exams.service';
 import {Exam, ExamPaper} from '../../common/models/exams.models';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
-import {MatIconRegistry, MatSnackBar} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import { MatSnackBar} from "@angular/material";
 
 declare var $: any;
 
@@ -125,6 +124,9 @@ export class ExamSchedulesComponent implements OnInit {
   }
 
   onSelectExam(event: any, selected_exam: Exam): void {
+    $(event.target).transition('pulse');
+    $('.twelve.wide.stretched.column').transition('slide right');
+    $('.twelve.wide.stretched.column').transition('slide left');
     this.exams.find(exam => exam.id == selected_exam.id).selected = true;
     this.selectedExam = this.exams.find(exam => exam.id == selected_exam.id);
 
@@ -139,6 +141,11 @@ export class ExamSchedulesComponent implements OnInit {
   onPaperSaved(event: any) {
     this.getExamPapers();
     $('#new-exam-paper-modal').modal('hide');
+  }
+
+  onScheduleSaved(event: any) {
+    this.getExams();
+    $('#new-exam-cycle-modal').modal('hide');
   }
 
   pdfExportClick(): void {
