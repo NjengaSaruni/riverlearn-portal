@@ -89,7 +89,6 @@ export class CommonService {
       if (method == 'GET') {
         let options = new RequestOptions({ headers: this.headers });
         options.params = params;
-        console.log(options.params);
           return this._http.get(url, options)
             .map(extractData)
             .catch(handleError);

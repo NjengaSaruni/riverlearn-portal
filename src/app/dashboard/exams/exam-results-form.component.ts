@@ -10,7 +10,7 @@ import {MatSnackBar} from "@angular/material";
 import {ExamService} from "../../common/services/exams.service";
 import {Exam, ExamPaper} from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
-import {Student} from "../../common/models/divisions.models";
+import {Class, Student} from "../../common/models/divisions.models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 declare var $: any;
@@ -33,6 +33,7 @@ export class ExamResultsFormComponent implements OnInit {
   protected value = 50;
   protected bufferValue = 75;
   protected selectedPaper: ExamPaper;
+  protected selectedClass: Class;
 
   constructor(
     private userService: UserService,
@@ -142,9 +143,15 @@ export class ExamResultsFormComponent implements OnInit {
       )
   }
 
-  selectPaper(paper: ExamPaper): void {
+  selectPaper(paper: ExamPaper, _class: Class): void {
     this.selectedPaper = paper;
+    this.selectedClass = _class;
 
+    this.divisionService.getClass(this.selectedClass.id)
+      .subscribe(
+        cls => this.selectedClass = cls,
+        error => this.openSnackBar(error)
+      );
     $('#results-modal').modal('show')
   }
 

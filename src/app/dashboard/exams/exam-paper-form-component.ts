@@ -108,6 +108,7 @@ export class ExamPaperFormComponent implements OnInit {
   }
 
   onExamChange(event: any){
+    // FIXME Proper classes in the class select control
     this.paperForm.patchValue({classes: []});
 
     $('#classes').dropdown('clear');

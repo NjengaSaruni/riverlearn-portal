@@ -24,6 +24,7 @@ export class Class extends AbstractBase
   level: Level;
   stream: Stream;
   class_teacher: Teacher;
+  students: Student[];
   year: number;
 }
 

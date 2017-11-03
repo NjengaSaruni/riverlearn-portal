@@ -113,7 +113,8 @@ export class ExamSchedulesComponent implements OnInit {
     let appointment = {
       'id' : paper.id,
       'location': paper.location.name,
-      'subject': paper.subject.name,
+      'subject': paper.exam.name + ' : ' + paper.subject.name,
+      'class': paper.subject.name,
       'start': paper.start,
       'end': paper.end,
       'style': 'dark'
@@ -180,7 +181,7 @@ export class ExamSchedulesComponent implements OnInit {
       description: 'description',
       location: 'location',
       subject: 'subject',
-      resourceId: 'subject'
+      resourceId: 'class'
     };
   resources: any =
     {

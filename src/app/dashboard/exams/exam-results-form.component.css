@@ -1,6 +1,5 @@
 .mat-form-field {
   border: none !important;
-
   color: #0e5a77;
   width: 100%;
 }
@@ -23,9 +22,19 @@
 .icon.message {
   cursor: pointer;
 }
+
+.ui.icon.message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 95%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
 .icon.message:hover  {
   background-color: #F3F4F5;
-  color: #cd9a36 !important;
+  color: #0e5a77 !important;
 }
 .ui.icon.input {
   min-width: -webkit-fill-available;
