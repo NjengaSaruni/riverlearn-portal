@@ -13,6 +13,7 @@ import { InstitutionService } from './common/services/institutions.service';
 import {CommonService} from './common/services/common.service';
 import {DivisionService} from './common/services/divisions.service';
 import {AuthGuard} from './common/services/auth-guard.service';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {AuthGuard} from './common/services/auth-guard.service';
     FormsModule, // <-- import the FormsModule before binding with [(ngModel)]
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     JsonpModule,
     AppRoutingModule
   ],

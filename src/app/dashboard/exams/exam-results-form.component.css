@@ -20,12 +20,12 @@
   padding: 10px;
 }
 
-.item {
-  padding: 4px;
+.icon.message {
   cursor: pointer;
 }
-.item:hover  {
+.icon.message:hover  {
   background-color: #F3F4F5;
+  color: #cd9a36 !important;
 }
 .ui.icon.input {
   min-width: -webkit-fill-available;
