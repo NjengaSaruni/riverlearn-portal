@@ -19,6 +19,7 @@ import {
   MatSnackBarModule, MatStepperModule, MatTabsModule,
 } from "@angular/material";
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
+import {HotTableModule} from "angular-handsontable";
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
     MatProgressBarModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatStepperModule
+    MatStepperModule,
+    HotTableModule
 ],
   providers: [
     ExamService,

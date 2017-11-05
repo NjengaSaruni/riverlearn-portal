@@ -37,7 +37,26 @@
   color: #0e5a77 !important;
 }
 .ui.icon.input {
-  min-width: -webkit-fill-available;
+  min-width: stretch;
 }
 
 
+.ui.statistics > .statistic {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 0em 1.5em 0.5em;
+  max-width: auto;
+}
+
+.wtHolder {
+  width: inherit;
+  height: inherit;
+}

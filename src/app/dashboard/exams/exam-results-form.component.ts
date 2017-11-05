@@ -12,6 +12,7 @@ import {Exam, ExamPaper} from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, Student} from "../../common/models/divisions.models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {HotRegisterer} from "angular-handsontable";
 
 declare var $: any;
 
@@ -21,6 +22,7 @@ declare var $: any;
 })
 export class ExamResultsFormComponent implements OnInit {
   contentReady: boolean;
+  studentsReady: boolean;
   filteredExams: Exam[];
   students: Student[];
   papers: ExamPaper[];
@@ -35,19 +37,37 @@ export class ExamResultsFormComponent implements OnInit {
   protected selectedPaper: ExamPaper;
   protected selectedClass: Class;
 
+  instance: string = "hotInstance";
+  coordX: string;
+  coordY: string;
+  newValue: string;
+
+  data: any[];
+
+  columns: object[] = [
+    {data: 'user.full_name', title: 'Name', width: 200},
+    {data: 'current_class.name', title: 'Class', width: 100}
+  ];
+
+  settings: object = {
+    afterLoadData: (firstLoad) => {
+      if(!firstLoad) {
+        this.isLoading = false;
+      }
+    },
+  };
+
+  isLoading: boolean = false;
+
   constructor(
     private userService: UserService,
     private examService: ExamService,
     private divisionService: DivisionService,
     private titleService: Title,
     private formBuilder: FormBuilder,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private _hotRegisterer: HotRegisterer
   ) {}
-
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-
 
   public ngOnInit(){
     this.titleService.setTitle("Examinations | Results Form");
@@ -60,13 +80,6 @@ export class ExamResultsFormComponent implements OnInit {
 
     this.getStudents();
     this.getExams();
-
-    this.firstFormGroup = this.formBuilder.group({
-      exam: ['', Validators.required]
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
 
     $(document).ready(function () {
       $('.ui.search')
@@ -143,26 +156,69 @@ export class ExamResultsFormComponent implements OnInit {
       )
   }
 
-  selectPaper(paper: ExamPaper, _class: Class): void {
+  selectPaper(paper: ExamPaper, exam: Exam, _class: Class): void {
+    this.isLoading = true;
     this.selectedPaper = paper;
-    this.selectedClass = _class;
+    this.selectedClass = null;
+    this.selectedExam = exam;
 
-    this.divisionService.getClass(this.selectedClass.id)
+    this.divisionService.getClass(_class.id)
       .subscribe(
-        cls => this.selectedClass = cls,
+        cls => {
+          this.studentsReady = true;
+          this.data = cls.students,
+          this.selectedClass = cls;
+        },
         error => this.openSnackBar(error)
       );
     $('#results-modal').modal('show')
   }
 
-  filterExams(event: any): void {
-    let q = this.resultForm.get('exam').value;
-    console.log(q);
-    this.examService.getExams(q)
-      .subscribe(
-        exams => this.filteredExams = exams,
-        error => this.openSnackBar(error)
-      )
+  selectCell($event) {
+    const x = parseInt(this.coordX, 10);
+    const y = parseInt(this.coordY, 10);
+    const hot = this._hotRegisterer.getInstance(this.instance);
+
+    if (isNaN(x) || isNaN(y)) {
+      hot.deselectCell();
+      return false;
+    }
+
+    if (hot.selectCell(y, x)) {
+      $event.target.focus();
+
+    } else {
+      hot.deselectCell();
+    }
+
+    hot.unlisten();
+  }
+
+  changeValue($event) {
+    const x = parseInt(this.coordX, 10);
+    const y = parseInt(this.coordY, 10);
+
+    if (isNaN(x) || isNaN(y)) {
+      return false;
+    }
+
+    const hot = this._hotRegisterer.getInstance(this.instance);
+
+    hot.setDataAtCell(y, x, $event.target.value);
+  }
+
+  syncSelection() {
+    const hot = this._hotRegisterer.getInstance(this.instance);
+    [this.coordY, this.coordX] = hot.getSelected();
+    const x = parseInt(this.coordX, 10);
+    const y = parseInt(this.coordY, 10);
+
+    this.newValue = hot.getDataAtCell(y, x);
+  }
+
+  addNewColumn($event) {
+    const hot = this._hotRegisterer.getInstance(this.instance);
+    hot.alter('insert_col', 10);
   }
 }
 

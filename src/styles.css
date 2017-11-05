@@ -1,6 +1,6 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 /*@import "https://fonts.googleapis.com/icon?family=Material+Icons";*/
-
+@import '~handsontable/dist/handsontable.full.css';
 body,
 html {
   font-size: 100%;
