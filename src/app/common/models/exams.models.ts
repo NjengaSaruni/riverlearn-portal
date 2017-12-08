@@ -29,13 +29,31 @@ export class ExamPaper extends AbstractBase {
   classes: Class;
 }
 
+export class Grade extends AbstractBase {
+  name: string;
+  ceiling: number;
+  floor: number;
+}
+
 export class StudentPaperPerformance extends AbstractBase{
   student: Student;
   paper: ExamPaper;
   mark: number;
+  grade: Grade;
+  class_performance: ClassExamPaperPerformance;
+  comments: _Comment[];
 }
 
-export class Result extends AbstractBase {
-  student_paper_performances: StudentPaperPerformance[];
+export class ClassExamPaperPerformance extends AbstractBase {
+  class_result: ClassExamResult;
+  paper: ExamPaper;
+  comments: _Comment[];
+  student_performances: StudentPaperPerformance[];
+}
+
+export class ClassExamResult extends AbstractBase {
+  exam: Exam;
+  _class: Class;
+  paper_performances: ClassExamPaperPerformance[];
   comments: _Comment[];
 }

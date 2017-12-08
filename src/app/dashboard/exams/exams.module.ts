@@ -20,6 +20,7 @@ import {
 } from "@angular/material";
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
 import {HotTableModule} from "angular-handsontable";
+import {AngularEchartsModule} from "ngx-echarts";
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {HotTableModule} from "angular-handsontable";
     FormsModule,
     ReactiveFormsModule,
     examRoutingModule,
+    AngularEchartsModule,
     MatDatepickerModule,
     MatExpansionModule,
     MatFormFieldModule,

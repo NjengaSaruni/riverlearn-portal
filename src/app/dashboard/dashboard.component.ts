@@ -6,9 +6,8 @@ import {Component, OnChanges, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../common/services/user.service';
 import {JoinRequest, User} from '../common/models/users.models';
-import {CommonService, delay, JwtHelper} from '../common/services/common.service';
 import {Class, Parent, Student, Teacher} from '../common/models/divisions.models';
-import {Exam, ExamPaper, Result} from '../common/models/exams.models';
+import {ClassExamResult, Exam, ExamPaper} from '../common/models/exams.models';
 import {DivisionService} from '../common/services/divisions.service';
 import {ExamService} from '../common/services/exams.service';
 import {Title} from '@angular/platform-browser';
@@ -27,7 +26,7 @@ export class DashboardComponent implements OnInit, OnChanges {
   private teachers: Teacher[];
   private exams: Exam[];
   private examPapers: ExamPaper[];
-  private examResults: Result[];
+  private examResults: ClassExamResult[];
 
   private request: JoinRequest;
   private requests: JoinRequest[];

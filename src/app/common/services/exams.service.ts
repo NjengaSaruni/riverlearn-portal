@@ -10,7 +10,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {CommonService} from './common.service';
-import {Exam, ExamPaper, Result} from '../models/exams.models';
+import {ClassExamPaperPerformance, ClassExamResult, Exam, ExamPaper} from '../models/exams.models';
 import {Subject} from '../models/common.models';
 import DateTimeFormat = Intl.DateTimeFormat;
 
@@ -18,10 +18,15 @@ import DateTimeFormat = Intl.DateTimeFormat;
 export class ExamService extends CommonService {
   private examsUrl = 'exams/';
   private examPapersUrl = this.examsUrl + 'papers/';
-  private examResultsUrl = this.examsUrl + 'papers/';
+  private examResultsUrl = this.examsUrl + 'results/';
+  private classPaperPerformancesUrl = this.examsUrl + 'class_paper_performances/';
 
-  getExamResults(): Observable<Result[]> {
-    return this.makeRequest(this.examResultsUrl, 'GET')
+  getExamResults(exam?: string, _class?: string, q?: string): Observable<ClassExamResult[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', q);
+    params.set('_class', _class);
+    params.set('exam', exam);
+    return this.makeRequest(this.examResultsUrl, 'GET', null, params)
   }
 
   createExamResult(
@@ -35,7 +40,7 @@ export class ExamService extends CommonService {
     return this.makeRequest(this.examResultsUrl,'POST' ,{exam, subject, start_time, duration, total_mark, csv_file});
   }
 
-  getExamResult(id: string): Observable<Result> {
+  getExamResult(id: string): Observable<ClassExamResult> {
     id += '/';
     return this.makeRequest(this.examResultsUrl + id, 'GET')
   }
@@ -96,6 +101,19 @@ export class ExamService extends CommonService {
   getExam(id: string): Observable<Exam> {
     id += '/';
     return this.makeRequest(this.examsUrl + id, 'GET');
+  }
+
+
+  getClassExamPaperPerformances(paper: string = null, q: string = null): Observable<ClassExamPaperPerformance[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', q);
+    params.set('paper', paper);
+    return this.makeRequest(this.classPaperPerformancesUrl, 'GET', null, params);
+  }
+
+  getClassExamPaperPerformance(id: string): Observable<ClassExamPaperPerformance> {
+    id += '/';
+    return this.makeRequest(this.classPaperPerformancesUrl + id, 'GET');
   }
 }
 

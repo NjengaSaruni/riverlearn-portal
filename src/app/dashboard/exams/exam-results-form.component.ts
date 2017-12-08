@@ -8,11 +8,12 @@ import {User} from '../../common/models/users.models';
 import {UserService} from '../../common/services/user.service';
 import {MatSnackBar} from "@angular/material";
 import {ExamService} from "../../common/services/exams.service";
-import {Exam, ExamPaper} from "../../common/models/exams.models";
+import {ClassExamResult, Exam, ExamPaper} from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, Student} from "../../common/models/divisions.models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HotRegisterer} from "angular-handsontable";
+import {genData} from "./data";
 
 declare var $: any;
 
@@ -21,9 +22,9 @@ declare var $: any;
   styleUrls: ['./exam-results-form.component.css']
 })
 export class ExamResultsFormComponent implements OnInit {
+  result: ClassExamResult;
   contentReady: boolean;
   studentsReady: boolean;
-  filteredExams: Exam[];
   students: Student[];
   papers: ExamPaper[];
   exams: Exam[];
@@ -37,17 +38,14 @@ export class ExamResultsFormComponent implements OnInit {
   protected selectedPaper: ExamPaper;
   protected selectedClass: Class;
 
+  title = "Student's Name";
+
   instance: string = "hotInstance";
   coordX: string;
   coordY: string;
   newValue: string;
 
-  data: any[];
-
-  columns: object[] = [
-    {data: 'user.full_name', title: 'Name', width: 200},
-    {data: 'current_class.name', title: 'Class', width: 100}
-  ];
+  data: any[] = genData();
 
   settings: object = {
     afterLoadData: (firstLoad) => {
@@ -82,20 +80,6 @@ export class ExamResultsFormComponent implements OnInit {
     this.getExams();
 
     $(document).ready(function () {
-      $('.ui.search')
-        .search({
-          apiSettings: {
-            url: '//api.github.com/search/repositories?q={query}'
-          },
-          fields: {
-            results : 'items',
-            title   : 'name',
-            url     : 'html_url'
-          },
-          minCharacters : 3
-        })
-      ;
-
       $('.ui.dropdown').dropdown();
 
       $('.ui.accordion').accordion();
@@ -156,21 +140,22 @@ export class ExamResultsFormComponent implements OnInit {
       )
   }
 
-  selectPaper(paper: ExamPaper, exam: Exam, _class: Class): void {
+  selectExam(paper: ExamPaper, exam: Exam, _class: Class): void {
+    this.data = null;
+    this.studentsReady = false;
     this.isLoading = true;
     this.selectedPaper = paper;
-    this.selectedClass = null;
     this.selectedExam = exam;
 
-    this.divisionService.getClass(_class.id)
+    this.examService.getExamResults(exam.id)
       .subscribe(
-        cls => {
+        results => {
+          this.result = results[0];
           this.studentsReady = true;
-          this.data = cls.students,
-          this.selectedClass = cls;
         },
         error => this.openSnackBar(error)
       );
+
     $('#results-modal').modal('show')
   }
 

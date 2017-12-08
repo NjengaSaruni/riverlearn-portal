@@ -28,6 +28,7 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/jqwidgets-framework/jqwidgets/jqx-all.js",
+        "../node_modules/echarts/dist/echarts.min.js",
         "semantic/dist/semantic.js",
         "../node_modules/semantic-ui-calendar/dist/calendar.js",
         "time_circles.js",

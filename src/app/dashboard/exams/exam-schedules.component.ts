@@ -113,7 +113,7 @@ export class ExamSchedulesComponent implements OnInit {
     let appointment = {
       'id' : paper.id,
       'location': paper.location.name,
-      'subject': paper.exam.name + ' : ' + paper.subject.name,
+      'subject': paper.subject.name,
       'class': paper.subject.name,
       'start': paper.start,
       'end': paper.end,
@@ -126,8 +126,7 @@ export class ExamSchedulesComponent implements OnInit {
 
   onSelectExam(event: any, selected_exam: Exam): void {
     $(event.target).transition('pulse');
-    $('.twelve.wide.stretched.column').transition('slide right');
-    $('.twelve.wide.stretched.column').transition('slide left');
+    $('.twelve.wide.stretched.column').transition('slide left').transition('slide down');
     this.exams.find(exam => exam.id == selected_exam.id).selected = true;
     this.selectedExam = this.exams.find(exam => exam.id == selected_exam.id);
 

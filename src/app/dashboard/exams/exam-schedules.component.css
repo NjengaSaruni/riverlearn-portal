@@ -17,3 +17,18 @@
 .active {
   color: #0e5a77 !important;
 }
+
+.mat-tab-label {
+  height: 80px !important;
+  padding: 0 24px;
+  cursor: pointer;
+  box-sizing: border-box;
+  opacity: inherit;
+  min-width: 160px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+}
