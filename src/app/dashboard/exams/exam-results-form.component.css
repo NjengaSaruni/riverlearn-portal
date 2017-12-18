@@ -60,3 +60,13 @@
   width: inherit;
   height: inherit;
 }
+
+
+/*#results-modal {*/
+  /*position: fixed;*/
+  /*top: 150px !important;*/
+/*}*/
+
+.mat-field {
+  border: none !important;
+}

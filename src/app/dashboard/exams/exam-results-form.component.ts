@@ -8,7 +8,10 @@ import {User} from '../../common/models/users.models';
 import {UserService} from '../../common/services/user.service';
 import {MatSnackBar} from "@angular/material";
 import {ExamService} from "../../common/services/exams.service";
-import {ClassExamResult, Exam, ExamPaper} from "../../common/models/exams.models";
+import {
+  ClassExamPaperPerformance, ClassExamResult, Exam, ExamPaper,
+  StudentPaperPerformance
+} from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, Student} from "../../common/models/divisions.models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -22,6 +25,7 @@ declare var $: any;
   styleUrls: ['./exam-results-form.component.css']
 })
 export class ExamResultsFormComponent implements OnInit {
+  classPaperPerformance: ClassExamPaperPerformance;
   result: ClassExamResult;
   contentReady: boolean;
   studentsReady: boolean;
@@ -37,6 +41,10 @@ export class ExamResultsFormComponent implements OnInit {
   protected bufferValue = 75;
   protected selectedPaper: ExamPaper;
   protected selectedClass: Class;
+  protected results = [];
+
+  protected workingTotal: number = 0;
+  protected workingMean: number = 0;
 
   title = "Student's Name";
 
@@ -56,6 +64,7 @@ export class ExamResultsFormComponent implements OnInit {
   };
 
   isLoading: boolean = false;
+  selectedStudent: Student;
 
   constructor(
     private userService: UserService,
@@ -141,11 +150,25 @@ export class ExamResultsFormComponent implements OnInit {
   }
 
   selectExam(paper: ExamPaper, exam: Exam, _class: Class): void {
-    this.data = null;
+    this.workingTotal = 0;
+    this.workingMean = 0;
     this.studentsReady = false;
     this.isLoading = true;
-    this.selectedPaper = paper;
-    this.selectedExam = exam;
+    this.divisionService.getClass(_class.id)
+      .subscribe(
+        exam => this.selectedClass = exam,
+        error => this.openSnackBar(error),
+      );
+    this.examService.getExam(exam.id)
+      .subscribe(
+        exam => this.selectedExam = exam,
+        error => this.openSnackBar(error)
+      );
+    this.examService.getExamPaper(paper.id)
+      .subscribe(
+        paper => this.selectedPaper = paper,
+        error => this.openSnackBar(error)
+      );
 
     this.examService.getExamResults(exam.id)
       .subscribe(
@@ -156,7 +179,18 @@ export class ExamResultsFormComponent implements OnInit {
         error => this.openSnackBar(error)
       );
 
-    $('#results-modal').modal('show')
+    this.examService.getClassExamPaperPerformances(paper.id)
+      .subscribe(
+        performance => {
+          this.classPaperPerformance = performance[0];
+          this.classPaperPerformance.student_performances = this.classPaperPerformance.student_performances.filter(
+            perf => perf.student.current_class.id == this.selectedClass.id
+          )
+        },
+        error => this.openSnackBar(error)
+      );
+
+    $('#results-modal').modal('show');
   }
 
   selectCell($event) {
@@ -179,31 +213,23 @@ export class ExamResultsFormComponent implements OnInit {
     hot.unlisten();
   }
 
-  changeValue($event) {
-    const x = parseInt(this.coordX, 10);
-    const y = parseInt(this.coordY, 10);
+  onEnterInput(performance: StudentPaperPerformance): void {
+    this.selectedStudent = performance.student;
+  }
 
-    if (isNaN(x) || isNaN(y)) {
-      return false;
+  onEditPerformance(i: number, event: any, performance: StudentPaperPerformance): void {
+    this.selectedStudent = performance.student;
+    this.classPaperPerformance.student_performances[i].mark = event.target.value;
+    this.classPaperPerformance.student_performances[i].updated = false;
+
+    let count = 0;
+    this.workingTotal = 0;
+    for(let _performance of this.classPaperPerformance.student_performances) {
+      this.workingTotal += parseInt(_performance.mark.toString());
+      count += 1;
     }
 
-    const hot = this._hotRegisterer.getInstance(this.instance);
-
-    hot.setDataAtCell(y, x, $event.target.value);
-  }
-
-  syncSelection() {
-    const hot = this._hotRegisterer.getInstance(this.instance);
-    [this.coordY, this.coordX] = hot.getSelected();
-    const x = parseInt(this.coordX, 10);
-    const y = parseInt(this.coordY, 10);
-
-    this.newValue = hot.getDataAtCell(y, x);
-  }
-
-  addNewColumn($event) {
-    const hot = this._hotRegisterer.getInstance(this.instance);
-    hot.alter('insert_col', 10);
+    this.workingMean = this.workingTotal / count;
   }
 }
 

@@ -42,6 +42,7 @@ export class StudentPaperPerformance extends AbstractBase{
   grade: Grade;
   class_performance: ClassExamPaperPerformance;
   comments: _Comment[];
+  updated: boolean = true;
 }
 
 export class ClassExamPaperPerformance extends AbstractBase {
@@ -49,6 +50,9 @@ export class ClassExamPaperPerformance extends AbstractBase {
   paper: ExamPaper;
   comments: _Comment[];
   student_performances: StudentPaperPerformance[];
+  mean: number;
+  total: number;
+  grade: Grade;
 }
 
 export class ClassExamResult extends AbstractBase {
