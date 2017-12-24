@@ -10,7 +10,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {CommonService} from './common.service';
-import {ClassExamPaperPerformance, ClassExamResult, Exam, ExamPaper} from '../models/exams.models';
+import {
+  ClassExamPaperPerformance, ClassExamResult, Exam, ExamPaper,
+  StudentPaperPerformance
+} from '../models/exams.models';
 import {Subject} from '../models/common.models';
 import DateTimeFormat = Intl.DateTimeFormat;
 
@@ -20,6 +23,7 @@ export class ExamService extends CommonService {
   private examPapersUrl = this.examsUrl + 'papers/';
   private examResultsUrl = this.examsUrl + 'results/';
   private classPaperPerformancesUrl = this.examsUrl + 'class_paper_performances/';
+  private studentPaperPerformancesUrl = this.examsUrl + 'student_paper_performances/';
 
   getExamResults(exam?: string, _class?: string, q?: string): Observable<ClassExamResult[]> {
     let params: URLSearchParams = new URLSearchParams();
@@ -115,5 +119,11 @@ export class ExamService extends CommonService {
     id += '/';
     return this.makeRequest(this.classPaperPerformancesUrl + id, 'GET');
   }
+
+  patchStudentPaperPerformance(id: string, mark: number): Observable<StudentPaperPerformance> {
+    id += '/';
+    return this.makeRequest(this.studentPaperPerformancesUrl + id, 'PATCH', {id, mark});
+  }
+
 }
 

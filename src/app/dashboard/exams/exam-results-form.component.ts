@@ -161,19 +161,23 @@ export class ExamResultsFormComponent implements OnInit {
         error => this.openSnackBar(error)
       );
 
-    this.examService.getClassExamPaperPerformances(paper.id)
+    this.getClassExamPaperPerformances(paper.id);
+
+    $('#results-modal').modal('show');
+  }
+
+  getClassExamPaperPerformances(paperId: string) {
+    this.examService.getClassExamPaperPerformances(paperId)
       .subscribe(
         performance => {
           this.classPaperPerformance = performance[0];
           this.classPaperPerformance.student_performances = this.classPaperPerformance.student_performances.filter(
             perf => perf.student.current_class.id == this.selectedClass.id
-          )
+          );
           this.allStudentPerformances = this.classPaperPerformance.student_performances;
         },
         error => this.openSnackBar(error)
       );
-
-    $('#results-modal').modal('show');
   }
 
   onEnterInput(performance: StudentPaperPerformance): void {
@@ -196,13 +200,18 @@ export class ExamResultsFormComponent implements OnInit {
   }
 
   async onSaveResults(event: any, performance: StudentPaperPerformance){
-    this.studentsReady = false;
+    // this.studentsReady = false;
     let cpp = this.classPaperPerformance.student_performances.find(
       perf => perf.id == performance.id
     );
 
-    this.openSnackBar(cpp.mark.toString());
-    await delay(200);
+    this.examService.patchStudentPaperPerformance(performance.id, performance.mark)
+      .subscribe(
+        perf => this.openSnackBar("Saved"),
+        error => this.openSnackBar(error)
+      );
+
+    this.getClassExamPaperPerformances(performance.class_performance.paper.id);
 
     this.studentsReady = true;
   }
