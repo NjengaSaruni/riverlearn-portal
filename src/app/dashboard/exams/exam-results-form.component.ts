@@ -14,8 +14,6 @@ import {
 } from "../../common/models/exams.models";
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, Student} from "../../common/models/divisions.models";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {delay} from "../../common/services/common.service";
 
 declare var $: any;
 
@@ -33,7 +31,6 @@ export class ExamResultsFormComponent implements OnInit {
   papers: ExamPaper[];
   exams: Exam[];
   private user: User;
-  protected resultForm: FormGroup;
   protected selectedExam: Exam = null;
   protected color = 'primary';
   protected mode = 'indeterminate';
@@ -46,14 +43,6 @@ export class ExamResultsFormComponent implements OnInit {
   protected workingTotal: number = 0;
   protected workingMean: number = 0;
 
-  settings: object = {
-    afterLoadData: (firstLoad) => {
-      if(!firstLoad) {
-        this.isLoading = false;
-      }
-    },
-  };
-
   isLoading: boolean = false;
   selectedStudent: Student;
 
@@ -62,18 +51,11 @@ export class ExamResultsFormComponent implements OnInit {
     private examService: ExamService,
     private divisionService: DivisionService,
     private titleService: Title,
-    private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
   ) {}
 
   public ngOnInit(){
     this.titleService.setTitle("Examinations | Results Form");
-    this.resultForm = this.formBuilder.group(
-      {
-        student: ['', Validators.required],
-        exam: ['']
-      }
-    );
 
     this.getStudents();
     this.getExams();
@@ -86,7 +68,7 @@ export class ExamResultsFormComponent implements OnInit {
   }
 
   openSnackBar(message? : string, duration: number = 3000) {
-    let snackBarRef = this.snackBar.open(message, 'Dismiss' ,{
+    this.snackBar.open(message, 'Dismiss' ,{
       duration: duration
     });
   }
@@ -132,7 +114,6 @@ export class ExamResultsFormComponent implements OnInit {
   }
 
   selectExam(paper: ExamPaper, exam: Exam, _class: Class): void {
-    console.log("Different exam paper");
     this.selectedStudent = null;
     this.studentsReady = false;
     this.isLoading = true;
@@ -163,14 +144,16 @@ export class ExamResultsFormComponent implements OnInit {
 
     this.getClassExamPaperPerformances(paper.id);
 
+    this.calculateMean();
+
     $('#results-modal').modal('show');
   }
 
   getClassExamPaperPerformances(paperId: string) {
     this.examService.getClassExamPaperPerformances(paperId)
       .subscribe(
-        performance => {
-          this.classPaperPerformance = performance[0];
+        performances => {
+          this.classPaperPerformance = performances[0];
           this.classPaperPerformance.student_performances = this.classPaperPerformance.student_performances.filter(
             perf => perf.student.current_class.id == this.selectedClass.id
           );
@@ -182,13 +165,15 @@ export class ExamResultsFormComponent implements OnInit {
 
   onEnterInput(performance: StudentPaperPerformance): void {
     this.selectedStudent = performance.student;
+
+    this.calculateMean();
   }
 
-  onEditPerformance(i: number, event: any, performance: StudentPaperPerformance): void {
-    this.selectedStudent = performance.student;
-    this.classPaperPerformance.student_performances[i].mark = event.target.value;
-    this.classPaperPerformance.student_performances[i].updated = false;
+  calculateMean(): void {
 
+    if (this.classPaperPerformance == null) {
+      return
+    }
     let count = 0;
     this.workingTotal = 0;
     for(let _performance of this.classPaperPerformance.student_performances) {
@@ -199,19 +184,22 @@ export class ExamResultsFormComponent implements OnInit {
     this.workingMean = this.workingTotal / count;
   }
 
-  async onSaveResults(event: any, performance: StudentPaperPerformance){
-    // this.studentsReady = false;
-    let cpp = this.classPaperPerformance.student_performances.find(
-      perf => perf.id == performance.id
-    );
+  onEditPerformance(i: number, event: any, performance: StudentPaperPerformance): void {
+    this.selectedStudent = performance.student;
+    this.classPaperPerformance.student_performances[i].mark = event.target.value;
 
+    this.calculateMean();
+  }
+
+  onSaveResults(event: any, performance: StudentPaperPerformance){
+    this.studentsReady = false;
     this.examService.patchStudentPaperPerformance(performance.id, performance.mark)
       .subscribe(
         perf => this.openSnackBar("Saved"),
         error => this.openSnackBar(error)
       );
 
-    this.getClassExamPaperPerformances(performance.class_performance.paper.id);
+    this.getClassExamPaperPerformances(this.selectedPaper.id);
 
     this.studentsReady = true;
   }

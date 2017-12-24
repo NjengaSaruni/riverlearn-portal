@@ -57,16 +57,16 @@
         <div class="ui right floated mini statistics">
         <div class="ui mini statistic">
           <div class="value">
-            {{ classPaperPerformance?.student_performances.length }}
+            {{ allStudentPerformances?.length }}
           </div>
           <div class="label">
-            Student{{ classPaperPerformance?.student_performances.length != 1 ? 's' : ''}}
+            Student{{ allStudentPerformances?.length != 1 ? 's' : ''}}
           </div>
         </div>
 
         <div class="statistic">
           <div class="value">
-            {{ classPaperPerformance?.mean }}
+            {{ classPaperPerformance?.mean | number : '1.2-2' }}
           </div>
           <div class="label">
             Current Mean
@@ -107,7 +107,6 @@
           <th></th>
           <th>Name</th>
           <th>Mark</th>
-          <th>Updated</th>
           <th class="right aligned"></th>
         </tr>
         </thead>
@@ -118,13 +117,11 @@
           <td class="field">
             <mat-form-field>
               <input matInput placeholder="{{ performance.student.user.first_name }}'s mark" [value]="performance.mark"
-                     (focus)="onEnterInput(performance)"(blur)="onEditPerformance(i, $event, performance)"
+                     (focus)="onEnterInput(performance)" (keyup)="onEditPerformance(i, $event, performance)"
+                     (blur)="onSaveResults($event, performance)" (keyup.enter)="onSaveResults($event, performance)"
+                     (keyup.tab)="onSaveResults($event, performance)"
                      class="mat-field" type="number" min="0">
             </mat-form-field>
-          </td>
-          <td>
-            <i class="icon green info" *ngIf="!performance.updated"></i>
-            <i class="icon red warning circle" *ngIf="performance.updated"></i>
           </td>
           <td class="right aligned">
             <mat-icon class="save-icon" (click)="onSaveResults($event, performance)">save</mat-icon>
