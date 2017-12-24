@@ -15,8 +15,7 @@ import {
 import {DivisionService} from "../../common/services/divisions.service";
 import {Class, Student} from "../../common/models/divisions.models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HotRegisterer} from "angular-handsontable";
-import {genData} from "./data";
+import {delay} from "../../common/services/common.service";
 
 declare var $: any;
 
@@ -26,6 +25,7 @@ declare var $: any;
 })
 export class ExamResultsFormComponent implements OnInit {
   classPaperPerformance: ClassExamPaperPerformance;
+  allStudentPerformances: StudentPaperPerformance[];
   result: ClassExamResult;
   contentReady: boolean;
   studentsReady: boolean;
@@ -46,15 +46,6 @@ export class ExamResultsFormComponent implements OnInit {
   protected workingTotal: number = 0;
   protected workingMean: number = 0;
 
-  title = "Student's Name";
-
-  instance: string = "hotInstance";
-  coordX: string;
-  coordY: string;
-  newValue: string;
-
-  data: any[] = genData();
-
   settings: object = {
     afterLoadData: (firstLoad) => {
       if(!firstLoad) {
@@ -73,7 +64,6 @@ export class ExamResultsFormComponent implements OnInit {
     private titleService: Title,
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
-    private _hotRegisterer: HotRegisterer
   ) {}
 
   public ngOnInit(){
@@ -141,17 +131,9 @@ export class ExamResultsFormComponent implements OnInit {
       )
   }
 
-  getExam(): void {
-    this.examService.getExam('')
-      .subscribe(
-        exam => this.selectedExam = exam,
-        error => this.openSnackBar(error)
-      )
-  }
-
   selectExam(paper: ExamPaper, exam: Exam, _class: Class): void {
-    this.workingTotal = 0;
-    this.workingMean = 0;
+    console.log("Different exam paper");
+    this.selectedStudent = null;
     this.studentsReady = false;
     this.isLoading = true;
     this.divisionService.getClass(_class.id)
@@ -186,31 +168,12 @@ export class ExamResultsFormComponent implements OnInit {
           this.classPaperPerformance.student_performances = this.classPaperPerformance.student_performances.filter(
             perf => perf.student.current_class.id == this.selectedClass.id
           )
+          this.allStudentPerformances = this.classPaperPerformance.student_performances;
         },
         error => this.openSnackBar(error)
       );
 
     $('#results-modal').modal('show');
-  }
-
-  selectCell($event) {
-    const x = parseInt(this.coordX, 10);
-    const y = parseInt(this.coordY, 10);
-    const hot = this._hotRegisterer.getInstance(this.instance);
-
-    if (isNaN(x) || isNaN(y)) {
-      hot.deselectCell();
-      return false;
-    }
-
-    if (hot.selectCell(y, x)) {
-      $event.target.focus();
-
-    } else {
-      hot.deselectCell();
-    }
-
-    hot.unlisten();
   }
 
   onEnterInput(performance: StudentPaperPerformance): void {
@@ -230,6 +193,30 @@ export class ExamResultsFormComponent implements OnInit {
     }
 
     this.workingMean = this.workingTotal / count;
+  }
+
+  async onSaveResults(event: any, performance: StudentPaperPerformance){
+    this.studentsReady = false;
+    let cpp = this.classPaperPerformance.student_performances.find(
+      perf => perf.id == performance.id
+    );
+
+    this.openSnackBar(cpp.mark.toString());
+    await delay(200);
+
+    this.studentsReady = true;
+  }
+
+  onSearchStudent(event: any) {
+    // Searches through the students in current paper
+    for(let value of event.target.value.split(" ")){
+      let re = new RegExp(value, "i");
+
+      this.classPaperPerformance.student_performances = this.allStudentPerformances.filter(
+        perf => perf.student.user.full_name.search(re) > -1
+      );
+    }
+
   }
 }
 

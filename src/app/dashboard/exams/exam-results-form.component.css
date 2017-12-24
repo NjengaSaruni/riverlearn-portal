@@ -60,13 +60,57 @@
   width: inherit;
   height: inherit;
 }
+.toolbar-icon {
+  padding: 0 28px !important;
+  cursor: pointer;
+}
 
+.save-icon {
+  color: #0e5a77;
+  cursor: pointer;
+}
 
-/*#results-modal {*/
-  /*position: fixed;*/
-  /*top: 150px !important;*/
-/*}*/
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
 
 .mat-field {
   border: none !important;
+}
+
+.toolbar {
+  background: #0e5a77;
+  color: white;
+}
+
+.toolbar input::-webkit-input-placeholder {
+  color: white !important;
+}
+
+.toolbar input:-moz-placeholder { /* Firefox 18- */
+  color: white !important;
+}
+
+.toolbar input::-moz-placeholder {  /* Firefox 19+ */
+  color: white !important;
+}
+
+.toolbar input:-ms-input-placeholder {
+  color: white !important;
+}
+.toolbar input {
+  color: white;
+}
+
+.toolbar .statistic .value {
+  color: white !important;
+}
+
+.toolbar .statistic .label {
+  color: white !important;
+}
+
+.top.menu .value {
+  color: #0e5a77;
+  font-weight: bold;
 }

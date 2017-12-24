@@ -30,7 +30,7 @@
     </mat-progress-bar>
   </div>
   <div class="ui blue top attached message">
-    <div class="ui menu">
+    <div class="ui top menu">
       <div class="ui item">
         <div class="ui right floated mini statistics">
           <div class="statistic">
@@ -48,62 +48,58 @@
               {{ selectedPaper?.subject.name }}
             </div>
           </div>
-          <div class="statistic">
-            <div class="value">
-              {{ selectedStudent?.user.full_name }}
-            </div>
-          </div>
         </div>
       </div>
     </div>
-    <div class="ui top attached menu">
-      <div class="item">
+
+    <mat-toolbar color="primary" class="toolbar">
+      <mat-toolbar-row>
         <div class="ui right floated mini statistics">
-          <div class="ui mini statistic">
-            <div class="value">
-              {{ selectedClass?.students.length }}
-            </div>
-            <div class="label">
-              Students
-            </div>
+        <div class="ui mini statistic">
+          <div class="value">
+            {{ classPaperPerformance?.student_performances.length }}
           </div>
+          <div class="label">
+            Student{{ classPaperPerformance?.student_performances.length != 1 ? 's' : ''}}
+          </div>
+        </div>
 
-          <div class="statistic">
-            <div class="value">
-              {{ classPaperPerformance?.total }}
-            </div>
-            <div class="label">
-              Total
-            </div>
+        <div class="statistic">
+          <div class="value">
+            {{ classPaperPerformance?.mean }}
           </div>
-          <div class="statistic">
-            <div class="value">
-              {{ classPaperPerformance?.mean }}
-            </div>
-            <div class="label">
-              Current Mean
-            </div>
+          <div class="label">
+            Current Mean
           </div>
+        </div>
 
-          <div class="statistic">
-            <div class="value">
-              {{ workingTotal }}
-            </div>
-            <div class="label">
-              Working Total
-            </div>
+        <div class="statistic">
+          <div class="value">
+            {{ workingTotal }}
           </div>
-          <div class="statistic">
-            <div class="value">
-              {{ workingMean | number : '1.2-2' }}
-            </div>
-            <div class="label">
-              Working Mean
-            </div>
+          <div class="label">
+            Working Total
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            {{ workingMean | number : '1.2-2' }}
+          </div>
+          <div class="label">
+            Working Mean
           </div>
         </div>
       </div>
-    </div>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <mat-form-field>
+          <input matInput placeholder="Search for student" [value]="selectedStudent?.user.full_name"
+                 (keyup)="onSearchStudent($event)">
+        </mat-form-field>
+        <span class="toolbar-spacer"></span>
+        <mat-icon class="toolbar-icon">search</mat-icon>
+      </mat-toolbar-row>
+    </mat-toolbar>
     <div class="ui scrolling content">
       <table class="ui selectable bottom attached table">
         <thead>
@@ -121,13 +117,18 @@
           <td>{{ performance.student.user.full_name }}</td>
           <td class="field">
             <mat-form-field>
-              <input matInput placeholder="{{ performance.student.user.first_name }}'s mark" [value]="performance.mark" (focus)="onEnterInput(performance)"(blur)="onEditPerformance(i, $event, performance)" class="mat-field" type="number" min="0">
-            </mat-form-field></td>
+              <input matInput placeholder="{{ performance.student.user.first_name }}'s mark" [value]="performance.mark"
+                     (focus)="onEnterInput(performance)"(blur)="onEditPerformance(i, $event, performance)"
+                     class="mat-field" type="number" min="0">
+            </mat-form-field>
+          </td>
           <td>
             <i class="icon green info" *ngIf="!performance.updated"></i>
             <i class="icon red warning circle" *ngIf="performance.updated"></i>
           </td>
-          <td class="right aligned"></td>
+          <td class="right aligned">
+            <mat-icon class="save-icon" (click)="onSaveResults($event, performance)">save</mat-icon>
+          </td>
         </tr>
         </tbody>
       </table>
