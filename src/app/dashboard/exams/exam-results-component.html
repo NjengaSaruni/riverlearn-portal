@@ -1,5 +1,60 @@
 <div class="ui raised segment">
-  <div echarts [options]="chartOption" class="demo-chart"></div>
+  <div class="ui form">
+    <div class="ui three fields">
+      <div class="field">
+        <div class="ui fluid search selection dropdown">
+          <input name="user" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Level</div>
+          <div class="menu">
+            <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
+              {{ level.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui fluid search selection dropdown">
+          <input name="user" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Class</div>
+          <div class="menu">
+            <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
+              {{ class.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui fluid search selection dropdown">
+          <input name="user" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Result</div>
+          <div class="menu">
+            <div class="item"  *ngFor="let result of examResults" (click)="onSelectResult(result)">
+              {{ result.exam.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <div class="ui primary button"> Tweak</div>
+  <div class="ui dividing header">
+    {{ selectedResult?.exam.name }}
+  </div>
+
+
+  <jqxChart
+    [title]="title" [description]="description"
+    [width]="850" [height]="500"
+    [colorScheme]="'scheme01'"
+    [source]="sampleData"
+    [xAxis]="xAxis"
+    [seriesGroups]="seriesGroups"
+    #myChart
+    (onToggle)="onToggleChart()">
+  </jqxChart>
+
+  <div class="ui primary button" (click)="onToggleChart()"> Tweak</div>
 </div>

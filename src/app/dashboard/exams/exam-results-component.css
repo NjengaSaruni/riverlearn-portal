@@ -1,3 +1,12 @@
 .demo-chart {
   height: 400px;
 }
+
+.menu .item {
+  color: #0e5a77;
+  font: bolder !important;
+}
+
+.dropdown input {
+  color: #0e5a77 !important;
+}

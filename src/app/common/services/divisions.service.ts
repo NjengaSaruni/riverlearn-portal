@@ -71,8 +71,10 @@ export class DivisionService extends CommonService {
     return this.makeRequest(this.studentsUrl + id , 'GET');
   }
 
-  getClasses(): Observable<Class[]> {
-    return this.makeRequest(this.classesUrl, 'GET');
+  getClasses(level: string = null): Observable<Class[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('level', level);
+    return this.makeRequest(this.classesUrl, 'GET', null, params);
   }
 
   createClass(stream: string, level: string, class_teacher: string = null): Observable<Class> {

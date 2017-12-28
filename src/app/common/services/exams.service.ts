@@ -86,9 +86,10 @@ export class ExamService extends CommonService {
     return this.makeRequest(this.examPapersUrl + id, 'GET');
   }
 
-  getExams(q: string = null): Observable<Exam[]> {
+  getExams(q: string = null, level: string = null,): Observable<Exam[]> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('q', q);
+    params.set('level', level);
     return this.makeRequest(this.examsUrl, 'GET', null, params);
   }
 

@@ -20,11 +20,13 @@ import {
 } from "@angular/material";
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
 import {AngularEchartsModule} from "ngx-echarts";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ChartsModule,
     ReactiveFormsModule,
     examRoutingModule,
     AngularEchartsModule,
