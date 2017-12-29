@@ -1,60 +1,128 @@
-<div class="ui raised segment">
-  <div class="ui form">
-    <div class="ui three fields">
-      <div class="field">
-        <div class="ui fluid search selection dropdown">
-          <input name="user" type="hidden">
-          <i class="dropdown icon"></i>
-          <div class="default text">Select Level</div>
-          <div class="menu">
-            <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
-              {{ level.name }}
+
+<mat-tab-group class="demo-tab-group">
+  <mat-tab label="Per subject">
+    <div class="demo-tab-content">
+      <div class="ui form">
+        <div class="ui three fields">
+          <div class="field">
+            <div class="ui fluid search selection dropdown" id="levels-dropdown">
+              <input name="user" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Select Level</div>
+              <div class="menu">
+                <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
+                  {{ level.name }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui fluid search selection dropdown">
+              <input name="user" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Select Class</div>
+              <div class="menu">
+                <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
+                  {{ class.name }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui fluid search selection dropdown">
+              <input name="user" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Select Result</div>
+              <div class="menu">
+                <div class="item"  *ngFor="let result of examResults" (click)="onSelectResult(result)">
+                  {{ result.exam.name }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="field">
-        <div class="ui fluid search selection dropdown">
-          <input name="user" type="hidden">
-          <i class="dropdown icon"></i>
-          <div class="default text">Select Class</div>
-          <div class="menu">
-            <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
-              {{ class.name }}
-            </div>
-          </div>
+
+      <div class="ui blue message" *ngIf="selectedResult == null">
+        <div class="header">
+          Please select a class and an exam above.
         </div>
       </div>
-      <div class="field">
-        <div class="ui fluid search selection dropdown">
-          <input name="user" type="hidden">
-          <i class="dropdown icon"></i>
-          <div class="default text">Select Result</div>
-          <div class="menu">
-            <div class="item"  *ngFor="let result of examResults" (click)="onSelectResult(result)">
-              {{ result.exam.name }}
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <jqxChart (onClick)="onChartClick($event)" *ngIf="selectedResult"
+                [title]="title" [description]="description"
+                [width]="750" [height]="500"
+                [colorScheme]="'scheme01'"
+                [source]="resultsData"
+                [xAxis]="xAxis" [valueAxis]="valueAxis"
+                [seriesGroups]="seriesGroups"
+                #myChart>
+      </jqxChart>
+
     </div>
-  </div>
 
-  <div class="ui dividing header">
-    {{ selectedResult?.exam.name }}
-  </div>
+  </mat-tab>
+  <mat-tab label="Tab 2">
+    <ng-template mat-tab-label>
+      ⭐
+    </ng-template>
+    <div class="demo-tab-content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
+      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
+      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
+      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+    </div>
+  </mat-tab>
+  <mat-tab label="Per student" disabled>
+    No content
+  </mat-tab>
+  <mat-tab label="Per exam means">
+    <div class="demo-tab-content">
+      <table class="ui celled table">
+        <thead>
+        <tr><th>Header</th>
+          <th>Name</th>
+          <th>Mark</th>
+        </tr></thead>
+        <tbody>
+        <tr *ngFor="let result of examResults">
+          <td>
+            <div class="ui blue ribbon label">First</div>
+          </td>
+          <td>{{result.exam.name }}</td>
+          <td>{{result.total }}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr><th colspan="3">
+          <div class="ui right floated pagination menu">
+            <a class="icon item">
+              <i class="left chevron icon"></i>
+            </a>
+            <a class="item">1</a>
+            <a class="item">2</a>
+            <a class="item">3</a>
+            <a class="item">4</a>
+            <a class="icon item">
+              <i class="right chevron icon"></i>
+            </a>
+          </div>
+        </th>
+        </tr></tfoot>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Tab 5">
+    No content
+  </mat-tab>
+  <mat-tab label="Tab 6">
+    No content
+  </mat-tab>
+</mat-tab-group>
 
 
-  <jqxChart
-    [title]="title" [description]="description"
-    [width]="850" [height]="500"
-    [colorScheme]="'scheme01'"
-    [source]="sampleData"
-    [xAxis]="xAxis"
-    [seriesGroups]="seriesGroups"
-    #myChart
-    (onToggle)="onToggleChart()">
-  </jqxChart>
 
-  <div class="ui primary button" (click)="onToggleChart()"> Tweak</div>
-</div>
+
+
+

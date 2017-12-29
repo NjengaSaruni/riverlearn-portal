@@ -7,7 +7,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://riverlearn.com/license
  */
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DivisionService} from "../../common/services/divisions.service";
 import {ExamService} from "../../common/services/exams.service";
 import {MatSnackBar} from "@angular/material";
@@ -23,7 +23,7 @@ declare var $: any;
   styleUrls: ['./exam-results-component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ExamResultsComponent implements OnInit {
+export class ExamResultsComponent implements OnInit, AfterViewInit {
   subjects: InstitutionSubject[];
   selectedExam: Exam;
   exams: Exam[];
@@ -39,15 +39,20 @@ export class ExamResultsComponent implements OnInit {
   levels: Level[];
   classes: Class[];
 
-  sampleData = [
-    { Subject: "Chemistry", Mean: 89.01 },
-    { Subject: "Maths", Mean: 49.61 },
-    { Subject: "Biology", Mean: 69.09}
+  resultsData = [
+    { Subject: "", Mean: 0 },
   ];
 
   xAxis: any = {
-    dataField: "Subject"
+    dataField: "Subject",
   };
+
+  valueAxis: any =
+    {
+      visible: true,
+      minValue: 0,
+      maxValue: 100
+    };
 
   colorScheme: string = "scheme01";
 
@@ -56,26 +61,12 @@ export class ExamResultsComponent implements OnInit {
     orientation: "vertical",
     series: [{
       dataField: "Mean",
-      displayText: "Population (percentages)"
+      displayText: "Mean for the class"
     }]
   }];
 
   isBrazilAdded = false;
 
-  onToggleChart(): void
-  {
-    let dataInfoBrazil = { Subject: "English", Population: 192376496, Mean: 79.56 };
-    if (!this.isBrazilAdded) {
-
-      this.sampleData.push(dataInfoBrazil);
-      this.myChart.update();
-      this.isBrazilAdded = true;
-      return;
-    }
-    this.sampleData.pop();
-    this.myChart.update();
-    this.isBrazilAdded = false;
-  }
   constructor(
     private divisionService: DivisionService,
     private examService: ExamService,
@@ -91,8 +82,20 @@ export class ExamResultsComponent implements OnInit {
       })
     ;
 
-    $('.ui.dropdown')
+    $('#levels-dropdown')
       .dropdown();
+
+    $('#select-result-modal')
+      .modal({
+        blurring: true
+      })
+      .modal('show')
+    ;
+  }
+
+  ngAfterViewInit(): void {
+      $('.ui.dropdown')
+        .dropdown()
   }
 
 
@@ -154,10 +157,11 @@ export class ExamResultsComponent implements OnInit {
   onSelectResult(result: ClassExamResult): void {
     this.title = result.exam.name;
     this.description = result._class.name;
+    this.selectedResult = result;
 
-    this.sampleData = [];
+    this.resultsData = [];
     for(let performance of result.paper_performances){
-      this.sampleData.push({
+      this.resultsData.push({
         Subject: performance.paper.subject.name,
         Mean: parseFloat(performance.mean.toFixed(2))
       })
@@ -166,4 +170,7 @@ export class ExamResultsComponent implements OnInit {
     this.myChart.update();
   }
 
+  onChartClick(event: any): void {
+      console.log(event);
+  }
 }

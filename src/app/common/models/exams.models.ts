@@ -56,6 +56,7 @@ export class ClassExamPaperPerformance extends AbstractBase {
 }
 
 export class ClassExamResult extends AbstractBase {
+  total: number;
   exam: Exam;
   _class: Class;
   paper_performances: ClassExamPaperPerformance[];
