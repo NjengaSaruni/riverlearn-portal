@@ -9,7 +9,7 @@ import { dashboardComponents, routing } from './dashboard-routing.module';
 import {ExamService} from '../common/services/exams.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminGuard} from '../common/services/auth-guard.service';
-import {MatProgressBarModule} from "@angular/material";
+import {MatProgressBarModule, MatSnackBarModule} from "@angular/material";
 
 @NgModule({
   imports: [
@@ -19,6 +19,7 @@ import {MatProgressBarModule} from "@angular/material";
     ReactiveFormsModule,
     routing,
     MatProgressBarModule,
+    MatSnackBarModule
   ],
   providers: [
     ExamService,

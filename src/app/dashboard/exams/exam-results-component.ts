@@ -24,6 +24,8 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class ExamResultsComponent implements OnInit, AfterViewInit {
+  meanForResult: number;
+  loadingResults: boolean;
   subjects: InstitutionSubject[];
   selectedExam: Exam;
   exams: Exam[];
@@ -39,9 +41,7 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   levels: Level[];
   classes: Class[];
 
-  resultsData = [
-    { Subject: "", Mean: 0 },
-  ];
+  resultsData = [];
 
   xAxis: any = {
     dataField: "Subject",
@@ -155,18 +155,29 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   }
 
   onSelectResult(result: ClassExamResult): void {
+    this.loadingResults = true;
     this.title = result.exam.name;
     this.description = result._class.name;
     this.selectedResult = result;
 
     this.resultsData = [];
+
+    let total = 0;
+    let i = 0;
     for(let performance of result.paper_performances){
+      total += performance.mean;
+      i++;
       this.resultsData.push({
         Subject: performance.paper.subject.name,
         Mean: parseFloat(performance.mean.toFixed(2))
       })
     }
 
+    if(i > 0){
+      this.meanForResult = total/i;
+    }
+
+    this.loadingResults = false;
     this.myChart.update();
   }
 

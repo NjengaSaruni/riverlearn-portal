@@ -1,8 +1,11 @@
 
 <mat-tab-group class="demo-tab-group">
-  <mat-tab label="Per subject">
+  <mat-tab label="Per recent exams">
+    <ng-template mat-tab-label>
+      Subject comparison per exam
+    </ng-template>
     <div class="demo-tab-content">
-      <div class="ui form">
+      <div class="ui form blue message">
         <div class="ui three fields">
           <div class="field">
             <div class="ui fluid search selection dropdown" id="levels-dropdown">
@@ -32,6 +35,7 @@
             <div class="ui fluid search selection dropdown">
               <input name="user" type="hidden">
               <i class="dropdown icon"></i>
+              <i class="loading notched circle icon" *ngIf="loadingResults"></i>
               <div class="default text">Select Result</div>
               <div class="menu">
                 <div class="item"  *ngFor="let result of examResults" (click)="onSelectResult(result)">
@@ -43,35 +47,63 @@
         </div>
       </div>
 
-      <div class="ui blue message" *ngIf="selectedResult == null">
-        <div class="header">
-          Please select a class and an exam above.
+
+      <div class="ui celled stackable grid">
+        <div class="ui ten wide column">
+          <jqxChart (onClick)="onChartClick($event)" *ngIf="selectedResult"
+                    [title]="title" [description]="description"
+                    [width]="'100%'" [height]="500"
+                    [colorScheme]="'scheme01'"
+                    [source]="resultsData"
+                    [xAxis]="xAxis" [valueAxis]="valueAxis"
+                    [seriesGroups]="seriesGroups"
+                    #myChart>
+          </jqxChart>
+        </div>
+
+        <div class="ui six wide column">
+          <table class="ui celled striped table">
+            <thead>
+            <tr><th colspan="3">
+              {{ selectedResult?.exam.name }}
+            </th>
+            </tr></thead>
+            <tbody>
+            <tr *ngFor="let performance of selectedResult?.paper_performances">
+              <td class="collapsing">
+                <i class="file outline icon"></i> {{ performance.paper.subject.name }}
+              </td>
+              <td>{{ performance.paper.start | date }}</td>
+              <td [ngClass]="{'positive': performance.mean > 80 , 'negative': performance.mean < 70}"
+                  class="right aligned collapsing">
+                <i *ngIf="performance.mean < 70" class="attention icon"></i>
+                <i *ngIf="performance.mean >= 80" class="clap icon"></i>
+                {{ performance.mean | number: '1.1-2'}}
+              </td>
+            </tr>
+            <tr>
+              <td class="collapsing">
+                <i class="folder icon"></i> <b>Class mean</b>
+              </td>
+              <td></td>
+              <td class="right aligned collapsing">
+                <i *ngIf="meanForResult < 70" class="attention icon"></i>
+                {{ meanForResult |number: '1.1-2' }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-
-      <jqxChart (onClick)="onChartClick($event)" *ngIf="selectedResult"
-                [title]="title" [description]="description"
-                [width]="750" [height]="500"
-                [colorScheme]="'scheme01'"
-                [source]="resultsData"
-                [xAxis]="xAxis" [valueAxis]="valueAxis"
-                [seriesGroups]="seriesGroups"
-                #myChart>
-      </jqxChart>
-
     </div>
 
   </mat-tab>
   <mat-tab label="Tab 2">
     <ng-template mat-tab-label>
-      ⭐
+      Subject trends per class
     </ng-template>
     <div class="demo-tab-content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-      Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
-      In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
-      feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
-      orci enim rutrum enim, vel tempor sapien arcu a tellus.
+      <subject-line-graph></subject-line-graph>
     </div>
   </mat-tab>
   <mat-tab label="Per student" disabled>
@@ -83,7 +115,7 @@
         <thead>
         <tr><th>Header</th>
           <th>Name</th>
-          <th>Mark</th>
+          <th>Mean</th>
         </tr></thead>
         <tbody>
         <tr *ngFor="let result of examResults">
@@ -91,7 +123,7 @@
             <div class="ui blue ribbon label">First</div>
           </td>
           <td>{{result.exam.name }}</td>
-          <td>{{result.total }}</td>
+          <td>{{meanForResult | number : '1.2-2'}}</td>
         </tr>
         </tbody>
         <tfoot>
@@ -122,7 +154,85 @@
 </mat-tab-group>
 
 
+<div class="ui comments">
+  <h3 class="ui dividing header">Comments</h3>
+  <form class="ui reply form">
+    <div class="field">
+      <textarea></textarea>
+    </div>
+    <div class="ui blue labeled submit icon button">
+      <i class="icon edit"></i> Add Reply
+    </div>
+  </form>
+  <div class="comment">
+    <a class="avatar">
+      <img src="/images/avatar/small/matt.jpg">
+    </a>
+    <div class="content">
+      <a class="author">Matt</a>
+      <div class="metadata">
+        <span class="date">Today at 5:42PM</span>
+      </div>
+      <div class="text">
+        How artistic!
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+      </div>
+    </div>
+  </div>
+  <div class="comment">
+    <a class="avatar">
+      <img src="/images/avatar/small/elliot.jpg">
+    </a>
+    <div class="content">
+      <a class="author">Elliot Fu</a>
+      <div class="metadata">
+        <span class="date">Yesterday at 12:30AM</span>
+      </div>
+      <div class="text">
+        <p>This has been very useful for my research. Thanks as well!</p>
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+      </div>
+    </div>
+    <div class="comments">
+      <div class="comment">
+        <a class="avatar">
+          <img src="/images/avatar/small/jenny.jpg">
+        </a>
+        <div class="content">
+          <a class="author">Jenny Hess</a>
+          <div class="metadata">
+            <span class="date">Just now</span>
+          </div>
+          <div class="text">
+            Elliot you are always so right :)
+          </div>
+          <div class="actions">
+            <a class="reply">Reply</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="comment">
+    <a class="avatar">
+      <img src="/images/avatar/small/joe.jpg">
+    </a>
+    <div class="content">
+      <a class="author">Joe Henderson</a>
+      <div class="metadata">
+        <span class="date">5 days ago</span>
+      </div>
+      <div class="text">
+        Dude, this is awesome. Thanks so much
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+      </div>
+    </div>
+  </div>
 
-
-
-
+</div>

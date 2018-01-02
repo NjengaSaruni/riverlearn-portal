@@ -3,6 +3,11 @@
  */
 
 import {Component,  OnInit} from '@angular/core';
+import {ExamService} from "../common/services/exams.service";
+import {ClassExamResult, Exam} from "../common/models/exams.models";
+import {MatSnackBar} from "@angular/material";
+import {DivisionService} from "../common/services/divisions.service";
+import {Class, Level} from "../common/models/divisions.models";
 
 declare var $: any;
 
@@ -13,13 +18,75 @@ declare var $: any;
 })
 
 export class SampleGraphsComponent implements OnInit {
+  examResults: ClassExamResult[];
+  selectedClass: Class;
+  classes: Class[];
+  selectedLevel: any;
+  levels: Level[];
+  exams: Exam[];
+  results: ClassExamResult[];
+
+  constructor(
+    private examService: ExamService,
+    private divisionService: DivisionService,
+    public snackBar: MatSnackBar
+  ){}
 
   ngOnInit(): void {
     $(document).ready(function() {
       $('.ui.dropdown').dropdown();
     });
+
+    this.getLevels();
   }
 
+  getExams(): void {
+    this.examService.getExams()
+      .subscribe(
+        exams => this.exams = exams,
+        error => this.openSnackBar(error)
+      )
+  }
+
+  getLevels(): void {
+    this.divisionService.getLevels()
+      .subscribe(
+        levels => this.levels = levels,
+        error => this.openSnackBar(error)
+      )
+  }
+
+  getClasses(): void {
+    this.divisionService.getClasses(this.selectedLevel.id)
+      .subscribe(
+        classes => this.classes = classes,
+        error => this.openSnackBar(error)
+      )
+  }
+
+  getExamResults(): void {
+    this.examService.getExamResults(null, this.selectedClass.id)
+      .subscribe(
+        results => this.examResults = results,
+        error => this.openSnackBar(error)
+      );
+  }
+
+  onSelectLevel(level: Level): void {
+    this.selectedLevel = level;
+    this.getClasses();
+  }
+
+  onSelectClass(_class: Class): void {
+    this.selectedClass = _class;
+    this.getExamResults();
+  }
+
+  openSnackBar(message? : string, duration: number = 3000) {
+    this.snackBar.open(message, 'Dismiss' ,{
+      duration: duration
+    });
+  }
   // lineChart
   public lineChartData:Array<any> = [
     [65, 59, 80, 81, 56, 55, 40],
@@ -91,11 +158,13 @@ export class SampleGraphsComponent implements OnInit {
   public lineChartType2:string = 'line';
 
   public randomize():void {
-    let _lineChartData:Array<any> = new Array(this.lineChartData1.length);
-    for (let i = 0; i < this.lineChartData1.length; i++) {
-      _lineChartData[i] = {data: new Array(this.lineChartData1[i].data.length), label: this.lineChartData1[i].label};
-      for (let j = 0; j < this.lineChartData1[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+    let _lineChartData :Array<any> = [];
+    let _lineChartLabels: Array<any> = [];
+
+    for (let i = 0; i < this.examResults.length; i++) {
+      _lineChartData.push({data: new Array(this.lineChartData1[i].data.length), label: this.examResults[i].exam.name});
+      for (let j = 0; j < this.examResults[i].paper_performances.length; j++) {
+        _lineChartData[i].data[j] = this.examResults[i].paper_performances[j].mean;
       }
     }
     this.lineChartData1 = _lineChartData;

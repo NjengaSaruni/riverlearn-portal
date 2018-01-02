@@ -11,6 +11,7 @@ import {ExamScheduleFormComponent} from './exam-schedule-form.component';
 import {ExamResultsComponent} from "./exam-results-component";
 import {ExamPaperFormComponent} from "./exam-paper-form-component";
 import {ExamResultsFormComponent} from "./exam-results-form.component";
+import {SubjectLineGraphComponent} from "./subject-line-graph.component";
 
 
 const examRoutes: Routes = [
@@ -40,5 +41,6 @@ export const examComponents = [
   ExamResultsFormComponent,
   ExamScheduleFormComponent,
   ExamSchedulesComponent,
-  ExamsComponent
+  ExamsComponent,
+  SubjectLineGraphComponent
 ];

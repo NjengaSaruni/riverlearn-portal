@@ -1,0 +1,36 @@
+<div class="ui form blue message">
+  <div class="ui two fields">
+    <div class="field">
+      <div class="ui fluid search selection dropdown" id="levels-dropdown" (click)="openDropdown()">
+        <input name="user" type="hidden">
+        <i class="dropdown icon"></i>
+        <div class="default text">Select Level</div>
+        <div class="menu">
+          <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
+            {{ level.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui fluid search selection dropdown">
+        <input name="user" type="hidden">
+        <i class="dropdown icon"></i>
+        <div class="default text">Select Class</div>
+        <div class="menu">
+          <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
+            {{ class.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<jqxChart
+          [width]="'100%'" [height]="500"
+          [colorScheme]="'scheme04'"
+          [source]="resultsData"
+          [xAxis]="xAxis" [valueAxis]="valueAxis"
+          [seriesGroups]="seriesGroups"
+          #subjectLineChart>
+</jqxChart>

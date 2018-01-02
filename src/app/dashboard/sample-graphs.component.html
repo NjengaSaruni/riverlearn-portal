@@ -1,59 +1,102 @@
-<div class="ui centre aligned title segment">
-  <div class="title">
-    <h1>Trend in maths performance so far this year.</h1>
-  </div>
-  <div class="ui two column stackable grid">
-    <div class="ui column">
-      <canvas baseChart
-              [data]="lineChartData"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              [chartType]="lineChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
-      </canvas>
-    </div>
-    <div class="ui column">
-      <canvas baseChart
-              [data]="lineChartData"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              [chartType]="lineChartType1"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
-      </canvas>
-    </div>
-  </div>
-  <div class="two wide column">
-    <div class="ui fluid primary button" (click)="randomizeType()" >Toggle</div>
-  </div>
-</div>
+<!--<div class="ui centre aligned title segment">-->
+  <!--<div class="title">-->
+    <!--<h1>Trend in maths performance so far this year.</h1>-->
+  <!--</div>-->
+  <!--<div class="ui two column stackable grid">-->
+    <!--<div class="ui column">-->
+      <!--<canvas baseChart-->
+              <!--[data]="lineChartData"-->
+              <!--[labels]="lineChartLabels"-->
+              <!--[options]="lineChartOptions"-->
+              <!--[chartType]="lineChartType"-->
+              <!--(chartHover)="chartHovered($event)"-->
+              <!--(chartClick)="chartClicked($event)">-->
+      <!--</canvas>-->
+    <!--</div>-->
+    <!--<div class="ui column">-->
+      <!--<canvas baseChart-->
+              <!--[data]="lineChartData"-->
+              <!--[labels]="lineChartLabels"-->
+              <!--[options]="lineChartOptions"-->
+              <!--[chartType]="lineChartType1"-->
+              <!--(chartHover)="chartHovered($event)"-->
+              <!--(chartClick)="chartClicked($event)">-->
+      <!--</canvas>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="two wide column">-->
+    <!--<div class="ui fluid primary button" (click)="randomizeType()" >Toggle</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<div class="ui center aligned title segment">-->
+  <!--<h1>Comparative per subject performance</h1>-->
+  <!--<div class="ui two column stackable grid">-->
+    <!--<div class="ui column">-->
+      <!--<canvas baseChart-->
+              <!--[data]="pieChartData"-->
+              <!--[labels]="pieChartLabels"-->
+              <!--[chartType]="pieChartType"-->
+              <!--(chartHover)="chartHovered($event)"-->
+              <!--(chartClick)="chartClicked($event)">-->
+      <!--</canvas>-->
+    <!--</div>-->
+    <!--<div class="ui column">-->
+      <!--<canvas baseChart-->
+              <!--[data]="pieChartData"-->
+              <!--[labels]="pieChartLabels"-->
+              <!--[chartType]="pieChartType1"-->
+              <!--(chartHover)="chartHovered($event)"-->
+              <!--(chartClick)="chartClicked($event)">-->
+      <!--</canvas>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <div class="ui center aligned title segment">
-  <h1>Comparative per subject performance</h1>
-  <div class="ui two column stackable grid">
-    <div class="ui column">
-      <canvas baseChart
-              [data]="pieChartData"
-              [labels]="pieChartLabels"
-              [chartType]="pieChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
-      </canvas>
-    </div>
-    <div class="ui column">
-      <canvas baseChart
-              [data]="pieChartData"
-              [labels]="pieChartLabels"
-              [chartType]="pieChartType1"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
-      </canvas>
+  <h1>Student performance overall</h1>
+
+  <div class="ui form">
+    <div class="ui three fields">
+      <div class="field">
+        <div class="ui fluid search selection dropdown" id="levels-dropdown">
+          <input name="user" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Level</div>
+          <div class="menu">
+            <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
+              {{ level.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui fluid search selection dropdown">
+          <input name="user" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Class</div>
+          <div class="menu">
+            <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
+              {{ class.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui fluid search selection dropdown">
+          <input name="user" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Result</div>
+          <div class="menu">
+            <div class="item"  *ngFor="let result of examResults" (click)="onSelectResult(result)">
+              {{ result.exam.name }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div class="ui center aligned title segment">
-  <h1>Student performance overall</h1>
+
   <div class="ui equal width center aligned grid">
     <div class="column">
       <div style="display: block;">
