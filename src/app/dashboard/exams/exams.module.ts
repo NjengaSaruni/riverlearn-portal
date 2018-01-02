@@ -16,7 +16,7 @@ import {
   MatDatepickerModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatNativeDateModule,
   MatProgressBarModule,
-  MatSnackBarModule, MatStepperModule, MatTabsModule, MatToolbarModule,
+  MatSnackBarModule, MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule,
 } from "@angular/material";
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
 import {AngularEchartsModule} from "ngx-echarts";
@@ -40,7 +40,8 @@ import {ChartsModule} from "ng2-charts";
     MatSnackBarModule,
     MatTabsModule,
     MatStepperModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTableModule
 ],
   providers: [
     ExamService,

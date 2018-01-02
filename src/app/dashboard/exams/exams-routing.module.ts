@@ -12,6 +12,7 @@ import {ExamResultsComponent} from "./exam-results-component";
 import {ExamPaperFormComponent} from "./exam-paper-form-component";
 import {ExamResultsFormComponent} from "./exam-results-form.component";
 import {SubjectLineGraphComponent} from "./subject-line-graph.component";
+import {StudentLineGraphComponent} from "./student-line-graph.component";
 
 
 const examRoutes: Routes = [
@@ -26,7 +27,7 @@ const examRoutes: Routes = [
           { path: 'add', component: ExamScheduleFormComponent },
           { path: 'results', component: ExamResultsComponent },
           { path: 'submit', component: ExamResultsFormComponent},
-          { path: '', redirectTo: '/dashboard/exams/schedules', pathMatch: 'full' },
+          { path: '', redirectTo: '/dashboard/exams/results', pathMatch: 'full' },
         ]
       }
     ]
@@ -42,5 +43,6 @@ export const examComponents = [
   ExamScheduleFormComponent,
   ExamSchedulesComponent,
   ExamsComponent,
-  SubjectLineGraphComponent
+  SubjectLineGraphComponent,
+  StudentLineGraphComponent
 ];

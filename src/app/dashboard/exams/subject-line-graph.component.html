@@ -26,11 +26,24 @@
     </div>
   </div>
 </div>
+<div class="ui inverted active dimmer" *ngIf="loadingGraph">
+  <mat-progress-bar
+    class="example-margin"
+    [color]="color"
+    [mode]="mode"
+    [value]="value"
+    [bufferValue]="bufferValue">
+  </mat-progress-bar>
+</div>
 <jqxChart
-          [width]="'100%'" [height]="500"
-          [colorScheme]="'scheme04'"
-          [source]="resultsData"
-          [xAxis]="xAxis" [valueAxis]="valueAxis"
-          [seriesGroups]="seriesGroups"
-          #subjectLineChart>
+  [width]="'100%'" [height]="500"
+  [colorScheme]="colorScheme"
+  [source]="resultsData"
+  [xAxis]="xAxis" [valueAxis]="valueAxis"
+  [seriesGroups]="seriesGroups"
+  #subjectLineChart>
 </jqxChart>
+<div class="ui labeled icon primary button" (click)="printChart()">
+  <i class="icon print"></i>
+  Print
+</div>

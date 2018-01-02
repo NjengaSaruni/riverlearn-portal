@@ -55,14 +55,35 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
     };
 
   colorScheme: string = "scheme01";
+  markThreshHold = 70;
+  markThreshLow = 30;
 
   seriesGroups: any[] = [{
     type: "column",
     orientation: "vertical",
     series: [{
       dataField: "Mean",
-      displayText: "Mean for the class"
-    }]
+      displayText: "Mean for the class",
+      colorFunction: (value: any, itemIndex: any, serie: any, group: any): any => {
+        return (value <= this.markThreshHold) ? '#0e5a77' : '#cd9a36';
+      },
+      showLabels: true
+    }],
+    bands:
+      [
+        {
+          minValue: this.markThreshHold,
+          maxValue: this.markThreshHold,
+          lineWidth: 1,
+          color: 'green'
+        },
+        {
+          minValue: this.markThreshLow,
+          maxValue: this.markThreshLow,
+          lineWidth: 1,
+          color: 'red'
+        }
+      ]
   }];
 
   isBrazilAdded = false;

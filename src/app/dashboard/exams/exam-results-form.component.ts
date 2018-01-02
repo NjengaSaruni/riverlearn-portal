@@ -54,7 +54,7 @@ export class ExamResultsFormComponent implements OnInit {
     public snackBar: MatSnackBar,
   ) {}
 
-  public ngOnInit(){
+  ngOnInit(){
     this.titleService.setTitle("Examinations | Results Form");
 
     this.getStudents();
@@ -147,6 +147,7 @@ export class ExamResultsFormComponent implements OnInit {
     this.calculateMean();
 
     $('#results-modal').modal('show');
+
   }
 
   getClassExamPaperPerformances(paperId: string) {
@@ -172,7 +173,7 @@ export class ExamResultsFormComponent implements OnInit {
   calculateMean(): void {
 
     if (this.classPaperPerformance == null) {
-      return
+      return;
     }
     let count = 0;
     this.workingTotal = 0;

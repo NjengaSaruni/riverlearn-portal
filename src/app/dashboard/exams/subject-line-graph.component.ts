@@ -18,13 +18,22 @@ declare var $: any;
   styleUrls: ['./subject-line-graph.component.css'],
 })
 export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
+
   examResults: ClassExamResult[];
   classes: Class[];
   levels: Level[];
   selectedLevel: Level;
   selectedClass: Class;
 
+  protected loadingGraph;
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
+
   @ViewChild('subjectLineChart') subjectLineChart: jqxChartComponent;
+  private markThreshLow: number = 30;
+  private markThreshHold: number = 70;
 
   constructor(
     private examService: ExamService,
@@ -69,9 +78,26 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   colorScheme: string = "scheme01";
 
   seriesGroups: any[] = [{
-    type: "line",
+    type: "spline",
     alignEndPointsWithIntervals: true,
-    series: []
+    series: [
+      { emptyPointsDisplay: 'skip', displayText: 'Value', lineWidth: 2, symbolSize: 8, symbolType: 'circle' }
+    ],
+    bands:
+      [
+        {
+          minValue: this.markThreshHold,
+          maxValue: this.markThreshHold,
+          lineWidth: 1,
+          color: 'green'
+        },
+        {
+          minValue: this.markThreshLow,
+          maxValue: this.markThreshLow,
+          lineWidth: 1,
+          color: 'red'
+        }
+      ]
   }];
 
   getLevels(): void {
@@ -93,7 +119,9 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   getExamResults(): void {
     this.examService.getExamResults(null, this.selectedClass.id)
       .subscribe(
-        results => this.randomize(results),
+        results => {
+          this.renderGraph(results);
+        },
         error => this.openSnackBar(error)
       );
   }
@@ -104,6 +132,11 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   }
 
   onSelectClass(_class: Class): void {
+    if(_class == this.selectedClass){
+      this.openSnackBar("You selected the same class!")
+      return
+    }
+    this.loadingGraph = true;
     this.selectedClass = _class;
     this.getExamResults();
   }
@@ -118,7 +151,30 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
     $('.ui.dropdown').dropdown();
   }
 
-  randomize(results: ClassExamResult[]): void {
+
+  printChart(): void {
+    let content = this.subjectLineChart.host[0].outerHTML;
+    let newWindow = window.open('', '', 'width=800, height=500'),
+      document = newWindow.document.open(),
+      pageContent =
+        '<!DOCTYPE html>' +
+        '<html>' +
+        '<head>' +
+        '<meta charset="utf-8" />' +
+        '<title>jQWidgets Chart</title>' +
+        '</head>' +
+        '<body>' + content + '</body></html>';
+    try {
+      document.write(pageContent);
+      document.close();
+      newWindow.print();
+      newWindow.close();
+    }
+    catch (error) {
+    }
+  }
+
+  renderGraph(results: ClassExamResult[]): void {
     let subjects: any[] = [];
     this.seriesGroups[0].series = [];
 
@@ -147,6 +203,7 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
       this.resultsData.push(obj);
     }
 
-    this.subjectLineChart.update()
+    this.subjectLineChart.update();
+    this.loadingGraph = false;
   }
 }
