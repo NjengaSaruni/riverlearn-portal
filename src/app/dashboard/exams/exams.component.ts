@@ -27,6 +27,8 @@ export class ExamsComponent implements OnInit {
 
   public ngOnInit(){
     this.titleService.setTitle("Examinations");
+
+    $('.ui.dropdown').dropdown();
   }
 
   openSnackBar(message? : string, duration: number = 3000) {

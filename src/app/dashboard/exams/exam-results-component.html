@@ -8,38 +8,71 @@
       <div class="ui form blue message">
         <div class="ui three fields">
           <div class="field">
-            <div class="ui fluid search selection dropdown" id="levels-dropdown">
-              <input name="user" type="hidden">
-              <i class="dropdown icon"></i>
-              <div class="default text">Select Level</div>
+            <div class="ui floating dropdown labeled icon fluid  fluid button" id="levels-dropdown">
+              <i class="filter icon"></i>
+              <span class="text">Select Level</span>
               <div class="menu">
-                <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
-                  {{ level.name }}
+                <div class="ui icon search input">
+                  <i class="search icon"></i>
+                  <input placeholder="Search levels..." type="text">
+                </div>
+                <div class="divider"></div>
+                <div class="header">
+                  <i class="tags icon"></i>
+                  Levels
+                </div>
+                <div class="scrolling menu">
+                  <div class="item" *ngFor="let level of levels" (click)="onSelectLevel(level)">
+                    <div class="ui teal empty circular label"></div>
+                    {{ level.name }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="field">
-            <div class="ui fluid search selection dropdown">
-              <input name="user" type="hidden">
-              <i class="dropdown icon"></i>
-              <div class="default text">Select Class</div>
+            <div class="ui floating dropdown labeled icon fluid button">
+              <i class="filter icon"></i>
+              <span class="text">Select Class</span>
               <div class="menu">
-                <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
-                  {{ class.name }}
+                <div class="ui icon search input">
+                  <i class="search icon"></i>
+                  <input placeholder="Search classes..." type="text">
+                </div>
+                <div class="divider"></div>
+                <div class="header">
+                  <i class="tags icon"></i>
+                  Classes
+                </div>
+                <div class="scrolling menu">
+                  <div class="item" *ngFor="let class of classes" (click)="onSelectClass(class)">
+                    <div class="ui red empty circular label"></div>
+                    {{ class.name }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="field">
-            <div class="ui fluid search selection dropdown">
-              <input name="user" type="hidden">
-              <i class="dropdown icon"></i>
-              <i class="loading notched circle icon" *ngIf="loadingResults"></i>
-              <div class="default text">Select Result</div>
+            <div class="ui floating dropdown labeled icon fluid  fluid button">
+              <i class="filter icon"></i>
+              <span class="text">Select Result</span>
               <div class="menu">
-                <div class="item"  *ngFor="let result of examResults" (click)="onSelectResult(result)">
-                  {{ result.exam.name }}
+                <div class="ui icon search input">
+                  <i class="search icon" *ngIf="!loadingResults"></i>
+                  <i class="loading icon" *ngIf="loadingResults"></i>
+                  <input placeholder="Search results..." type="text">
+                </div>
+                <div class="divider"></div>
+                <div class="header">
+                  <i class="tags icon"></i>
+                  Results
+                </div>
+                <div class="scrolling menu">
+                  <div class="item" *ngFor="let result of examResults" (click)="onSelectResult(result)">
+                    <div class="ui teal empty circular label"></div>
+                    {{ result.exam.name }}
+                  </div>
                 </div>
               </div>
             </div>

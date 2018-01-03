@@ -18,8 +18,7 @@ declare var $: any;
   styleUrls: ['./subject-line-graph.component.css'],
 })
 export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
-
-  examResults: ClassExamResult[];
+  loadingResults: boolean;
   classes: Class[];
   levels: Level[];
   selectedLevel: Level;
@@ -31,9 +30,9 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   protected value = 50;
   protected bufferValue = 75;
 
+  protected firstLoad = true;
+
   @ViewChild('subjectLineChart') subjectLineChart: jqxChartComponent;
-  private markThreshLow: number = 30;
-  private markThreshHold: number = 70;
 
   constructor(
     private examService: ExamService,
@@ -42,25 +41,20 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   ){}
 
   ngOnInit(): void {
-    $('#levels-dropdown').dropdown();
 
-
-    $(document).ready(function () {
-      $('.ui.dropdown').dropdown();
-    })
+    $('.ui.button.dropdown')
+      .dropdown();
 
     this.getLevels();
   }
 
   ngAfterViewInit(): void {
     this.subjectLineChart.update();
-    $('.ui.dropdown').dropdown()
 
-
-    $(document).ready(function () {
-      $('.ui.dropdown').dropdown();
-    })
+    $('.ui.button.dropdown')
+      .dropdown();
   }
+
 
   resultsData: Array<any> = [];
 
@@ -70,12 +64,10 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
 
   valueAxis: any =
     {
-      visible: true,
-      // minValue: 0,
-      // maxValue: 100
+      visible: true
     };
 
-  colorScheme: string = "scheme01";
+  colorScheme: string = "scheme02";
 
   seriesGroups: any[] = [{
     type: "spline",
@@ -83,21 +75,6 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
     series: [
       { emptyPointsDisplay: 'skip', displayText: 'Value', lineWidth: 2, symbolSize: 8, symbolType: 'circle' }
     ],
-    bands:
-      [
-        {
-          minValue: this.markThreshHold,
-          maxValue: this.markThreshHold,
-          lineWidth: 1,
-          color: 'green'
-        },
-        {
-          minValue: this.markThreshLow,
-          maxValue: this.markThreshLow,
-          lineWidth: 1,
-          color: 'red'
-        }
-      ]
   }];
 
   getLevels(): void {
@@ -136,6 +113,7 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
       this.openSnackBar("You selected the same class!")
       return
     }
+    this.loadingResults = true;
     this.loadingGraph = true;
     this.selectedClass = _class;
     this.getExamResults();
@@ -147,10 +125,16 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openDropdown(): void {
-    $('.ui.dropdown').dropdown();
-  }
+  openDropdown(event: any): void {
+    if(this.firstLoad){
+      $(event.target).dropdown('toggle');
 
+      $('.ui.button.dropdown')
+        .dropdown();
+
+      this.firstLoad = false;
+    }
+  }
 
   printChart(): void {
     let content = this.subjectLineChart.host[0].outerHTML;
@@ -199,7 +183,7 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
         let key = performance.paper.subject.name;
         obj[key] = performance.mean;
       }
-      console.log(obj);
+
       this.resultsData.push(obj);
     }
 
