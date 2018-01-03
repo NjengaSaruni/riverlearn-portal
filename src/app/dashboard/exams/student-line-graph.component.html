@@ -1,21 +1,37 @@
-<div class="ui floating dropdown labeled icon button" (click)="toggleDropdown()" id="students-search-dropdown">
+<div class="ui floating dropdown labeled icon fluid  fluid button"
+     id="students-search-dropdown" (click)="openDropdown($event)">
   <i class="filter icon"></i>
-  <span class="text">Filter Posts</span>
+  <span class="text">Select Student</span>
   <div class="menu">
     <div class="ui icon search input">
       <i class="search icon"></i>
-      <input placeholder="Search tags..." type="text">
+      <input placeholder="Search levels..." type="text">
     </div>
     <div class="divider"></div>
     <div class="header">
       <i class="tags icon"></i>
-      Tag Label
+      Students
     </div>
     <div class="scrolling menu">
-      <div class="item">
-        <div class="ui red empty circular label"></div>
-        Important
+      <div class="item" *ngFor="let student of students" (click)="onSelectStudent(student)">
+        <div class="ui teal empty circular label"></div>
+        {{ student.user.full_name }} -- {{ student.current_class.name }}
       </div>
     </div>
   </div>
+</div>
+<div class="ui filler middle aligned center aligned" *ngIf="!selectedStudent">
+  <h3> Please search for student name above</h3>
+</div>
+<jqxChart
+  [width]="'100%'" [height]="500"
+  [colorScheme]="colorScheme"
+  [source]="resultsData"
+  [xAxis]="xAxis" [valueAxis]="valueAxis"
+  [seriesGroups]="seriesGroups"
+  #studentLineChart>
+</jqxChart>
+<div class="ui labeled icon primary button" (click)="printChart()">
+  <i class="icon print"></i>
+  Print
 </div>

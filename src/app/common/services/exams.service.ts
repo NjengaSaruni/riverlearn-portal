@@ -30,6 +30,7 @@ export class ExamService extends CommonService {
     params.set('q', q);
     params.set('_class', _class);
     params.set('exam', exam);
+
     return this.makeRequest(this.examResultsUrl, 'GET', null, params)
   }
 
@@ -119,6 +120,14 @@ export class ExamService extends CommonService {
   getClassExamPaperPerformance(id: string): Observable<ClassExamPaperPerformance> {
     id += '/';
     return this.makeRequest(this.classPaperPerformancesUrl + id, 'GET');
+  }
+
+  getStudentExamPaperPerformances(q?: string, student?: string, exam?: string): Observable<StudentPaperPerformance[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', q);
+    params.set('student', student);
+    params.set('exam', exam);
+    return this.makeRequest(this.studentPaperPerformancesUrl, 'GET', null, params);
   }
 
   patchStudentPaperPerformance(id: string, mark: number): Observable<StudentPaperPerformance> {
