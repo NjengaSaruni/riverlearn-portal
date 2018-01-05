@@ -5,7 +5,7 @@
   <div class="menu">
     <div class="ui icon search input">
       <i class="search icon"></i>
-      <input placeholder="Search levels..." type="text">
+      <input placeholder="Search for student..." type="text">
     </div>
     <div class="divider"></div>
     <div class="header">
@@ -20,18 +20,194 @@
     </div>
   </div>
 </div>
-<div class="ui filler middle aligned center aligned" *ngIf="!selectedStudent">
-  <h3> Please search for student name above</h3>
+<div class="ui celled stackable grid">
+  <div class="ui ten wide column">
+    <jqxChart
+      [title]="title" [description]="description"
+      [width]="'100%'" [height]="500"
+      [colorScheme]="colorScheme"
+      [source]="resultsData"
+      [xAxis]="xAxis" [valueAxis]="valueAxis"
+      [seriesGroups]="seriesGroups"
+      #studentLineChart>
+    </jqxChart>
+  </div>
+  <div class="ui six wide column">
+    <mat-tab-group class="demo-tab-group">
+      <mat-tab label="Per recent exams" *ngFor="let exam of points" >
+
+        <ng-template mat-tab-label>
+          <div (click)="getStudentPerformances(exam.Id)" class="ui header">{{ exam.Exam }}</div>
+        </ng-template>
+
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Mark</th>
+            <th>Rank</th>
+          </tr></thead>
+          <tbody>
+          <tr *ngFor="let performance of examPerformances">
+            <td>{{ performance.class_performance.paper.subject.name }}</td>
+            <td>{{ performance.mark }}</td>
+            <td>
+              {{ performance.rank }}
+              <div class="ui teal right ribbon label" *ngIf="performance.rank == 1">First</div>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr><th colspan="3">
+            <div class="ui right floated pagination menu">
+              <a class="icon item">
+                <i class="left chevron icon"></i>
+              </a>
+              <a class="item">1</a>
+              <a class="item">2</a>
+              <a class="item">3</a>
+              <a class="item">4</a>
+              <a class="icon item">
+                <i class="right chevron icon"></i>
+              </a>
+            </div>
+          </th>
+          </tr></tfoot>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
 </div>
-<jqxChart
-  [width]="'100%'" [height]="500"
-  [colorScheme]="colorScheme"
-  [source]="resultsData"
-  [xAxis]="xAxis" [valueAxis]="valueAxis"
-  [seriesGroups]="seriesGroups"
-  #studentLineChart>
-</jqxChart>
-<div class="ui labeled icon primary button" (click)="printChart()">
-  <i class="icon print"></i>
-  Print
+
+<div class="ui bottom attached blue segment">
+
+  <div class="ui top attached tabular menu">
+    <div class="item">
+      <div class="ui labeled icon primary button" (click)="toggleComments()">
+        <i class="icon comments"></i>
+        Comments
+      </div>
+    </div>
+    <div class="item">
+      <div class="ui labeled icon right floated primary button" (click)="printChart()">
+        <i class="icon print"></i>
+        Print Chart
+      </div>
+
+      <div class="ui labeled icon right floated primary button" (click)="saveAsPDF()">
+        <i class="icon file pdf outline"></i>
+        Save as PDF
+      </div>
+      <div class="ui labeled icon right floated primary button" (click)="saveAsPNG()">
+        <i class="icon file image outline"></i>
+        Save as PNG
+      </div>
+      <div class="ui labeled icon right floated primary button" (click)="saveAsJPEG()">
+        <i class="icon image"></i>
+        Save as JPEG
+      </div>
+
+      <div class="ui buttons">
+        <div class="ui labeled icon right floated primary button" (click)="saveAsJPEG()">
+          <i class="icon thumbs up"></i>
+          Like
+        </div>
+        <div class="ui labeled icon right floated primary button" (click)="saveAsJPEG()">
+          <i class="icon thumbs down"></i>
+          Dislike
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="content">
+    <div class="ui comments" style="display:none;" id="comments">
+      <form class="ui reply form">
+        <div class="ui field">
+          <mat-form-field>
+            <textarea matInput placeholder="Your comment on this exam" class="mat-input"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="ui primary right floated labeled submit icon button">
+          <i class="icon edit"></i> Add Reply
+        </div>
+      </form>
+      <div class="comment">
+        <a class="avatar">
+          <img src="/images/avatar/small/matt.jpg">
+        </a>
+        <div class="content">
+          <a class="author">Matt</a>
+          <div class="metadata">
+            <span class="date">Today at 5:42PM</span>
+          </div>
+          <div class="text">
+            How artistic!
+          </div>
+          <div class="actions">
+            <a class="reply">Reply</a>
+          </div>
+        </div>
+      </div>
+      <div class="comment">
+        <a class="avatar">
+          <img src="/images/avatar/small/elliot.jpg">
+        </a>
+        <div class="content">
+          <a class="author">Elliot Fu</a>
+          <div class="metadata">
+            <span class="date">Yesterday at 12:30AM</span>
+          </div>
+          <div class="text">
+            <p>This has been very useful for my research. Thanks as well!</p>
+          </div>
+          <div class="actions">
+            <a class="reply">Reply</a>
+          </div>
+        </div>
+        <div class="comments">
+          <div class="comment">
+            <a class="avatar">
+              <img src="/images/avatar/small/jenny.jpg">
+            </a>
+            <div class="content">
+              <a class="author">Jenny Hess</a>
+              <div class="metadata">
+                <span class="date">Just now</span>
+              </div>
+              <div class="text">
+                Elliot you are always so right :)
+              </div>
+              <div class="actions">
+                <a class="reply">Reply</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="comment">
+        <a class="avatar">
+          <img src="/images/avatar/small/joe.jpg">
+        </a>
+        <div class="content">
+          <a class="author">Joe Henderson</a>
+          <div class="metadata">
+            <span class="date">5 days ago</span>
+          </div>
+          <div class="text">
+            Dude, this is awesome. Thanks so much
+          </div>
+          <div class="actions">
+            <a class="reply">Reply</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
+

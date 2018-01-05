@@ -39,6 +39,7 @@ export class StudentPaperPerformance extends AbstractBase{
   student: Student;
   paper: ExamPaper;
   mark: number;
+  rank: number;
   grade: Grade;
   class_performance: ClassExamPaperPerformance;
   comments: _Comment[];

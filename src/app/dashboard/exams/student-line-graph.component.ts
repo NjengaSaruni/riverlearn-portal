@@ -21,10 +21,12 @@ declare var $: any;
 export class StudentLineGraphComponent implements OnInit {
   @ViewChild('studentLineChart') studentLineChart: jqxChartComponent;
 
+  examPerformances: StudentPaperPerformance[];
   studentPerformances: StudentPaperPerformance[];
   selectedStudent: Student;
   firstLoad: boolean = true;
   students: Student[];
+  points: any[] = [];
 
   resultsData: Array<any> = [];
 
@@ -69,12 +71,18 @@ export class StudentLineGraphComponent implements OnInit {
       )
   }
 
-  getStudentPerformances(): void {
-      this.examService.getStudentExamPaperPerformances(null, this.selectedStudent.id)
+  getStudentPerformances(exam?: string): void {
+      console.log(exam);
+      this.examService.getStudentExamPaperPerformances(null, this.selectedStudent.id, exam)
         .subscribe(
           performances => {
-            this.studentPerformances = performances;
-            this.renderGraph(performances);
+            if(!exam){
+              this.studentPerformances = performances;
+              this.renderGraph(performances);
+            }
+            else{
+              this.examPerformances = performances;
+            }
           },
           error => this.openSnackBar(error)
         )
@@ -83,13 +91,14 @@ export class StudentLineGraphComponent implements OnInit {
   renderGraph(performances: StudentPaperPerformance[]): void {
     let subjects: any[] = [];
     let exams: any[] = [];
-    let points: any[] = [];
 
+    this.examPerformances = [];
     this.seriesGroups[0].series = [];
 
     this.title = this.selectedStudent.user.first_name + '\'s trend per subject';
     this.description = 'Performance over the past exams';
 
+    // Prepare subjects uniquely
     for(let performance of performances) {
       let subject =  performance.class_performance.paper.subject.name;
 
@@ -104,29 +113,79 @@ export class StudentLineGraphComponent implements OnInit {
     }
 
     this.resultsData = [];
+
+    if(this.points.length > 0) {
+      this.points.length = 0;
+    }
+
+    // Prepare exams uniquely
     for(let performance of performances){
       let exam_id = performance.class_performance.paper.exam.id;
       let exam_name = performance.class_performance.paper.exam.name;
+      let exam_create_time = performance.class_performance.paper.exam.created_at;
 
       if(! exams.includes(exam_id)){
         let obj = {};
         obj['Exam'] = exam_name;
-        points.push(obj);
+        obj['Id'] = exam_id;
+        obj['Time'] = exam_create_time;
+        this.points.push(obj);
         exams.push(exam_id);
       }
 
       let key = performance.class_performance.paper.subject.name;
-      points.find(item => item.Exam == exam_name)[key] = performance.mark;
+      this.points.find(item => item.Exam == exam_name)[key] = performance.mark;
 
     }
 
-    for(let point of points){
+    // Sort exams by time
+    this.points.sort((a, b) => {
+      if(a.Time < b.Time) {
+        return -1;
+      }
+      return 1;
+    });
+
+    // Push to chartData
+    for(let point of this.points){
       this.resultsData.push(point);
     }
 
     this.studentLineChart.update();
   }
 
+
+  printChart(): void {
+    let content = this.studentLineChart.host[0].outerHTML;
+    let newWindow = window.open('', '', 'width=800, height=500'),
+      document = newWindow.document.open(),
+      pageContent =
+        '<!DOCTYPE html>' +
+        '<html>' +
+        '<head>' +
+        '<meta charset="utf-8" />' +
+        '<title>jQWidgets Chart</title>' +
+        '</head>' +
+        '<body>' + content + '</body></html>';
+    try {
+      document.write(pageContent);
+      document.close();
+      newWindow.print();
+      newWindow.close();
+    }
+    catch (error) {
+    }
+  }
+
+  saveAsJPEG() {
+    this.studentLineChart.saveAsJPEG(this.selectedStudent.user.full_name + '\'s' + ' performance trend' + '.jpeg', 'https://www.jqwidgets.com/export_server/export.php');
+  };
+  saveAsPNG() {
+    this.studentLineChart.saveAsPNG(this.selectedStudent.user.full_name + '\'s' + ' performance trend' + '.png', 'https://www.jqwidgets.com/export_server/export.php');
+  };
+  saveAsPDF() {
+    this.studentLineChart.saveAsPDF(this.selectedStudent.user.full_name + '\'s' + ' performance trend' + '.pdf', 'https://www.jqwidgets.com/export_server/export.php');
+  };
 
   openDropdown(event: any): void {
     if(this.firstLoad){
@@ -143,6 +202,10 @@ export class StudentLineGraphComponent implements OnInit {
     this.selectedStudent = student;
 
     this.getStudentPerformances();
+  }
+
+  toggleComments(): void {
+    $('#comments').transition('scale');
   }
   openSnackBar(message? : string, duration: number = 3000) {
     this.snackBar.open(message, 'Dismiss' ,{

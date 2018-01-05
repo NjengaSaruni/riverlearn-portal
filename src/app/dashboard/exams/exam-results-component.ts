@@ -185,13 +185,18 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
 
     let total = 0;
     let i = 0;
+
+
+    // Prepare subjects uniquely
     for(let performance of result.paper_performances){
       total += performance.mean;
       i++;
       this.resultsData.push({
         Subject: performance.paper.subject.name,
         Mean: parseFloat(performance.mean.toFixed(2))
-      })
+      });
+
+
     }
 
     if(i > 0){
@@ -202,7 +207,7 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
     this.myChart.update();
   }
 
-  onChartClick(event: any): void {
-      console.log(event);
+  chartEvent(event: any): any {
+      console.log(event.args);
   }
 }

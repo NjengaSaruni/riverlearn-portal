@@ -17,3 +17,30 @@
   height: 400px;
   padding-top: 100px;
 }
+
+.mat-input {
+  border: none !important;
+  padding: 0px !important;
+  color: #0e5a77;
+  height: auto;
+}
+
+.ui.comments {
+  margin: 1.5em 0em;
+  margin-bottom: 1.5em;
+  max-width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.ui.comments .reply.form textarea {
+  font-size: 1em;
+  height: inherit;
+}
+.ui.form textarea:not([rows]) {
+  height: inherit;
+  min-height: inherit;
+  max-height: 24em;
+}

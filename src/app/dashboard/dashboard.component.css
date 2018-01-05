@@ -94,6 +94,10 @@ a {
   box-shadow: 5px 5px 10px rgba(2, 3, 3, 0.16);
 }
 
+.ui.pointing.menu {
+  overflow-x: auto;
+}
+
 .ui.pointing.menu .active.item {
   background: rgba(0,0,0,.05);
   color: #0e5a77;
