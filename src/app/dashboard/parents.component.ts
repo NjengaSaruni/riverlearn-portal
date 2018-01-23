@@ -15,10 +15,10 @@ declare var $: any;
 })
 
 export class ParentsComponent implements OnInit {
-  private parents: Parent[];
-  private contentReady: boolean;
-  private searchTextEmpty: boolean;
-  private searchText: string;
+  protected parents: Parent[];
+  protected contentReady: boolean;
+  protected searchTextEmpty: boolean;
+  protected searchText: string;
 
   protected color = 'primary';
   protected mode = 'indeterminate';

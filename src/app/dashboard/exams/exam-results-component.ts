@@ -12,7 +12,7 @@ import {DivisionService} from "../../common/services/divisions.service";
 import {ExamService} from "../../common/services/exams.service";
 import {MatSnackBar} from "@angular/material";
 import {Class, InstitutionSubject, Level} from "../../common/models/divisions.models";
-import {ClassExamResult, Exam} from "../../common/models/exams.models";
+import {ClassExamPaperPerformance, ClassExamResult, Exam} from "../../common/models/exams.models";
 import { jqxChartComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxchart';
 
 declare var $: any;
@@ -24,6 +24,8 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class ExamResultsComponent implements OnInit, AfterViewInit {
+  loadingPaperPerformances: boolean;
+  retrievingResults: boolean;
   meanForResult: number;
   loadingResults: boolean;
   subjects: InstitutionSubject[];
@@ -40,6 +42,11 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   selectedLevel: Level;
   levels: Level[];
   classes: Class[];
+
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
 
   resultsData = [];
 
@@ -87,6 +94,7 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   }];
 
   isBrazilAdded = false;
+  protected selectedPaperPerformance: ClassExamPaperPerformance;
 
   constructor(
     private divisionService: DivisionService,
@@ -152,7 +160,11 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   getExamResults(): void {
       this.examService.getExamResults(null, this.selectedClass.id)
         .subscribe(
-          results => this.examResults = results,
+          results => {
+            this.examResults = results;
+            this.loadingResults = false;
+            this.retrievingResults = false;
+          },
           error => this.openSnackBar(error)
         );
   }
@@ -171,12 +183,25 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   }
 
   onSelectClass(_class: Class): void {
+    this.retrievingResults = true;
     this.selectedClass = _class;
     this.getExamResults();
   }
 
+  onFetchResults(): void {
+      this.loadingResults = true;
+      if(this.examResults.length == 0){
+        this.openSnackBar('No results for this class')
+      }
+  }
+
+  onClickClasses(): void {
+    if(! this.selectedLevel) {
+      this.openSnackBar('Please select a level');
+    }
+  }
+
   onSelectResult(result: ClassExamResult): void {
-    this.loadingResults = true;
     this.title = result.exam.name;
     this.description = result._class.name;
     this.selectedResult = result;
@@ -193,9 +218,9 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
       i++;
       this.resultsData.push({
         Subject: performance.paper.subject.name,
-        Mean: parseFloat(performance.mean.toFixed(2))
+        Mean: parseFloat(performance.mean.toFixed(2)),
+        Id: performance.id
       });
-
 
     }
 
@@ -203,11 +228,29 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
       this.meanForResult = total/i;
     }
 
-    this.loadingResults = false;
     this.myChart.update();
   }
 
   chartEvent(event: any): any {
-      console.log(event.args);
+    this.loadingPaperPerformances = true;
+    let id: string = this.resultsData[event.args['elementIndex']].Id;
+    this.getPerformance(id);
+  }
+
+  selectPerformance(performance?: ClassExamPaperPerformance): void {
+    this.getPerformance(performance.id)
+  }
+
+  private getPerformance(id: string) {
+    $('#student-results').modal('refresh');
+    this.examService.getClassExamPaperPerformance(id)
+      .subscribe(
+        performance => {
+          this.selectedPaperPerformance = performance;
+          this.loadingPaperPerformances = false;
+          $('#student-results').modal('show')
+        },
+        error => this.openSnackBar(error)
+      )
   }
 }

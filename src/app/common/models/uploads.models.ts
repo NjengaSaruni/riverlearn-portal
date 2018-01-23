@@ -11,6 +11,6 @@ export class File extends AbstractBase {
 
 export class Image extends AbstractBase {
   caption: string;
-  url: string;
+  url: any;
   description: string
 }

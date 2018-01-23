@@ -19,6 +19,7 @@ import {StudentFormComponent} from './student-form.component';
 import {ParentsComponent} from './parents.component';
 import {ParentFormComponent} from './parent-form.component';
 import {TeacherFormComponent} from './teacher-form.component';
+import {StudentDetailComponent} from "./student-detail.component";
 
 
 const dashboardRoutes: Routes = [
@@ -33,6 +34,7 @@ const dashboardRoutes: Routes = [
           { path: 'profile', component: UserDetailComponent },
           { path: 'graphs', component: SampleGraphsComponent },
           { path: 'students', component: StudentsComponent},
+          { path: 'students/:id', component: StudentDetailComponent },
           { path: 'teachers', component: TeachersComponent },
           { path: 'parents', component: ParentsComponent },
           {
@@ -65,8 +67,6 @@ const dashboardRoutes: Routes = [
   },
 ];
 
-
-
 export const routing: ModuleWithProviders = RouterModule.forChild(dashboardRoutes);
 export const dashboardComponents = [
   DashboardComponent,
@@ -78,9 +78,11 @@ export const dashboardComponents = [
   ParentFormComponent,
   RequestsComponent,
   SampleGraphsComponent,
+  StudentDetailComponent,
+  StudentFormComponent,
   StudentsComponent,
   TeachersComponent,
   TeacherFormComponent,
   UserDetailComponent,
-  StudentFormComponent,
+
 ];

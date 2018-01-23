@@ -17,8 +17,6 @@ declare var $: any;
 export class ExamsComponent implements OnInit {
   private user: User;
 
-  private errorMessage: string;
-
   constructor(
     private userService: UserService,
     private titleService: Title,
@@ -27,6 +25,7 @@ export class ExamsComponent implements OnInit {
 
   public ngOnInit(){
     this.titleService.setTitle("Examinations");
+    this.getUser();
 
     $('.ui.dropdown').dropdown();
   }

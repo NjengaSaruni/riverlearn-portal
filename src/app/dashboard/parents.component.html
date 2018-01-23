@@ -1,5 +1,4 @@
 <mat-progress-bar *ngIf="!contentReady"
-                  class="example-margin"
                   [color]="color"
                   [mode]="mode"
                   [value]="value"
@@ -22,8 +21,8 @@
       <i class="search link icon" (click)="searchParents($event);"></i>
     </div>
   </div>
-  <div class="ui people shape">
-    <div class="active side" *ngFor="let parent of parents">
+  <div class="ui link cards">
+    <div class="card" *ngFor="let parent of parents">
       <div class="image">
         <img src="/images/avatar/tom.jpg">
       </div>

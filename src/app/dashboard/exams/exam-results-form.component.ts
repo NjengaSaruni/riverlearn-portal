@@ -114,6 +114,7 @@ export class ExamResultsFormComponent implements OnInit {
   }
 
   selectExam(paper: ExamPaper, exam: Exam, _class: Class): void {
+    this.titleService.setTitle('Examinations | Results ' + exam.name + ' ' + _class.name);
     this.selectedStudent = null;
     this.studentsReady = false;
     this.isLoading = true;
@@ -194,13 +195,14 @@ export class ExamResultsFormComponent implements OnInit {
 
   onSaveResults(event: any, performance: StudentPaperPerformance){
     this.studentsReady = false;
-    this.examService.patchStudentPaperPerformance(performance.id, performance.mark)
+    this.examService.patchStudentPaperPerformance(performance.id, event.target.value)
       .subscribe(
-        perf => this.openSnackBar("Saved"),
+        perf => {
+          this.openSnackBar("Saved");
+          this.getClassExamPaperPerformances(this.selectedPaper.id);
+        },
         error => this.openSnackBar(error)
       );
-
-    this.getClassExamPaperPerformances(this.selectedPaper.id);
 
     this.studentsReady = true;
   }

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
-import {AccountType, JoinRequest, Token, User} from '../models/users.models';
+import {AccountType, JoinRequest, Token, User, UserProfile} from '../models/users.models';
 import {CommonService, handleError, JwtHelper } from './common.service';
 
 @Injectable()
@@ -19,6 +19,7 @@ export class UserService extends CommonService {
   private createUsersUrl = this.usersUrl + 'create/';
   private accountTypesUrl = this.usersUrl + 'account_types/';
   private joinRequestsUrl = this.usersUrl + 'join_requests/';
+  private profilesUrl = this.usersUrl + 'profiles/';
 
   protected user: User;
 
@@ -116,5 +117,16 @@ export class UserService extends CommonService {
   createInstitutionJoinRequest(
     institution: string, notes: string = null): Observable<JoinRequest> {
     return this.makeRequest(this.joinRequestsUrl,'POST', { institution, notes });
+  }
+
+  getUserProfiles(created_by?: string): Observable<UserProfile[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('created_by', created_by);
+
+    return this.makeRequest(this.profilesUrl , 'GET', null, params)
+  }
+
+  createUserProfile(image?: any, bio?: any): Observable<UserProfile> {
+      return this.makeRequest(this.profilesUrl, 'POST', {image, bio})
   }
 }

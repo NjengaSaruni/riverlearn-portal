@@ -5,6 +5,8 @@
 import { Component, OnInit} from '@angular/core';
 import {DivisionService} from '../common/services/divisions.service';
 import {Teacher} from '../common/models/divisions.models';
+import {UserService} from "../common/services/user.service";
+import {User} from "../common/models/users.models";
 
 declare var $: any;
 
@@ -15,16 +17,23 @@ declare var $: any;
 })
 
 export class TeachersComponent implements OnInit {
-  private teachers: Teacher[];
-  private contentReady: boolean;
-  constructor(
-    private divisionService: DivisionService
-  ) {
+  user: User;
+  protected teachers: Teacher[];
+  protected contentReady: boolean;
 
-  }
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
+
+  constructor(
+    private divisionService: DivisionService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.getTeachers();
+    this.getUser();
   }
 
   getTeachers() {
@@ -39,6 +48,13 @@ export class TeachersComponent implements OnInit {
       );
   }
 
+  getUser(): void {
+    this.userService.getLoggedInUser()
+      .subscribe(
+        user => this.user = user,
+        error => alert(error)
+      )
+  }
   hideCards() {
     this.getTeachers();
     $('.dimmable.segment').transition({

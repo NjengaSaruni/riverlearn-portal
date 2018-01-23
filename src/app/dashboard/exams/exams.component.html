@@ -1,4 +1,4 @@
-<div class="ui three top attached steps">
+<div class="ui three top attached steps" *ngIf="user?.account_type.name !== 'Parent'">
   <a class="step" routerLink="schedules" routerLinkActive="active">
     <i class="wait icon"></i>
     <div class="content">

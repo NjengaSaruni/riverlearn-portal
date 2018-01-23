@@ -2,15 +2,15 @@
  * Created by saruni on 4/9/17.
  */
 
-import {Component, OnChanges, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {UserService} from '../common/services/user.service';
-import {JoinRequest, User} from '../common/models/users.models';
-import {Class, Parent, Student, Teacher} from '../common/models/divisions.models';
-import {ClassExamResult, Exam, ExamPaper} from '../common/models/exams.models';
-import {DivisionService} from '../common/services/divisions.service';
-import {ExamService} from '../common/services/exams.service';
-import {Title} from '@angular/platform-browser';
+import {Component, OnChanges, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {UserService} from "../common/services/user.service";
+import {JoinRequest, User} from "../common/models/users.models";
+import {Class, Parent, Student, Teacher} from "../common/models/divisions.models";
+import {ClassExamResult, Exam, ExamPaper} from "../common/models/exams.models";
+import {DivisionService} from "../common/services/divisions.service";
+import {ExamService} from "../common/services/exams.service";
+import {Title} from "@angular/platform-browser";
 
 declare var $: any;
 
@@ -32,6 +32,11 @@ export class DashboardComponent implements OnInit, OnChanges {
   private requests: JoinRequest[];
   private institutionRequests: JoinRequest[];
   private requestSubmitted: boolean = false;
+
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
 
   private errorMessage: string;
 

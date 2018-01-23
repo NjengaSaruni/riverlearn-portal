@@ -9,6 +9,61 @@
   height: 80px;
 }
 
-a {
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-input {
+  border: none !important;
+  padding: 0px !important;
   color: #0e5a77;
+  height: auto;
+}
+
+.ui.form textarea:not([rows]) {
+  height: inherit;
+  min-height: inherit;
+  max-height: 24em;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.ui.event.segment {
+  padding: 2%;
+  margin: 1%;
+}
+
+.ui.feed > .event > .content > .actions a {
+  padding-left: 3%;
+}
+
+.date {
+  float: right !important;
+}
+
+.ui.message {
+  max-height: 100%;
+}
+
+.ui.feed > .event > .content .summary {
+  margin: 0em;
+  font-size: 1em;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.87);
+  padding-bottom: 4px !important;
+}
+
+.ui.grid {
+  margin: 0;
+}
+
+.action.column{
+  cursor: pointer;
 }

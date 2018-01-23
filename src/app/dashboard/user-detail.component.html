@@ -1,7 +1,82 @@
-<h2>{{loggedInUser?.username}} details!</h2>
-<div>
-  <div>
-    Institution: {{ loggedInUser?.institution.name ? loggedInUser?.institution.name : "No InstitutionSupplied" }}
+<div class="ui stackable grid">
+  <div class="four wide column segment">
+    <div class="ui fluid card">
+      <div class="blurring dimmable image">
+        <div class="ui dimmer">
+          <div class="content">
+            <div class="center">
+              <input type="file" (change)="fileEvent($event)" #fileInput class="inputfile" id="embedpollfileinput" />
+              <label for="embedpollfileinput" class="ui primary floated button">
+                <i class="ui upload icon"></i>
+                Upload new image
+              </label>
+            </div>
+          </div>
+        </div>
+        <img src={{userProfile?.image?.url}} *ngIf="userProfile?.image">
+        <img src="../../images/avatar/nan.jpg"  *ngIf="!userProfile?.image">
+
+
+      </div>
+
+
+      <div class="content">
+        <a class="header"> {{loggedInUser?.full_name}} </a>
+        <div class="meta">
+
+          <span class="left floated date"> Joined on  {{ loggedInUser?.created_at | date: 'mediumDate' }}</span>
+        </div>
+        <div class="description">
+          {{ userProfile?.bio }}
+        </div>
+      </div>
+      <div class="extra content">
+        <span> @{{ loggedInUser?.username }}</span>
+        <span class="right floated star">
+            <i class="edit icon"></i>
+            Edit Profile
+        </span>
+      </div>
+    </div>
+
+  </div>
+  <div class="twelve wide column">
+    <div class="ui fluid card">
+      <div class="content">
+        <div class="header">{{ loggedInUser?.account_type.name }}</div>
+        <div class="meta">Friend</div>
+        <div class="description">
+          Elliot Fu is a film-maker from New York.
+        </div>
+        <!--<div class="ui doubling cards">-->
+        <div class="ui fluid card" *ngFor="let profile of loggedInUser?.profiles">
+          <div class="content">
+            <div class="right floated meta">{{ profile.created_at | date: 'medium' }}</div>
+            <img class="ui avatar image" src="{{ userProfile?.image.url }}"> {{ loggedInUser?.username }}
+          </div>
+          <div class="image">
+            <img src="{{ profile.image?.url }}">
+          </div>
+          <div class="content">
+            <span class="right floated">
+              <i class="heart outline like icon"></i>
+              17 likes
+            </span>
+            <i class="comment icon"></i>
+            3 comments
+          </div>
+          <div class="extra content">
+            <div class="ui large transparent left icon input">
+              <i class="heart outline icon"></i>
+              <input placeholder="Add Comment..." type="text">
+            </div>
+          </div>
+        </div>
+        <!--</div>-->
+
+      </div>
+    </div>
+
   </div>
 </div>
-<button (click)="goBack()">Back</button>
+

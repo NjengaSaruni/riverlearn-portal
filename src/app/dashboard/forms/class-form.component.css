@@ -25,6 +25,10 @@
 .cards {
   color: #0e5a77;
 }
+.ui.cards > .card {
+  width: 23.74%;
+  border-color: #0e5a77;
+}
 
 .blue.button {
   color: #ffffff;

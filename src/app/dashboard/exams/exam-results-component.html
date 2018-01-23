@@ -8,7 +8,7 @@
       <div class="ui form blue message">
         <div class="ui three fields">
           <div class="field">
-            <div class="ui floating dropdown labeled icon fluid  fluid button" id="levels-dropdown">
+            <div class="ui floating dropdown labeled icon fluid button" id="levels-dropdown">
               <i class="filter icon"></i>
               <span class="text">Select Level</span>
               <div class="menu">
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="field">
-            <div class="ui floating dropdown labeled icon fluid button">
+            <div class="ui floating dropdown labeled icon fluid button" (click)="onClickClasses()">
               <i class="filter icon"></i>
               <span class="text">Select Class</span>
               <div class="menu">
@@ -54,10 +54,10 @@
             </div>
           </div>
           <div class="field">
-            <div class="ui floating dropdown labeled icon fluid  fluid button">
+            <div class="ui floating dropdown labeled icon fluid  fluid button" (click)="onFetchResults()">
               <i class="filter icon"></i>
-              <span class="text">Select Result</span>
-              <div class="menu">
+              <span class="text" >Select Result</span>
+              <div class="menu" >
                 <div class="ui icon search input">
                   <i class="search icon" *ngIf="!loadingResults"></i>
                   <i class="loading icon" *ngIf="loadingResults"></i>
@@ -75,9 +75,72 @@
                   </div>
                 </div>
               </div>
+              <mat-progress-bar *ngIf="retrievingResults && loadingResults"
+                class="example-margin"
+                [color]="color"
+                [mode]="mode"
+                [value]="value"
+                [bufferValue]="bufferValue">
+              </mat-progress-bar>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="ui modal" id="student-results">
+        <mat-progress-bar mode="buffer" *ngIf="loadingPaperPerformances"></mat-progress-bar>
+        <div class="header">{{
+            selectedPaperPerformance?.paper.exam.name
+          + ' || '
+          + selectedPaperPerformance?.paper.subject.name
+          + ' || '
+          + selectedPaperPerformance?.student_performances[0].student.current_class.name
+          }}</div>
+        <div class="ui scrolling content">
+          <table class="ui celled selectable padded table">
+            <thead>
+            <tr>
+              <th>Student</th>
+              <th>Mark</th>
+              <th>Rating</th>
+              <th>Rank</th>
+            </tr></thead>
+            <tbody>
+            <tr *ngFor="let performance of selectedPaperPerformance?.student_performances"
+                [ngClass]="{'positive' : performance.mark >= 80 , 'negative': performance.mark < 40 }">
+              <td>
+                <h4 class="ui image header">
+                  <img src="{{performance.student?.user?.profiles[0]?.image?.url }}" class="ui mini rounded image">
+                  <div class="content">
+                    {{performance.student?.user.full_name }}
+                    <div class="sub header">{{performance.student?.registration_number }}
+                    </div>
+                  </div>
+                </h4>
+              </td>
+              <td class="single line">
+                {{ performance.mark }}
+              </td>
+              <td>
+                <div class="ui star rating" data-rating="3" data-max-rating="3">
+                  <i class="icon active" *ngIf="performance.mark > 0"></i>
+                  <i class="icon active" *ngIf="performance.mark >= 20"></i>
+                  <i class="icon active" *ngIf="performance.mark >= 40"></i>
+                  <i class="icon active" *ngIf="performance.mark >= 60"></i>
+                  <i class="icon active" *ngIf="performance.mark >= 80"></i>
+                </div>
+              </td>
+              <td>
+                <a class="ui teal right ribbon label" *ngIf="performance.rank == 1">First</a>
+                <a class="ui teal right ribbon label" *ngIf="performance.rank == 2">Second</a>
+                <a class="ui teal right ribbon label" *ngIf="performance.rank == 3">Third</a>
+                {{performance.rank }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
 
       <div class="ui celled stackable grid">
@@ -94,7 +157,7 @@
         </div>
 
         <div class="ui six wide column">
-          <table class="ui celled striped table">
+          <table class="ui celled striped selectable table">
             <thead>
             <tr>
               <th colspan="3">
@@ -109,7 +172,7 @@
               </th>
             </tr></thead>
             <tbody>
-            <tr *ngFor="let performance of selectedResult?.paper_performances">
+            <tr *ngFor="let performance of selectedResult?.paper_performances" (click)="selectPerformance(performance)">
               <td class="collapsing">
                 <i class="file outline icon"></i> {{ performance.paper.subject.name }}
               </td>
@@ -138,7 +201,7 @@
     </div>
 
   </mat-tab>
-  <mat-tab label="Tab 2">
+  <mat-tab>
     <ng-template mat-tab-label>
       Subject trends per class
     </ng-template>
@@ -155,6 +218,9 @@
     </div>
   </mat-tab>
   <mat-tab label="Per exam means">
+    <ng-template mat-tab-label>
+      Student predicted performances
+    </ng-template>
     <div class="demo-tab-content">
       <table class="ui celled table">
         <thead>

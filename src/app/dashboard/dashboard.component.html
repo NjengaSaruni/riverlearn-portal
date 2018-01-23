@@ -1,6 +1,8 @@
-
 <div class="ui top attached segment">
-  <div class="ui inverted floating fixed top menu">
+  <div class="ui fixed top menu">
+    <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+  </div>
+  <div class="ui inverted fixed top menu">
     <div class="logo item" routerLink="/dashboard/" routerLinkActive="active">
       <div class="ui logo image">
         <img class="ui image" src="/images/logo_plain2.png">
@@ -81,6 +83,7 @@
       </div>
     </div>
   </div>
+
   <div id="dashboard-sidebar" class="ui sidebar vertical tabular inverted menu">
     <div class="ui icon item" routerLink="/dashboard">
       <i class="home icon"></i>
@@ -125,14 +128,12 @@
 </div>
 
 <div class="ui brown segment">
-  <div class="ui relaxed tablet stackable grid">
-    <div class="twelve wide column" >
-      <div class="ui attached message" *ngIf="user?.institution" >
-        <div class="ui pointing menu">
-          <a class="ui chevron item">
-            <i class="icon left chevron"></i>
-          </a>
-          <a class="ui item" routerLinkActive="active" routerLink="/dashboard/graphs">
+  <div class="ui stackable grid">
+    <div class="ui eleven wide column" >
+      <div class="ui attached message" *ngIf="user?.institution">
+
+        <mat-nav-list class="ui pointing menu">
+          <a mat-list-item  class="ui item" routerLinkActive="active" routerLink="/dashboard/graphs">
             <i class="icon dashboard"></i>
             Dashboard
           </a>
@@ -143,7 +144,8 @@
           <a class="ui item"routerLinkActive="active" routerLink="/dashboard/teachers" (click)="showTeachers()">
             <i class="users icon"></i> Staff Room
           </a>
-          <a class="ui item" tabindex="0" (click)="showParents();" routerLink="/dashboard/parents" routerLinkActive="active">
+          <a class="ui item" tabindex="0" (click)="showParents();" routerLink="/dashboard/parents"
+             routerLinkActive="active" *ngIf="user?.account_type.name != 'Parent'">
             <i class="child icon"></i> Parents/Guardians
           </a>
           <a class="ui item" routerLinkActive="active">
@@ -161,10 +163,7 @@
           <a class="ui item" tabindex="0" routerLinkActive="active">
             <i class="talk icon"></i> Discussions
           </a>
-          <a class="ui right chevron item">
-            <i class="icon right chevron"></i>
-          </a>
-        </div>
+        </mat-nav-list>
         <div class="ui horizontal divider"></div>
 
         <div class="ui segment">
@@ -181,7 +180,7 @@
               static; visibility: visible; width: 60px; height: 20px;" title="Twitter Tweet Button" src="https://platform.twitter.com/widgets/tweet_button.85cf65311617c356fe9237c3e6c10afb.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=https%3A%2F%2Friverlearn.com%2F&amp;size=m&amp;text=RiverLearn%20Project%201.0%20is%20amazing!&amp;time=1501623446150&amp;type=share&amp;url=http%3A%2F%2Friverlearn.com&amp;via=RiverLearnInc" data-url="https://riverlearn.com"></iframe>
       </div>
     </div>
-    <div class="four wide column">
+    <div class="ui five wide column message">
       <feed></feed>
     </div>
   </div>

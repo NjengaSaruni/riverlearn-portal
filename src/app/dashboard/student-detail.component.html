@@ -1,0 +1,46 @@
+<mat-progress-bar mode="buffer" *ngIf="!student"></mat-progress-bar>
+<div class="ui stackable grid" *ngIf="student">
+  <div class="four wide column segment">
+    <div class="ui fluid card">
+      <div class="blurring dimmable image">
+        <div class="ui dimmer">
+          <div class="content">
+            <div class="center">
+              <input type="file" (change)="fileEvent($event)" #fileInput class="inputfile" id="embedpollfileinput" />
+              <label for="embedpollfileinput" class="ui primary floated button">
+                <i class="ui upload icon"></i>
+                Upload new image
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <img src={{student?.user?.profiles[0].image.url}} *ngIf="student?.user?.profiles.length > 0">
+        <img src="../../images/avatar/nan.jpg"  *ngIf="student?.user?.profiles.length == 0 && student?.user.gender == 'F'">
+        <img src="../../images/avatar/tom.jpg"  *ngIf="student?.user?.profiles.length == 0 && student?.user.gender == 'M'">
+      </div>
+
+
+      <div class="content">
+        <a class="header" routerLink="/dashboard/students/{{student.id}}"> {{student?.user?.full_name}} </a>
+        <div class="meta">
+          <span> {{ student?.user.gender }}</span>
+          <span class="left floated date"> Joined on  {{ student?.created_at | date: 'mediumDate' }}</span>
+        </div>
+        <div class="description" *ngIf="student?.user?.profiles.length > 0">
+          {{ student?.user?.profiles[0].bio }}
+        </div>
+      </div>
+      <div class="extra content">
+        <span routerLink="/dashboard/students/{{student.id}}"> @{{ student?.user?.username }}</span>
+        <span class="right floated star">
+            <i class="edit icon"></i>
+            Edit Profile
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

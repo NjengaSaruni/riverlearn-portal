@@ -167,7 +167,8 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
         if(! subjects.includes(performance.paper.subject.name)){
           this.seriesGroups[0].series.push({
             dataField: performance.paper.subject.name,
-            displayText: performance.paper.subject.name
+            displayText: performance.paper.subject.name,
+            emptyPointsDisplay: 'connect'
           });
           subjects.push(performance.paper.subject.name)
         }

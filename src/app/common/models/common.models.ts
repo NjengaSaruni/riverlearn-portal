@@ -9,7 +9,7 @@ export abstract class AbstractBareBase {
   id: string;
   active: Boolean;
   deleted: Boolean;
-  created_at: Date;
+  created_at: any;
   updated_at: Date;
 }
 export abstract class AbstractBase extends AbstractBareBase{

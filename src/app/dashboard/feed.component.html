@@ -1,127 +1,75 @@
-<div class="ui floating segment">
-  <div class="ui header">Recent Feed</div>
-  <div class="ui top attached tabular menu">
-    <a class="item active" >
-      Local
-    </a>
-    <a class="item" routerLink="feed">
-      Photos
-    </a>
+<div class="ui modal" id="image-modal">
+  <img [src]="selectedImage?.url" class="ui massive image">
+</div>
+<div class="ui dividing header">Recent Feed</div>
+<div class="ui feed">
+  <div class="ui active inverted dimmer" *ngIf="!contentReady">
+    <div class="ui medium text loader">Loading</div>
   </div>
-  <div class="ui bottom attached segment"><!--[ngClass]="{'loading': !contentReady}"-->
-    <div class="ui feed">
-      <textarea class="ui fluid comment"></textarea>
-      <div class="event">
-        <div class="label">
-          <img src="/images/avatar/tom.jpg">
-        </div>
-        <div class="content">
-          <div class="summary">
-            <a class="user">
-              John Mwangi
-            </a> added a new book
-            <div class="date">
-              1 Hour Ago
-            </div>
-          </div>
-          <div class="meta">
-            <a class="like">
-              <i class="like icon"></i> 4 Likes
-            </a>
-          </div>
-        </div>
+  <div class="ui floating fixed segment event">
+    <div class="label">
+      <img src="{{ userProfile?.image.url }}">
+    </div>
+
+    <div class="ui content">
+      <mat-form-field>
+              <textarea matInput placeholder="Post a question, idea, theory..." class="mat-input"
+                        [(ngModel)]="post" [ngModelOptions]="{standalone: true}"
+                        (focus)="togglePostButton()" (blur)="togglePostButton()" (keyup.enter)="savePost()">
+              </textarea>
+      </mat-form-field>
+      <div class="ui buttons">
+        <input type="file" #imageInput class="inputfile" id="gallery-photo-add" multiple/>
+        <label for="gallery-photo-add" class="ui primary button">
+          <i class="image icon"></i>
+          Attach Files
+        </label>
       </div>
-      <div class="event">
-        <div class="label">
-          <img src="/images/avatar/nan.jpg">
-        </div>
-        <div class="content">
-          <div class="summary">
-            <a class="user">Helen Cheprop</a> added <a>2 new illustrations</a>
-            <div class="date">
-              4 days ago
-            </div>
-          </div>
-          <div class="extra images">
-            <a><img src="/images/wireframe/image.png"></a>
-            <a><img src="/images/wireframe/image.png"></a>
-          </div>
-          <div class="meta">
-            <a class="like">
-              <i class="like icon"></i> 1 Like
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="event">
-        <div class="label">
-          <img src="/images/avatar/nan.jpg">
-        </div>
-        <div class="content">
-          <div class="summary">
-            <a class="user">
-              Jenny Mwala
-            </a> added a results sheet.
-            <div class="date">
-              2 Days Ago
-            </div>
-          </div>
-          <div class="meta">
-            <a class="like">
-              <i class="like icon"></i> 8 Likes
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="event">
-        <div class="label">
-          <img src="/images/avatar/tom.jpg">
-        </div>
-        <div class="content">
-          <div class="summary">
-            <a>Ibrahim Omar</a> started a discussion
-            <div class="date">
-              3 days ago
-            </div>
-          </div>
-          <div class="extra text">
-            Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-          </div>
-          <div class="meta">
-            <a class="like">
-              <i class="like icon"></i> 5 Likes
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="event">
-        <div class="label">
-          <img src="/images/avatar/tom.jpg">
-        </div>
-        <div class="content">
-          <div class="summary">
-            <a>Justus Matiang'i</a> added <a>2 new tutorials</a>
-            <div class="date">
-              4 days ago
-            </div>
-          </div>
-          <div class="extra images">
-            <a><img src="/images/wireframe/image.png"></a>
-            <a><img src="/images/wireframe/image.png"></a>
-          </div>
-          <div class="meta">
-            <a class="like">
-              <i class="like icon"></i> 41 Likes
-            </a>
-          </div>
-          <div class="meta">
-            <a class="like">
-              <i class="eye icon"></i>  221 Views
-            </a>
-          </div>
-        </div>
-      </div>
+
+      <button class="ui primary right floated labeled submit icon button"
+              id="post-post-button" style="display:none;" (click)="savePost()" [disabled]="!post">
+        <i class="icon edit" ></i> Post
+      </button>
+      <div class="gallery" *ngIf="!hideGallery"></div>
+
     </div>
   </div>
 
+  <div class="ui event floating relaxed segment" *ngFor="let post of posts">
+    <div class="label">
+      <img src="{{ post.created_by.profiles[0].image.url }}" routerLink="/dashboard/students/{{student.id}}">
+    </div>
+    <div class="content">
+      <div class="summary">
+        <a>{{ post.created_by.full_name }}</a>
+        <div class="date">
+          {{ post.created_at | date : 'medium'}}
+        </div>
+      </div>
+      <div class="text">
+        {{ post.text }}
+      </div>
+
+      <div class="extra images" (click)="openImageModal()">
+        <a *ngFor="let image of post.images" (click)="openImageModal(image)"><img src="{{ image.url }}"></a>
+      </div>
+
+      <div class="ui two column grid buttons">
+        <div class="ui action basic column button">
+          <i class="icon like"></i>
+          Like
+          <div class="detail">22</div>
+        </div>
+        <div class="ui action basic column button">
+          <i class="icon comments outline"></i>
+          Comments
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui divider"></div>
+  </div>
+
 </div>
+

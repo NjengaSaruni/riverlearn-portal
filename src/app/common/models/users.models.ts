@@ -16,8 +16,8 @@ export class Group {
 }
 
 export class Image extends  AbstractBase{
-  caption: string
-  url: string
+  caption: string;
+  url: string;
   description: string;
 }
 
@@ -26,8 +26,10 @@ export class AccountType extends AbstractBase {
   notes: string;
 }
 
-export class Profile extends AbstractBase {
-  name: string;
+export class UserProfile extends AbstractBase {
+  user: User;
+  image: Image;
+  bio: string;
 }
 
 export class User extends AbstractBareBase {
@@ -47,12 +49,15 @@ export class User extends AbstractBareBase {
   id_number: string;
   groups: Group[];
   user_permissions: Permission[];
-  profile: Profile;
+  profiles: UserProfile[];
   institution: Institution;
   account_type: AccountType;
   gender: string;
   is_admin: boolean;
   domain: string;
+  parent: string;
+  student: string;
+  teacher: string;
 }
 
 export class JoinRequest extends AbstractBase {

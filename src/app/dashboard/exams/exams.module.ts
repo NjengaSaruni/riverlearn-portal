@@ -21,6 +21,7 @@ import {
 import jqxDateTimeInput = jqwidgets.jqxDateTimeInput;
 import {AngularEchartsModule} from "ngx-echarts";
 import {ChartsModule} from "ng2-charts";
+import {PredictionService} from "../../common/services/intelligence.service";
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import {ChartsModule} from "ng2-charts";
 ],
   providers: [
     ExamService,
+    PredictionService,
     AdminGuard
   ],
   declarations: [

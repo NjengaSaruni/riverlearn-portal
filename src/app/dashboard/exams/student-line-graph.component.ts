@@ -5,10 +5,12 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
 import {DivisionService} from "../../common/services/divisions.service";
 import {MatSnackBar} from "@angular/material";
-import {Student} from "../../common/models/divisions.models";
+import {Student, StudentComment} from "../../common/models/divisions.models";
 import {ExamService} from "../../common/services/exams.service";
 import {StudentPaperPerformance} from "../../common/models/exams.models";
 import {jqxChartComponent} from "jqwidgets-framework/jqwidgets-ts/angular_jqxchart";
+import {Observable} from "rxjs";
+import {AnonymousSubscription} from "rxjs/Subscription";
 
 declare var $: any;
 
@@ -18,11 +20,18 @@ declare var $: any;
   styleUrls: ['./student-line-graph.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class StudentLineGraphComponent implements OnInit {
+export class StudentLineGraphComponent {
+  postedComment: StudentComment;
+  studentComments: StudentComment[];
+  comment: any;
+  loadingGraph: boolean;
+
   @ViewChild('studentLineChart') studentLineChart: jqxChartComponent;
 
+  commentTabActive: boolean;
   examPerformances: StudentPaperPerformance[];
   studentPerformances: StudentPaperPerformance[];
+  private timerSubscription: AnonymousSubscription;
   selectedStudent: Student;
   firstLoad: boolean = true;
   students: Student[];
@@ -45,12 +54,17 @@ export class StudentLineGraphComponent implements OnInit {
     type: "spline",
     alignEndPointsWithIntervals: true,
     series: [
-      { emptyPointsDisplay: 'skip', displayText: 'Value', lineWidth: 2, symbolSize: 8, symbolType: 'circle' }
+      { emptyPointsDisplay: 'zero'}
     ],
   }];
 
   title: string;
   description: string;
+
+  protected color = 'primary';
+  protected mode = 'indeterminate';
+  protected value = 50;
+  protected bufferValue = 75;
 
   constructor(
     private divisionService: DivisionService,
@@ -58,13 +72,8 @@ export class StudentLineGraphComponent implements OnInit {
     public snackBar: MatSnackBar
   ){}
 
-  ngOnInit(): void {
-    this.getStudents();
-
-  }
-
-  getStudents(): void {
-    this.divisionService.getStudents()
+  getStudents(q?: string): void {
+    this.divisionService.getStudents(q)
       .subscribe(
         students => this.students = students,
         error => this.openSnackBar(error)
@@ -88,13 +97,32 @@ export class StudentLineGraphComponent implements OnInit {
         )
   }
 
+  getStudentComments(): void {
+    this.divisionService.getStudentComments(this.selectedStudent.id)
+      .subscribe(
+        comments => {
+          this.studentComments = comments;
+          // this.subscribeToComments();
+        },
+        error => this.openSnackBar(error)
+      );
+  }
+
+  // subscribeToComments(): void {
+  //   this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.getStudentComments());
+  // }
+
+
+  togglePostButton(): void {
+      $('#post-button').transition('fade')
+  }
+
   renderGraph(performances: StudentPaperPerformance[]): void {
     let subjects: any[] = [];
     let exams: any[] = [];
 
     this.examPerformances = [];
     this.seriesGroups[0].series = [];
-
     this.title = this.selectedStudent.user.first_name + '\'s trend per subject';
     this.description = 'Performance over the past exams';
 
@@ -105,7 +133,8 @@ export class StudentLineGraphComponent implements OnInit {
       if(! subjects.includes(subject)){
         this.seriesGroups[0].series.push({
           dataField: subject,
-          displayText: subject
+          displayText: subject,
+          emptyPointsDisplay: 'connect'
         });
 
         subjects.push(subject)
@@ -152,6 +181,7 @@ export class StudentLineGraphComponent implements OnInit {
     }
 
     this.studentLineChart.update();
+    this.loadingGraph = false;
   }
 
 
@@ -199,13 +229,45 @@ export class StudentLineGraphComponent implements OnInit {
   }
 
   onSelectStudent(student: Student): void {
+    if (student == this.selectedStudent){
+      return;
+    }
     this.selectedStudent = student;
+    this.loadingGraph = true;
+    this.commentTabActive = false;
 
     this.getStudentPerformances();
   }
 
   toggleComments(): void {
-    $('#comments').transition('scale');
+    $('#comments').transition('slide down');
+    this.commentTabActive ? this.commentTabActive = false : this.commentTabActive = true;
+
+    if(this.commentTabActive){
+      this.getStudentComments();
+    }
+  }
+
+
+  saveComment(){
+    if(this.comment){
+      this.divisionService.createStudentComment(this.selectedStudent.id, this.comment)
+        .subscribe(
+          comment => {
+            this.comment = null;
+            this.getStudentComments();
+          },
+          error => this.openSnackBar(error)
+        )
+    }
+  }
+
+  searchStudents(event: any) {
+    let text: string = event.target.value;
+    if(text.length >= 1){
+      this.getStudents(text)
+    }
+
   }
   openSnackBar(message? : string, duration: number = 3000) {
     this.snackBar.open(message, 'Dismiss' ,{

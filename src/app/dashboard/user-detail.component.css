@@ -27,3 +27,17 @@ button:disabled {
   color: #ccc;
   cursor: auto;
 }
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.ui.primary.button {
+  box-shadow: 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
+  width: auto;
+}

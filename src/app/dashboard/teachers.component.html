@@ -1,4 +1,4 @@
-<div class="ui accordion">
+<div class="ui accordion" *ngIf="user?.account_type.name == 'Teacher' && user?.is_admin">
   <div class="ui primary button title" (click)="hideCards()">
     Add New Teacher
     <i class="icon dropdown"></i>
@@ -10,9 +10,12 @@
 <div class="ui dimmable segment">
   <div class="ui link cards">
     <div class="ui inverted active dimmer" *ngIf="!contentReady">
-      <div class="ui text center inline loader">
-        Fetching teachers
-      </div>
+      <mat-progress-bar *ngIf="!contentReady"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="value"
+                        [bufferValue]="bufferValue">
+      </mat-progress-bar>
     </div>
     <div class="card" *ngFor="let teacher of teachers">
       <div class="image">
@@ -33,7 +36,7 @@
       </span>
         <span>
         <i class="user icon"></i>
-        Lorem Ipsum
+        @{{ teacher?.user?.username }}
       </span>
       </div>
     </div>

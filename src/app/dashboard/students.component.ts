@@ -19,8 +19,15 @@ declare var $: any;
 })
 
 export class StudentsComponent implements OnInit {
+  get user(): User {
+    return this._user;
+  }
+
+  set user(value: User) {
+    this._user = value;
+  }
   private students: Student[];
-  private user: User;
+  private _user: User;
   private hideSearch: boolean;
   private contentReady: boolean;
   private searchText: string;
@@ -48,7 +55,7 @@ export class StudentsComponent implements OnInit {
   getUser(): void {
     this.userService.getLoggedInUser()
       .subscribe(
-        user => this.user = user,
+        user => this._user = user,
         error => alert(error)
       )
   }

@@ -9,6 +9,7 @@ export class Level extends AbstractBase
 {
   name: string;
   value: number;
+  classes: Class[];
 }
 
 export class Stream extends AbstractBase
@@ -57,4 +58,9 @@ export class ClassRoom extends AbstractBase {
   name: string;
   occupants: number;
   current_class: Class;
+}
+
+export class StudentComment extends AbstractBase {
+  student: Student;
+  comment: string;
 }

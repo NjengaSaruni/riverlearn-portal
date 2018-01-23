@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {CommonService} from './common.service';
 import {
-  Class, ClassRoom, InstitutionSubject, Level, Parent, Stream, Student,
+  Class, ClassRoom, InstitutionSubject, Level, Parent, Stream, Student, StudentComment,
   Teacher
 } from '../models/divisions.models';
 import {User} from '../models/users.models';
@@ -23,6 +23,7 @@ export class DivisionService extends CommonService {
   private streamsUrl = this.divisionsUrl + 'streams/';
   private classesUrl = this.divisionsUrl + 'classes/';
   private studentsUrl = this.divisionsUrl + 'students/';
+  private studentCommentsUrl = this.divisionsUrl + 'students/comments/';
   private parentsUrl = this.divisionsUrl + 'parents/';
   private teachersUrl = this.divisionsUrl + 'teachers/';
   private subjectsUrl = this.divisionsUrl + 'subjects/';
@@ -133,6 +134,16 @@ export class DivisionService extends CommonService {
   getSubject(id: string): Observable<InstitutionSubject> {
     id += '/';
     return this.makeRequest(this.subjectsUrl + id , 'GET');
+  }
+
+  getStudentComments(student?: string): Observable<StudentComment[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('student', student);
+    return this.makeRequest(this.studentCommentsUrl, 'GET', null, params);
+  }
+
+  createStudentComment(student: string, comment: string): Observable<StudentComment> {
+    return this.makeRequest(this.studentCommentsUrl,'POST' , { student, comment });
   }
 
   getClassRooms(): Observable<ClassRoom[]> {
