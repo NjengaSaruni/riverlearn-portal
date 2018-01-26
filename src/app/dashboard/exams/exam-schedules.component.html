@@ -29,7 +29,8 @@
     <div class="demo-tab-content">
       <jqxScheduler
         #schedulerReference
-        [width]="1260" [height]="520" [source]="dataAdapter"  [view]="'agendaView'"
+        [width]="'100%'"
+        [source]="dataAdapter"  [view]="'agendaView'"
         [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
         (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
       </jqxScheduler>

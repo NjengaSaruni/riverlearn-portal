@@ -67,3 +67,7 @@
 .action.column{
   cursor: pointer;
 }
+
+.basic.button {
+  color: #0e5a77 !important;
+}

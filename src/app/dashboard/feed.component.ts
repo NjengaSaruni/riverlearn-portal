@@ -107,7 +107,7 @@ export class FeedComponent implements OnInit {
           this.contentReady = true;
           this.firstLoad = false;
           this.posts = posts;
-          // this.subscribeToPosts()
+          // this.subscribeToPosts();
         },
         error => this.openSnackBar(error)
       )
@@ -173,6 +173,13 @@ export class FeedComponent implements OnInit {
     }
   }
 
+  like(post: Post){
+    this.messaggingService.patchPost(post.id, null, this.loggedInUser.id)
+      .subscribe(
+        post => this.posts.find(pst => pst.id == post.id).likes += 1,
+        error => this.openSnackBar(error)
+      )
+  }
   openImageModal(image: Image){
     this.selectedImage = image;
     this.uploadService.getImage(image.id)

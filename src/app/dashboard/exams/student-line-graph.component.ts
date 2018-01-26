@@ -81,7 +81,6 @@ export class StudentLineGraphComponent {
   }
 
   getStudentPerformances(exam?: string): void {
-      console.log(exam);
       this.examService.getStudentExamPaperPerformances(null, this.selectedStudent.id, exam)
         .subscribe(
           performances => {

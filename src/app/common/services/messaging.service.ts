@@ -21,9 +21,16 @@ export class MessagingService extends CommonService {
     return this.makeRequest(this.postsUrl, 'POST', { text })
   }
 
-  patchPost(id: string, image?: string): Observable<Post> {
-    let images: string[] = [image];
+  patchPost(id: string, image?: string, liker?: string): Observable<Post> {
     id+='/';
-    return this.makeRequest(this.postsUrl + id, 'PATCH', { images })
+    if(image){
+      let images: string[] = [image];
+      return this.makeRequest(this.postsUrl + id, 'PATCH', { images})
+    }
+    if(liker){
+      let likers: string[] = [liker];
+      return this.makeRequest(this.postsUrl + id, 'PATCH', { likers})
+    }
+
   }
 }
