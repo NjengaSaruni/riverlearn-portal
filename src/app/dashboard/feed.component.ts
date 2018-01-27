@@ -13,8 +13,7 @@ import {Post} from "../common/models/messaging.models";
 import {Title} from "@angular/platform-browser";
 import {CommonService, JwtHelper} from "../common/services/common.service";
 import {UploadService} from "../common/services/uploads.service";
-import {Image} from "../common/models/uploads.models";
-
+import {Image} from "../common/models/uploads.models"
 
 declare var $: any;
 
@@ -161,7 +160,8 @@ export class FeedComponent implements OnInit {
                         error => this.openSnackBar(error)
                       );
                   },
-                  error => this.openSnackBar(error)
+                  error => this.openSnackBar(error),
+                  () => this.openSnackBar('Loaded posts')
                 );
             }
             $('#gallery-photo-add').reset();
@@ -176,7 +176,10 @@ export class FeedComponent implements OnInit {
   like(post: Post){
     this.messaggingService.patchPost(post.id, null, this.loggedInUser.id)
       .subscribe(
-        post => this.posts.find(pst => pst.id == post.id).likes += 1,
+        post => {
+          console.log(post);
+          this.getPosts();
+        },
         error => this.openSnackBar(error)
       )
   }
@@ -188,6 +191,16 @@ export class FeedComponent implements OnInit {
         error => this.openSnackBar(error)
       )
     $('#image-modal').modal('show');
+  }
+
+  openComments(i: number){
+    let element: string = '#comments'+i.toString();
+    $(element).transition('slide');
+  }
+
+  submitReply(event: any, post: Post){
+    this.openSnackBar(event.target.value);
+    event.target.value = null;
   }
 
 }

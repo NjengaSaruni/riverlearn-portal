@@ -19,7 +19,7 @@ export class Post extends AbstractBase {
   files: File[];
   likers: User[];
   likes: number;
-  comments: PostComment;
+  comments: PostComment[];
 }
 
 

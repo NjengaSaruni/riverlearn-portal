@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <div class="ui event floating relaxed segment" *ngFor="let post of posts">
+  <div class="ui event floating relaxed segment" *ngFor="let post of posts; index as i">
     <div class="label">
       <img src="{{ post.created_by.profiles[0].image.url }}" routerLink="/dashboard/students/{{post.created_by.student}}">
     </div>
@@ -59,7 +59,7 @@
           <i class="icon like"></i>
           Like
         </div>
-        <div class="ui action basic column button">
+        <div class="ui action basic column button" (click)="openComments(i)">
           <i class="icon comments outline"></i>
           Comments
         </div>
@@ -70,8 +70,8 @@
         </span>
       </div>
 
-      <div class="ui threaded comments">
-        <div class="comment">
+      <div class="ui threaded comments" id="comments{{ i }}" style="display:none;">
+        <div class="comment" *ngFor="let comment of post.comments">
           <a class="avatar">
             <img src="/images/avatar/small/matt.jpg">
           </a>
@@ -88,66 +88,12 @@
             </div>
           </div>
         </div>
-        <div class="comment">
-          <a class="avatar">
-            <img src="/images/avatar/small/elliot.jpg">
-          </a>
-          <div class="content">
-            <a class="author">Elliot Fu</a>
-            <div class="metadata">
-              <span class="date">Yesterday at 12:30AM</span>
-            </div>
-            <div class="text">
-              <p>This has been very useful for my research. Thanks as well!</p>
-            </div>
-            <div class="actions">
-              <a class="reply">Reply</a>
-            </div>
-          </div>
-          <div class="comments">
-            <div class="comment">
-              <a class="avatar">
-                <img src="/images/avatar/small/jenny.jpg">
-              </a>
-              <div class="content">
-                <a class="author">Jenny Hess</a>
-                <div class="metadata">
-                  <span class="date">Just now</span>
-                </div>
-                <div class="text">
-                  Elliot you are always so right :)
-                </div>
-                <div class="actions">
-                  <a class="reply">Reply</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="comment">
-          <a class="avatar">
-            <img src="/images/avatar/small/joe.jpg">
-          </a>
-          <div class="content">
-            <a class="author">Joe Henderson</a>
-            <div class="metadata">
-              <span class="date">5 days ago</span>
-            </div>
-            <div class="text">
-              Dude, this is awesome. Thanks so much
-            </div>
-            <div class="actions">
-              <a class="reply">Reply</a>
-            </div>
-          </div>
-        </div>
         <form class="ui reply form">
-          <div class="field">
-            <textarea></textarea>
-          </div>
-          <div class="ui blue labeled submit icon button">
-            <i class="icon edit"></i> Add Reply
-          </div>
+          <mat-form-field>
+              <textarea matInput placeholder="Post a reply..." class="mat-input"
+                        (keyup.enter)="submitReply($event, post)">
+              </textarea>
+          </mat-form-field>
         </form>
       </div>
 
