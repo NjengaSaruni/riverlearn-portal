@@ -59,29 +59,24 @@
           <i class="icon like"></i>
           Like
         </div>
-        <div class="ui action basic column button" (click)="openComments(i)">
+        <div class="ui action basic column button" (click)="openComments(post, i)">
           <i class="icon comments outline"></i>
           Comments
         </div>
       </div>
-      <div class="class meta">
-        <span class="date">
-           <i class="icon like"></i> {{ post.likes }}
-        </span>
-      </div>
 
       <div class="ui threaded comments" id="comments{{ i }}" style="display:none;">
-        <div class="comment" *ngFor="let comment of post.comments">
+        <div class="comment" *ngFor="let comment of selectedPostComments">
           <a class="avatar">
-            <img src="/images/avatar/small/matt.jpg">
+            <img src="{{ comment.created_by?.profiles[0]?.image.url }}">
           </a>
           <div class="content">
-            <a class="author">Matt</a>
+            <a class="author">{{ comment.created_by?.full_name }}</a>
             <div class="metadata">
-              <span class="date">Today at 5:42PM</span>
+              <span class="date">{{ comment.created_at | date : 'medium'}}</span>
             </div>
             <div class="text">
-              How artistic!
+              {{ comment.text }}
             </div>
             <div class="actions">
               <a class="reply">Reply</a>
@@ -96,6 +91,13 @@
           </mat-form-field>
         </form>
       </div>
+      <div class="class meta">
+        <span class="date">
+           <i class="icon like"></i> {{ post.likes }}
+        </span>
+      </div>
+
+
 
     </div>
 

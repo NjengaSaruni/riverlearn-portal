@@ -20,6 +20,7 @@ export class Post extends AbstractBase {
   likers: User[];
   likes: number;
   comments: PostComment[];
+  comment_count: number;
 }
 
 

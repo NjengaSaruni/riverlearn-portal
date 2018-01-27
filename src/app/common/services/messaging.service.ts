@@ -3,12 +3,14 @@
  */
 
 import {CommonService } from './common.service';
-import {Post} from "../models/messaging.models";
+import {Post, PostComment} from "../models/messaging.models";
 import {Observable} from "rxjs";
+import {URLSearchParams} from "@angular/http";
 
 export class MessagingService extends CommonService {
   private messagingUrl: string = 'messaging/';
   private postsUrl: string = this.messagingUrl + 'posts/';
+  private postCommentsUrl: string = this.messagingUrl + 'post_comments/';
 
   getPosts(q?: string, created_by?: string): Observable<Post[]> {
     let params: URLSearchParams = new URLSearchParams();
@@ -33,4 +35,17 @@ export class MessagingService extends CommonService {
     }
 
   }
+
+  createPostComment(text: string, post: string): Observable<PostComment> {
+    return this.makeRequest(this.postCommentsUrl, 'POST', {post, text})
+  }
+
+  getPostComments(q?: string, post?: string): Observable<PostComment[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', q);
+    params.set('post', post);
+    return this.makeRequest(this.postCommentsUrl, 'GET', null, params)
+  }
+
+
 }

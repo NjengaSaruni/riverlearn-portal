@@ -9,7 +9,7 @@ import {User, UserProfile} from "../common/models/users.models";
 import {AnonymousSubscription} from "rxjs/Subscription";
 import {Observable} from "rxjs";
 import {MessagingService} from "../common/services/messaging.service";
-import {Post} from "../common/models/messaging.models";
+import {Post, PostComment} from "../common/models/messaging.models";
 import {Title} from "@angular/platform-browser";
 import {CommonService, JwtHelper} from "../common/services/common.service";
 import {UploadService} from "../common/services/uploads.service";
@@ -38,6 +38,7 @@ export class FeedComponent implements OnInit {
 
   jwtHelper: JwtHelper = new JwtHelper();
   private firstLoad: boolean = true;
+  protected selectedPostComments: PostComment[];
 
   constructor(
     private userService: UserService,
@@ -57,6 +58,7 @@ export class FeedComponent implements OnInit {
     this.galleryPreview();
 
   }
+
 
   private galleryPreview() {
     $(function () {
@@ -183,24 +185,41 @@ export class FeedComponent implements OnInit {
         error => this.openSnackBar(error)
       )
   }
+
+
   openImageModal(image: Image){
     this.selectedImage = image;
     this.uploadService.getImage(image.id)
       .subscribe(
         image => this.selectedImage = image,
         error => this.openSnackBar(error)
-      )
+      );
     $('#image-modal').modal('show');
   }
 
-  openComments(i: number){
-    let element: string = '#comments'+i.toString();
-    $(element).transition('slide');
+  openComments(post?: Post, i?: number){
+    this.getPostComments(post);
+    if(i !== null){
+      let element: string = '#comments'+i.toString();
+      $(element).transition('slide');
+    }
+  }
+
+  private getPostComments(post: Post) {
+    this.messaggingService.getPostComments(null, post.id)
+      .subscribe(
+        post_comments => this.selectedPostComments = post_comments,
+        error => this.openSnackBar(error)
+      )
+    ;
   }
 
   submitReply(event: any, post: Post){
-    this.openSnackBar(event.target.value);
-    event.target.value = null;
+    this.messaggingService.createPostComment(event.target.value, post.id)
+      .subscribe(
+        postComment => this.getPostComments(post),
+        error => this.openSnackBar(error)
+      );
   }
 
 }
