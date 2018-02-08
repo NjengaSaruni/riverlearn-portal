@@ -60,7 +60,7 @@
           Like
         </div>
         <div class="ui action basic column button" (click)="openComments(post, i)">
-          <i class="icon comments outline"></i>
+          <i class="icon comment"></i>
           Comments
         </div>
       </div>
@@ -86,7 +86,7 @@
         <form class="ui reply form">
           <mat-form-field>
               <textarea matInput placeholder="Post a reply..." class="mat-input"
-                        (keyup.enter)="submitReply($event, post)">
+                        (keyup.enter)="submitReply($event, post)" value="">
               </textarea>
           </mat-form-field>
         </form>
@@ -95,10 +95,10 @@
         <span class="date">
            <i class="icon like"></i> {{ post.likes }}
         </span>
+        <span class="right floated date">
+           <i class="icon comments outline"></i> {{ post.comment_count }}
+        </span>
       </div>
-
-
-
     </div>
 
   </div>

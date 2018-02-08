@@ -131,8 +131,7 @@
   <div class="ui stackable grid">
     <div class="ui eleven wide column" >
       <div class="ui attached message" *ngIf="user?.institution">
-
-        <mat-nav-list class="ui pointing menu">
+        <nav class="ui pointing menu">
           <a mat-list-item  class="ui item" routerLinkActive="active" routerLink="/dashboard/graphs">
             <i class="icon dashboard"></i>
             Dashboard
@@ -148,7 +147,7 @@
              routerLinkActive="active" *ngIf="user?.account_type.name != 'Parent'">
             <i class="child icon"></i> Parents/Guardians
           </a>
-          <a class="ui item" routerLinkActive="active">
+          <a class="ui item" routerLinkActive="active" *ngIf="user?.account_type.name != 'Parent'">
             <i class="book icon"></i> Library
           </a>
           <a class="ui item" (click)="showClasses($event);"
@@ -163,12 +162,11 @@
           <a class="ui item" tabindex="0" routerLinkActive="active">
             <i class="talk icon"></i> Discussions
           </a>
-        </mat-nav-list>
+        </nav>
         <div class="ui horizontal divider"></div>
-
-        <div class="ui segment">
-          <router-outlet></router-outlet>
-        </div>
+      </div>
+      <div class="ui segment">
+        <router-outlet></router-outlet>
       </div>
       <div class="ui bottom attached warning message">
         <i class="icon happy"></i>

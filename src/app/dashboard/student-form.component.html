@@ -49,7 +49,9 @@
               <i class="big red remove circle outline icon"
                  *ngIf="( usernameTaken || incorrectUsernameFormat || studentForm.get('username').status === 'INVALID') && !comparingUsernames">
               </i>
-
+            </div>
+            <div class="ui error message" *ngIf="( usernameTaken || incorrectUsernameFormat || studentForm.get('username').status === 'INVALID') && !comparingUsernames">
+              <p>That username is already taken</p>
             </div>
           </div>
           <div class="field">

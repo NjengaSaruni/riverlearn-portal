@@ -29,7 +29,7 @@ export class FeedComponent implements OnInit {
   userProfile: UserProfile;
   loggedInUser: User;
   posts: Post[];
-  post: string;
+  post: string ;
   images: any[] = [];
 
   private contentReady: boolean = false;
@@ -39,6 +39,7 @@ export class FeedComponent implements OnInit {
   jwtHelper: JwtHelper = new JwtHelper();
   private firstLoad: boolean = true;
   protected selectedPostComments: PostComment[];
+  private hideGallery: boolean;
 
   constructor(
     private userService: UserService,
@@ -61,6 +62,7 @@ export class FeedComponent implements OnInit {
 
 
   private galleryPreview() {
+    this.hideGallery = false;
     $(function () {
       // Multiple images preview in browser
       var imagesPreview = function (input, placeToInsertImagePreview) {
@@ -148,6 +150,7 @@ export class FeedComponent implements OnInit {
 
   savePost(){
     if(this.post){
+      this.hideGallery = true;
       this.messaggingService.createPost(this.post)
         .subscribe(
           post => {
@@ -167,6 +170,7 @@ export class FeedComponent implements OnInit {
                 );
             }
             $('#gallery-photo-add').reset();
+
             $('div#test > img').remove();
           },
           error => this.openSnackBar(error)

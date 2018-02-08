@@ -116,6 +116,10 @@ export class ClassFormComponent implements OnInit {
       )
   }
 
+  showMenu(event: any){
+    event.target.closest( "div.scrolling")
+      .transition('slide')
+  }
   async createClass() {
     let level = this.classForm.get('level').value;
     let stream = this.classForm.get('stream').value;

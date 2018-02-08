@@ -145,14 +145,7 @@ app-navbar {
   color: hsla(0,0%,100%,.87);
 }
 .ui.five.wide.column {
-  overflow: auto !important;
-  position: sticky;
-  top: 80px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll !important;
 }
-
-/*.ui.eleven.wide.column {*/
-  /*position: static;*/
-  /*float: right;*/
-  /*transform: translateX(45%);*/
-  /*overflow: scroll !important;*/
-/*}*/

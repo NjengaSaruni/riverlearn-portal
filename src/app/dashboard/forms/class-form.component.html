@@ -37,6 +37,68 @@
           </button>
         </form>
       </div>
+      <div class="ui cards">
+        <div class="ui card" *ngFor="let class of classes">
+          <div class="content">
+            <i class="right floated ellipsis vertical icon" (click)="showMenu($event)"></i>
+            <div class="scrolling menu" style="display:none;" >
+              <div class="item" data-value="important">
+                <div class="ui red empty circular label"></div>
+                Important
+              </div>
+              <div class="item" data-value="announcement">
+                <div class="ui blue empty circular label"></div>
+                Announcement
+              </div>
+              <div class="item" data-value="cannotfix">
+                <div class="ui black empty circular label"></div>
+                Cannot Fix
+              </div>
+              <div class="item" data-value="news">
+                <div class="ui purple empty circular label"></div>
+                News
+              </div>
+              <div class="item" data-value="enhancement">
+                <div class="ui orange empty circular label"></div>
+                Enhancement
+              </div>
+              <div class="item" data-value="off-topic">
+                <div class="ui yellow empty circular label"></div>
+                Off Topic
+              </div>
+              <div class="item" data-value="interesting">
+                <div class="ui pink empty circular label"></div>
+                Interesting
+              </div>
+              <div class="item" data-value="discussion">
+                <div class="ui green empty circular label"></div>
+                Discussion
+              </div>
+            </div>
+            <div class="header">
+              {{ class?.name }}
+            </div>
+            <div class="description">
+              <div class="meta">
+                <a>Created on {{ class.created_at | date }}</a>
+              </div>
+              <p>
+                Teacher: {{ class.class_teacher?.user?.first_name + ' ' +  class.class_teacher?.user?.last_name}}
+              </p>
+            </div>
+          </div>
+          <div class="extra blue content">
+                <span class="left floated like">
+                  <i class="eye icon"></i>
+                  View Progress
+                </span>
+            <span class="right floated star">
+                  <i class="star icon"></i>
+                  Follow Class
+               </span>
+          </div>
+        </div>
+      </div>
       <div class="active content">
         <div class="ui inverted active dimmer" *ngIf="!contentReady">
           <mat-progress-bar
@@ -47,42 +109,10 @@
             [bufferValue]="bufferValue">
           </mat-progress-bar>
         </div>
-        <div class="accordion">
-          <div class="content" *ngFor="let level of levels">
-            <div class="ui cards">
-              <div class="ui card" *ngFor="let class of level.classes">
-                <div class="content">
-                  <i class="right floated ellipsis vertical icon"></i>
-                  <div class="header">
-                    {{ class?.name }}
-                  </div>
-                  <div class="description">
-                    <div class="meta">
-                      <a>Created on {{ class.created_at | date }}</a>
-                    </div>
-                    <p>
-                      Teacher: {{ class.class_teacher?.user?.first_name + ' ' +  class.class_teacher?.user?.last_name}}
-                    </p>
-                  </div>
-                </div>
-                <div class="extra blue content">
-                <span class="left floated like">
-                  <i class="eye icon"></i>
-                  View Progress
-                </span>
-                  <span class="right floated star">
-                  <i class="star icon"></i>
-                  Follow Class
-               </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
-</div>
+
 
 
 

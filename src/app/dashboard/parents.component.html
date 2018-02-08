@@ -24,7 +24,7 @@
   <div class="ui link cards">
     <div class="card" *ngFor="let parent of parents">
       <div class="image">
-        <img src="/images/avatar/tom.jpg">
+        <img src="{{ parent.user?.profiles[0]?.image.url }}">
       </div>
       <div class="content">
         <div class="header">{{ parent?.user?.first_name + ' ' + parent?.user?.last_name }}</div>

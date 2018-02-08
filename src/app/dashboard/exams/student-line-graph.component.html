@@ -1,26 +1,29 @@
-<div class="ui floating dropdown labeled icon fluid button"
-     id="students-search-dropdown" (click)="openDropdown($event)">
-  <i class="filter icon"></i>
-  <span class="text">Select Student</span>
-  <div class="menu">
-    <div class="ui icon search input">
-      <i class="search icon"></i>
-      <input placeholder="Search for student..." type="text" (keyup)="searchStudents($event)">
-    </div>
-    <div class="divider"></div>
-    <div class="header">
-      <i class="tags icon"></i>
-      Students
-    </div>
-    <div class="scrolling menu">
-      <div class="item">Students appear here</div>
-      <div class="item" *ngFor="let student of students" (click)="onSelectStudent(student)">
-        <div class="ui teal empty circular label"></div>
-        {{ student.user.full_name }} -- {{ student.current_class.name }}
+<div class="ui blue filter message">
+  <div class="ui floating dropdown labeled icon fluid button"
+       id="students-search-dropdown" (click)="openDropdown($event)">
+    <i class="filter icon"></i>
+    <span class="text">Select Student</span>
+    <div class="menu">
+      <div class="ui icon search input">
+        <i class="search icon"></i>
+        <input placeholder="Search for student..." type="text" (keyup)="searchStudents($event)">
+      </div>
+      <div class="divider"></div>
+      <div class="header">
+        <i class="tags icon"></i>
+        Students
+      </div>
+      <div class="scrolling menu">
+        <div class="item">Students appear here</div>
+        <div class="item" *ngFor="let student of students" (click)="onSelectStudent(student)">
+          <div class="ui teal empty circular label"></div>
+          {{ student.user.full_name }} -- {{ student.current_class.name }}
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 <div class="ui celled stackable grid">
   <div class="ui inverted active dimmer" *ngIf="loadingGraph">
     <mat-progress-bar

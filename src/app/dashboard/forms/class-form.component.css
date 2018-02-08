@@ -45,6 +45,9 @@
   font-size: small;
 }
 
+.icon {
+  cursor: pointer;
+}
 
 .golden.button {
   background-color: #cd9a36 !important;

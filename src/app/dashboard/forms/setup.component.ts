@@ -86,6 +86,7 @@ export class SetupComponent implements OnInit {
         data => {
           this.request = data;
           this.requestSubmitted = true;
+          this.router.navigate(['dashboard'])
         },
         handleJoinError
       );
@@ -95,7 +96,7 @@ export class SetupComponent implements OnInit {
         console.log(error);
       }
     }
-    // this.router.navigate(['dashboard'])
+
     // window.location.reload();
   }
 
