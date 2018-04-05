@@ -33,6 +33,8 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   protected firstLoad = true;
 
   @ViewChild('subjectLineChart') subjectLineChart: jqxChartComponent;
+  title: string;
+  description: string;
 
   constructor(
     private examService: ExamService,
@@ -159,6 +161,8 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   }
 
   renderGraph(results: ClassExamResult[]): void {
+    this.title = results[0]._class.name + '\'s trend per subject';
+    this.description = 'Performance over the past exams';
     let subjects: any[] = [];
     this.seriesGroups[0].series = [];
 

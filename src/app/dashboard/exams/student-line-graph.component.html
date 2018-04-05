@@ -1,4 +1,4 @@
-<div class="ui blue filter message">
+<div class="ui blue filter message" *ngIf="user?.account_type.name != 'Student'">
   <div class="ui floating dropdown labeled icon fluid button"
        id="students-search-dropdown" (click)="openDropdown($event)">
     <i class="filter icon"></i>

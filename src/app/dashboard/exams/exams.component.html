@@ -1,4 +1,4 @@
-<div class="ui three top attached steps" *ngIf="user?.account_type.name !== 'Parent'">
+<div class="ui three top attached steps" *ngIf="user?.account_type.name == 'Teacher'">
   <a class="step" routerLink="schedules" routerLinkActive="active">
     <i class="wait icon"></i>
     <div class="content">
@@ -11,6 +11,22 @@
     <div class="content">
       <div class="title">Submits results</div>
       <div class="description">Fill in student results</div>
+    </div>
+  </a>
+  <a class="step" routerLink="results" routerLinkActive="active">
+    <i class="line graph icon"></i>
+    <div class="content">
+      <div class="title">View exam results</div>
+      <div class="description">View results of past exams</div>
+    </div>
+  </a>
+</div>
+<div class="ui two top attached steps" *ngIf="user?.account_type.name == 'Student'">
+  <a class="step" routerLink="schedules" routerLinkActive="active">
+    <i class="wait icon"></i>
+    <div class="content">
+      <div class="title">Schedules</div>
+      <div class="description">Ongoing/upcoming exam papers</div>
     </div>
   </a>
   <a class="step" routerLink="results" routerLinkActive="active">

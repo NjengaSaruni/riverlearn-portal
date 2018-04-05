@@ -71,3 +71,7 @@
 .basic.button {
   color: #0e5a77 !important;
 }
+
+.ui.comments .comment {
+  overflow-y: auto;
+}

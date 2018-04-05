@@ -5,6 +5,8 @@
 import { Component, OnInit} from '@angular/core';
 import { Parent } from '../common/models/divisions.models';
 import { DivisionService } from '../common/services/divisions.service';
+import {UserService} from "../common/services/user.service";
+import {User} from "../common/models/users.models";
 
 declare var $: any;
 
@@ -24,10 +26,15 @@ export class ParentsComponent implements OnInit {
   protected mode = 'indeterminate';
   protected value = 50;
   protected bufferValue = 75;
+  protected user: User;
 
   constructor(
-    private divisionService: DivisionService
-  ) {}
+    private divisionService: DivisionService,
+    private userService: UserService
+  ) {
+    this.getParents();
+    this.getUser();
+  }
 
   ngOnInit() {
     $(document).ready(function () {
@@ -35,10 +42,15 @@ export class ParentsComponent implements OnInit {
           duration: 1000
         }
       );
-
     });
+  }
 
-    this.getParents();
+  getUser(): void {
+    this.userService.getLoggedInUser()
+      .subscribe(
+        user => this.user = user,
+        error => alert(error)
+      )
   }
 
   getParents(): void {

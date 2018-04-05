@@ -19,19 +19,19 @@ declare var $: any;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnChanges {
-  private user: User;
-  private classes: Class[];
-  private students: Student[];
-  private parents: Parent[];
-  private teachers: Teacher[];
-  private exams: Exam[];
-  private examPapers: ExamPaper[];
-  private examResults: ClassExamResult[];
+  user: User;
+  protected classes: Class[];
+  protected students: Student[];
+  protected parents: Parent[];
+  protected teachers: Teacher[];
+  protected exams: Exam[];
+  protected examPapers: ExamPaper[];
+  examResults: ClassExamResult[];
 
-  private request: JoinRequest;
-  private requests: JoinRequest[];
-  private institutionRequests: JoinRequest[];
-  private requestSubmitted: boolean = false;
+  request: JoinRequest;
+  requests: JoinRequest[];
+  institutionRequests: JoinRequest[];
+  requestSubmitted: boolean = false;
 
   protected color = 'primary';
   protected mode = 'indeterminate';
@@ -75,7 +75,9 @@ export class DashboardComponent implements OnInit, OnChanges {
     // FIXME: DROPDOWN DOESNT WORK SOMETIMES
     $(document).ready(function() {
       $('.ui.dropdown').dropdown();
+
     });
+
 
     $('#studentsSelector').transition({
       animation: 'jiggle',
@@ -261,10 +263,16 @@ export class DashboardComponent implements OnInit, OnChanges {
   }
 
   public showSideBar(): void {
-    if ($('#dashboard-sidebar' ).hasClass( 'visible' )){
-      return;
-    }
-    $('#dashboard-sidebar').transition('fade');
+    $('#dashboard-sidebar')
+      .sidebar('setting', 'transition', 'overlay')
+      .sidebar('toggle')
+
+  }
+
+  hideSidebar(): void {
+    $('#dashboard-sidebar')
+      .sidebar('setting', 'transition', 'overlay')
+      .sidebar('toggle')
 
   }
 

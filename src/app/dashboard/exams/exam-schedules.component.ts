@@ -7,6 +7,8 @@ import {ExamService} from '../../common/services/exams.service';
 import {Exam, ExamPaper} from '../../common/models/exams.models';
 import { jqxSchedulerComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxscheduler';
 import { MatSnackBar} from "@angular/material";
+import {UserService} from "../../common/services/user.service";
+import {User} from "../../common/models/users.models";
 
 declare var $: any;
 
@@ -19,7 +21,7 @@ declare var $: any;
 export class ExamSchedulesComponent implements OnInit {
   protected selectedExam: Exam = null;
   @ViewChild('schedulerReference') schedulerReference: jqxSchedulerComponent;
-
+  @ViewChild('schedulerReference1') schedulerReference1: jqxSchedulerComponent;
   private contentReady: boolean = false;
   private appointments = [];
   private examPapers: ExamPaper[] = [];
@@ -28,16 +30,27 @@ export class ExamSchedulesComponent implements OnInit {
   protected mode = 'indeterminate';
   protected value = 50;
   protected bufferValue = 75;
+  private user: User;
 
   constructor(
     private examService: ExamService,
-    public snackBar: MatSnackBar
-  ) {}
+    public snackBar: MatSnackBar,
+    private userService: UserService) {
+      this.getUser();
+  }
 
   openSnackBar(message? : string, duration: number = 3000) {
     let snackBarRef = this.snackBar.open(message, 'Dismiss' ,{
       duration: duration
     });
+  }
+
+  getUser(): void {
+    this.userService.getLoggedInUser()
+      .subscribe(
+        user => this.user = user,
+        error => this.openSnackBar(error)
+      )
   }
 
   getExams(): void {
@@ -103,6 +116,7 @@ export class ExamSchedulesComponent implements OnInit {
     this.dataAdapter = new jqx.dataAdapter(this.source);
     try {
       this.schedulerReference.ensureAppointmentVisible(this.examPapers[0].id);
+      this.schedulerReference1.ensureAppointmentVisible(this.examPapers[0].id);
     }
     catch(err){
       // TODO what to do with this error?

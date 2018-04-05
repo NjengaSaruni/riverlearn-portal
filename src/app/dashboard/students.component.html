@@ -31,11 +31,9 @@
           <th>Current Class</th>
           <th>Gender</th>
           <th>Parent</th>
-          <th>Average mark</th>
         </tr></thead>
         <tbody>
         <tr *ngFor="let student of students"  routerLink="/dashboard/students/{{student.id}}">
-          <div class="ui green right left ribbon label">Rank rank rank rank</div>
           <td>
             {{ student?.user?.first_name + ' ' + student?.user?.last_name }}
           </td>

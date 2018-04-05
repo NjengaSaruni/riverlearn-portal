@@ -1,6 +1,4 @@
 .ui.fixed.top.menu .item {
-  height: auto;
-  text-align: center;
   background-color: #0e5a77;
 }
 
@@ -33,10 +31,6 @@ img {
 }
 .icon i {
   color: #cd9a36;
-}
-
-.golden-border {
-  background: #0e5a77 !important;
 }
 
 .top-items {
@@ -124,12 +118,6 @@ a {
   transition: background .1s ease,box-shadow .1s ease,color .1s ease;
 }
 
-@media only screen and (min-width: 800px) {
-  .ui.pointing.menu .chevron.item {
-    display: none;
-  }
-}
-
 .mat-elevation-z6 {
   box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);
 }
@@ -148,4 +136,8 @@ app-navbar {
   display: flex;
   flex-direction: column;
   overflow: scroll !important;
+}
+
+.golden-border {
+  border: 2px solid #cd9a36 !important;
 }

@@ -57,9 +57,10 @@ export class DivisionService extends CommonService {
     return this.makeRequest(this.parentsUrl + id , 'POST');
   }
 
-  getStudents(q: string = null): Observable<Student[]> {
+  getStudents(q: string = null, user?: string): Observable<Student[]> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('q', q);
+    params.set('user', user);
     return this.makeRequest(this.studentsUrl, 'GET', null, params);
   }
 

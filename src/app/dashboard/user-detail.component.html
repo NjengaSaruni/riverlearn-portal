@@ -43,12 +43,8 @@
   <div class="twelve wide column">
     <div class="ui fluid card">
       <div class="content">
-        <div class="header">{{ loggedInUser?.account_type.name }}</div>
-        <div class="meta">Friend</div>
-        <div class="description">
-          Elliot Fu is a film-maker from New York.
-        </div>
-        <!--<div class="ui doubling cards">-->
+        <div class="header">{{ loggedInUser?.full_name }}</div>
+        <div class="meta">{{ loggedInUser?.account_type.name }}</div>
         <div class="ui fluid card" *ngFor="let profile of loggedInUser?.profiles">
           <div class="content">
             <div class="right floated meta">{{ profile.created_at | date: 'medium' }}</div>

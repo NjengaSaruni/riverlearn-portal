@@ -110,7 +110,7 @@ export class FeedComponent implements OnInit {
           this.contentReady = true;
           this.firstLoad = false;
           this.posts = posts;
-          // this.subscribeToPosts();
+          this.subscribeToPosts();
         },
         error => this.openSnackBar(error)
       )

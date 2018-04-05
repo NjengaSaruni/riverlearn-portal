@@ -11,7 +11,7 @@ import {
   Response,
   HttpModule
 } from "@angular/http";
-import {Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders, Pipe, PipeTransform} from '@angular/core';
+import {Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromPromise";
 import "rxjs/add/observable/defer";
@@ -20,8 +20,8 @@ import {Router} from '@angular/router';
 import {Color, Subject} from '../models/common.models';
 
 export const localUrl = 'http://0.0.0.0:8001/api/v1/';
-export const onlineUrl = 'http://35.187.38.114:8000/api/v1/';
-export const useLocal = true;
+export const onlineUrl = 'http://35.231.21.99/api/v1/';
+export const useLocal = false;
 export const color = 'primary';
 export const mode = 'indeterminate';
 export const value = 50;

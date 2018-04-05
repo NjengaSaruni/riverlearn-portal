@@ -9,8 +9,9 @@ import {Student, StudentComment} from "../../common/models/divisions.models";
 import {ExamService} from "../../common/services/exams.service";
 import {StudentPaperPerformance} from "../../common/models/exams.models";
 import {jqxChartComponent} from "jqwidgets-framework/jqwidgets-ts/angular_jqxchart";
-import {Observable} from "rxjs";
 import {AnonymousSubscription} from "rxjs/Subscription";
+import {UserService} from "../../common/services/user.service";
+import {User} from "../../common/models/users.models";
 
 declare var $: any;
 
@@ -21,7 +22,6 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class StudentLineGraphComponent {
-  postedComment: StudentComment;
   studentComments: StudentComment[];
   comment: any;
   loadingGraph: boolean;
@@ -65,19 +65,46 @@ export class StudentLineGraphComponent {
   protected mode = 'indeterminate';
   protected value = 50;
   protected bufferValue = 75;
+  user: User;
 
   constructor(
     private divisionService: DivisionService,
+    private userService: UserService,
     private examService: ExamService,
     public snackBar: MatSnackBar
-  ){}
+  ){
+    this.getUser();
+  }
 
-  getStudents(q?: string): void {
-    this.divisionService.getStudents(q)
+  getStudents(query?:string, user?: string): void {
+    this.divisionService.getStudents(query, user)
       .subscribe(
-        students => this.students = students,
+        students => {
+          if(!query){
+            this.selectedStudent = students[0];
+            this.loadingGraph = true;
+            this.commentTabActive = false;
+            this.getStudentPerformances();
+          }
+          else {
+            this.students = students;
+          }
+        },
         error => this.openSnackBar(error)
       )
+  }
+
+  getUser(): void {
+    this.userService.getLoggedInUser()
+      .subscribe(
+        user => {
+          this.user = user;
+          if(user.account_type.name == 'Student'){
+            this.getStudents(null, user.id);
+          }
+        },
+        error => this.openSnackBar(error)
+      );
   }
 
   getStudentPerformances(exam?: string): void {

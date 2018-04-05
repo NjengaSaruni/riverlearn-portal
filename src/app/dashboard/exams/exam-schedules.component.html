@@ -18,7 +18,7 @@
   </mat-progress-bar>
 </div>
 
-<mat-tab-group class="demo-tab-group">
+<mat-tab-group class="demo-tab-group" *ngIf="user?.account_type.name == 'Teacher'">
   <mat-tab>
     <ng-template mat-tab-label>
       <div class="ui labeled inline icon title">
@@ -27,14 +27,14 @@
       </div>
     </ng-template>
     <div class="demo-tab-content">
-      <jqxScheduler
-        #schedulerReference
-        [width]="'100%'"
-        [source]="dataAdapter"  [view]="'agendaView'"
-        [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
-        (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
-      </jqxScheduler>
 
+      <jqxScheduler *ngIf="user?.account_type.name == 'Teacher'"
+                    #schedulerReference
+                    [width]="'100%'"
+                    [source]="dataAdapter"  [view]="'agendaView'"
+                    [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+                    (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
+      </jqxScheduler>
     </div>
   </mat-tab>
   <mat-tab >
@@ -59,8 +59,10 @@
       </div>
       <div class="twelve wide stretched column">
         <div>
-          <div class="ui dividing header">Name</div>
+          <div class="ui dividing header">Name
+            </div>
           {{ selectedExam?.name }}
+
           <br><br>
           <div class="ui dividing header">Duration</div>
           {{ selectedExam?.start_date | date }} - {{ selectedExam?.end_date | date }}
@@ -77,7 +79,7 @@
           <br><br>
           <div class="ui dividing header">Exam Papers</div>
           <div class="ui list">
-            <div class="item" *ngFor="let paper of selectedExam?.papers" routerLink="/dashboard/exams/submit">
+            <div class="item" *ngFor="let paper of selectedExam?.papers">
               <i class="icon file"></i>
               {{ paper?.subject?.name }} - {{ paper?.start | date:'medium' }}
             </div>
@@ -87,12 +89,19 @@
     </div>
   </mat-tab>
 </mat-tab-group>
+<jqxScheduler *ngIf="user?.account_type.name == 'Student'"
+  #schedulerReference1
+  [width]="'100%'"
+  [source]="dataAdapter"  [view]="'agendaView'"
+  [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+  (onAppointmentClick)="openExam($event)" [timeZone]="'UTC+3'">
+</jqxScheduler>
 <div class="ui horizontal divider"></div>
-<div class="ui labeled icon primary button" (click)="toggleCycleModal($event)">
+<div class="ui labeled icon primary button" (click)="toggleCycleModal($event)" *ngIf="user?.account_type.name == 'Teacher'">
   <i class="icon calendar outline"></i>
   Add examinations
 </div>
-<div class="ui labeled icon primary button" (click)="togglePaperModal($event)">
+<div class="ui labeled icon primary button" (click)="togglePaperModal($event)" *ngIf="user?.account_type.name == 'Teacher'">
   <i class="icon write"></i>
   Add exam paper
 </div>
