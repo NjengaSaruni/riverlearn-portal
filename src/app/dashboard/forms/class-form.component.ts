@@ -22,19 +22,19 @@ declare var $: any;
 })
 
 export class ClassFormComponent implements OnInit {
-  private contentReady: boolean;
-  private classForm: FormGroup;
-  private createdClass: Class;
-  private classes: Class[];
+  public contentReady: boolean;
+  public classForm: FormGroup;
+  public createdClass: Class;
+  public classes: Class[];
 
-  private user: User;
-  private teachers: Teacher[];
+  public user: User;
+  public teachers: Teacher[];
 
-  private selectedLevel: Level;
-  private levels: Level[];
-  private streams: Stream[];
+  public selectedLevel: Level;
+  public levels: Level[];
+  public streams: Stream[];
 
-  private errorMessage: string;
+  public errorMessage: string;
 
   protected color = 'primary';
   protected mode = 'indeterminate';
@@ -43,8 +43,8 @@ export class ClassFormComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private userService: UserService,
-    private divisionService: DivisionService
+    public userService: UserService,
+    public divisionService: DivisionService
   ){}
 
   ngOnInit(): void {

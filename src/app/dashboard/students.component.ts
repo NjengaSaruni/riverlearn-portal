@@ -3,12 +3,11 @@
  */
 
 
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DivisionService} from '../common/services/divisions.service';
 import {Student} from '../common/models/divisions.models';
 import {User} from '../common/models/users.models';
 import {UserService} from '../common/services/user.service';
-import {delay} from '../common/services/common.service';
 
 declare var $: any;
 
@@ -26,18 +25,18 @@ export class StudentsComponent implements OnInit {
   set user(value: User) {
     this._user = value;
   }
-  private students: Student[];
-  private _user: User;
-  private hideSearch: boolean;
-  private contentReady: boolean;
-  private searchText: string;
-  private searchTextEmpty: boolean;
-  private studentsTableHidden: boolean;
-  private studentFormButtonHidden: boolean;
+  public students: Student[];
+  public _user: User;
+  public hideSearch: boolean;
+  public contentReady: boolean;
+  public searchText: string;
+  public searchTextEmpty: boolean;
+  public studentsTableHidden: boolean;
+  public studentFormButtonHidden: boolean;
 
   constructor(
-    private divisionService: DivisionService,
-    private userService: UserService
+    public divisionService: DivisionService,
+    public userService: UserService
   ) {}
 
   ngOnInit() {

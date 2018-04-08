@@ -20,8 +20,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   values: number[] = [102, 115, 130, 137];
 
   public constructor(
-    private titleService: Title,
-    private router: Router,
+    public titleService: Title,
+    public router: Router,
   ) { }
 
   public setTitle(newTitle: string = "Welcome to RiverLearn Inc") {

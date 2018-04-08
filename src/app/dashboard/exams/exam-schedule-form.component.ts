@@ -20,25 +20,25 @@ declare var $: any;
 })
 
 export class ExamScheduleFormComponent implements OnInit {
-  protected contentReady: boolean = false;
-  protected savingExamCycle: boolean = false;
-  protected exams: Exam[];
-  protected levels: Level[];
-  protected examForm: FormGroup;
+  public contentReady: boolean = false;
+  public savingExamCycle: boolean = false;
+  public exams: Exam[];
+  public levels: Level[];
+  public examForm: FormGroup;
 
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
 
-  protected errors: string[];
+  public errors: string[];
 
   onSaveSchedule = new EventEmitter<boolean>();
 
   constructor(
-    private divisionService: DivisionService,
-    private examService: ExamService,
-    private formBuilder: FormBuilder,
+   public  divisionService: DivisionService,
+   public  examService: ExamService,
+   public  formBuilder: FormBuilder,
     public snackBar: MatSnackBar
   ) {}
 

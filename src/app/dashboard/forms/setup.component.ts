@@ -22,22 +22,22 @@ declare var $: any;
 })
 
 export class SetupComponent implements OnInit {
-  private user: User;
-  private institutions: Institution[];
-  private errorMessage: Error;
-  private selectedInstitution: Institution;
-  private request: JoinRequest;
-  private requests: JoinRequest[];
-  private notes: string;
-  private requestSubmitted: boolean = false;
-  private showErrorMessage = false;
+  public user: User;
+  public institutions: Institution[];
+  public errorMessage: Error;
+  public selectedInstitution: Institution;
+  public request: JoinRequest;
+  public requests: JoinRequest[];
+  public notes: string;
+  public requestSubmitted: boolean = false;
+  public showErrorMessage = false;
   // FIXME: Error message being show before the request.institution loads
 
   constructor(
-    private userService: UserService,
-    private commonService: CommonService,
-    private institutionService: InstitutionService,
-    private router: Router
+    public userService: UserService,
+    public commonService: CommonService,
+    public institutionService: InstitutionService,
+    public router: Router
   ){}
 
   ngOnInit(): void {

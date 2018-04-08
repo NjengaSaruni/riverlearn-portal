@@ -27,17 +27,17 @@ export class ExamPaperFormComponent implements OnInit {
   subjects: InstitutionSubject[];
   exams: Exam[];
 
-  protected paperForm: FormGroup;
+  public paperForm: FormGroup;
   @ViewChild('fileInput') fileInput : any;
-  private selectedExam: Exam;
+  public selectedExam: Exam;
 
   onSavePaper = new EventEmitter<any>();
 
   constructor(
-    private examService: ExamService,
-    private divisionService: DivisionService,
-    private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar
+    public examService: ExamService,
+    public divisionService: DivisionService,
+    public formBuilder: FormBuilder,
+    public snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {

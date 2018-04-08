@@ -20,12 +20,12 @@ declare var $: any;
 })
 export class DashboardComponent implements OnInit, OnChanges {
   user: User;
-  protected classes: Class[];
-  protected students: Student[];
-  protected parents: Parent[];
-  protected teachers: Teacher[];
-  protected exams: Exam[];
-  protected examPapers: ExamPaper[];
+  classes: Class[];
+  students: Student[];
+  parents: Parent[];
+  teachers: Teacher[];
+  exams: Exam[];
+  examPapers: ExamPaper[];
   examResults: ClassExamResult[];
 
   request: JoinRequest;
@@ -33,12 +33,12 @@ export class DashboardComponent implements OnInit, OnChanges {
   institutionRequests: JoinRequest[];
   requestSubmitted: boolean = false;
 
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
+  color = 'primary';
+  mode = 'indeterminate';
+  value = 50;
+  bufferValue = 75;
 
-  private errorMessage: string;
+  errorMessage: string;
 
   constructor(
     private router: Router,

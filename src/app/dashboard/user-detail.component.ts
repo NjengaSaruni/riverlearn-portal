@@ -36,18 +36,18 @@ export class UserDetailComponent implements OnInit {
   userProfile: UserProfile;
   image: Image;
 
-  protected loggedInUser: User;
+  public loggedInUser: User;
 
   @ViewChild('fileInput') fileInput : any;
   jwtHelper: JwtHelper = new JwtHelper();
 
-  protected errorMessage: string;
+  public errorMessage: string;
   constructor(
-    private commonService: CommonService,
-    private userService: UserService,
-    private uploadService: UploadService,
+    public commonService: CommonService,
+    public userService: UserService,
+    public uploadService: UploadService,
     public snackBar: MatSnackBar,
-    private titleService: Title
+    public titleService: Title
   ) {}
 
 
@@ -58,7 +58,7 @@ export class UserDetailComponent implements OnInit {
     UserDetailComponent.semanticEvents();
   }
 
-  private static semanticEvents() {
+  public static semanticEvents() {
     $('.image').dimmer({
       on: 'hover'
     });

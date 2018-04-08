@@ -43,10 +43,10 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   levels: Level[];
   classes: Class[];
 
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
 
   resultsData = [];
 
@@ -94,11 +94,11 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
   }];
 
   isBrazilAdded = false;
-  protected selectedPaperPerformance: ClassExamPaperPerformance;
+  public selectedPaperPerformance: ClassExamPaperPerformance;
 
   constructor(
-    private divisionService: DivisionService,
-    private examService: ExamService,
+    public divisionService: DivisionService,
+    public examService: ExamService,
     public snackBar: MatSnackBar,
   ){}
 
@@ -241,7 +241,7 @@ export class ExamResultsComponent implements OnInit, AfterViewInit {
     this.getPerformance(performance.id)
   }
 
-  private getPerformance(id: string) {
+  public getPerformance(id: string) {
     $('#student-results').modal('refresh');
     this.examService.getClassExamPaperPerformance(id)
       .subscribe(

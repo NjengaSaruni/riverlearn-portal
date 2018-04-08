@@ -15,11 +15,11 @@ declare var $: any;
   styleUrls: ['./exams.component.css']
 })
 export class ExamsComponent implements OnInit {
-  private user: User;
+ public  user: User;
 
   constructor(
-    private userService: UserService,
-    private titleService: Title,
+   public  userService: UserService,
+   public  titleService: Title,
     public snackBar: MatSnackBar
   ) {}
 

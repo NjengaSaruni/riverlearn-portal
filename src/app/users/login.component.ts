@@ -23,7 +23,7 @@ declare var $: any;
 })
 
 export class LoginFormComponent implements OnInit{
-  private token: Token;
+  public token: Token;
   errorMessage: string;
   loggedIn: boolean = false;
 
@@ -47,7 +47,7 @@ export class LoginFormComponent implements OnInit{
   });
 
   constructor (
-    private userService: UserService,
+    public userService: UserService,
     public fb: FormBuilder,
   ) { }
 

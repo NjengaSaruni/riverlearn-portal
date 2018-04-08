@@ -27,8 +27,8 @@ export class SampleGraphsComponent implements OnInit {
   results: ClassExamResult[];
 
   constructor(
-    private examService: ExamService,
-    private divisionService: DivisionService,
+    public examService: ExamService,
+    public divisionService: DivisionService,
     public snackBar: MatSnackBar
   ){}
 

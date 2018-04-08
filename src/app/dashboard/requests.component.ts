@@ -16,11 +16,11 @@ declare var $: any;
 })
 
 export class RequestsComponent implements OnInit {
-  private teacherRequests: JoinRequest[];
-  private parentRequests: JoinRequest[];
-  private studentRequests: JoinRequest[];
+  public teacherRequests: JoinRequest[];
+  public parentRequests: JoinRequest[];
+  public studentRequests: JoinRequest[];
   constructor(
-    private userService: UserService
+    public userService: UserService
   ) {}
 
   ngOnInit() {

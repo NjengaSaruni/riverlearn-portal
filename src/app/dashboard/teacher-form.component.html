@@ -4,7 +4,7 @@
     Teacher added!
   </div>
   <div class="actions">
-    <div class="ui red basic cancel inverted button" (click)="showTeachers()">
+    <div class="ui red basic cancel inverted button">
       <i class="remove icon"></i>
       Close
     </div>
@@ -81,9 +81,5 @@
   <div class="ui labeled icon primary button" tabindex="0" (click)="createTeacher()">
     <i class="icon save"></i>
     Save teacher
-  </div>
-
-  <div class="ui floating red message" *ngIf="errors?.length > 0">
-    <p *ngFor="let error of errors">{{ error }}</p>
   </div>
 </form>

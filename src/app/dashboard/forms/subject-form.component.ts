@@ -14,7 +14,7 @@ declare var $: any;
 })
 
 export class SubjectFormComponent implements OnInit, AfterViewInit {
-  private contentReady: boolean = false;
+  public contentReady: boolean = false;
 
   constructor(
   ) {}

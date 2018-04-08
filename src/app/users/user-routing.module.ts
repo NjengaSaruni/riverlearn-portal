@@ -25,7 +25,4 @@ const usersRoutes: Routes = [
 })
 export class UserRoutingModule {}
 export const userRoutingComponents = [
-  UsersComponent,
-  LoginFormComponent,
-  RegisterComponent
-]
+];

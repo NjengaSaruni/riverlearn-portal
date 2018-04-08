@@ -15,11 +15,11 @@ declare var $: any;
   styleUrls: ['./forms.component.css']
 })
 export class FormsComponent implements OnInit {
-  private user: User;
+  public user: User;
 
   constructor(
-    private commonService: CommonService,
-    private userService: UserService,
+    public commonService: CommonService,
+    public userService: UserService,
   ) {}
 
   public ngOnInit(){

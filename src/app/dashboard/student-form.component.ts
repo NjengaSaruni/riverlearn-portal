@@ -19,21 +19,21 @@ declare var $: any;
 })
 
 export class StudentFormComponent implements OnInit, AfterViewInit {
-  private contentReady: boolean;
-  private usernameTouched: boolean;
-  private creatingParent: boolean;
-  private studentForm: FormGroup;
-  private incorrectUsernameFormat: boolean;
-  private comparingUsernames: boolean;
-  private usernameTaken: boolean;
-  private users: User[];
-  private classes: Class[];
-  private parents: Parent[];
-  private availableParents: Parent[];
-  private searchLoading: boolean;
-  private selectedParent: Parent;
+  public contentReady: boolean;
+  public usernameTouched: boolean;
+  public creatingParent: boolean;
+  public studentForm: FormGroup;
+  public incorrectUsernameFormat: boolean;
+  public comparingUsernames: boolean;
+  public usernameTaken: boolean;
+  public users: User[];
+  public classes: Class[];
+  public parents: Parent[];
+  public availableParents: Parent[];
+  public searchLoading: boolean;
+  public selectedParent: Parent;
 
-  private genders: any[] = [
+  public genders: any[] = [
     {
       value: 'M',
       name : 'MALE'
@@ -50,8 +50,8 @@ export class StudentFormComponent implements OnInit, AfterViewInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private userService: UserService,
-    private divisionService: DivisionService
+    public userService: UserService,
+    public divisionService: DivisionService
   ) {}
 
   ngOnInit() {

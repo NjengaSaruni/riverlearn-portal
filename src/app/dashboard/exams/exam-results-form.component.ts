@@ -30,27 +30,27 @@ export class ExamResultsFormComponent implements OnInit {
   students: Student[];
   papers: ExamPaper[];
   exams: Exam[];
-  private user: User;
-  protected selectedExam: Exam = null;
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
-  protected selectedPaper: ExamPaper;
-  protected selectedClass: Class;
-  protected results = [];
+ public  user: User;
+  public selectedExam: Exam = null;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
+  public selectedPaper: ExamPaper;
+  public selectedClass: Class;
+  public results = [];
 
-  protected workingTotal: number = 0;
-  protected workingMean: number = 0;
+  public workingTotal: number = 0;
+  public workingMean: number = 0;
 
   isLoading: boolean = false;
   selectedStudent: Student;
 
   constructor(
-    private userService: UserService,
-    private examService: ExamService,
-    private divisionService: DivisionService,
-    private titleService: Title,
+   public  userService: UserService,
+   public  examService: ExamService,
+   public  divisionService: DivisionService,
+   public  titleService: Title,
     public snackBar: MatSnackBar,
   ) {}
 

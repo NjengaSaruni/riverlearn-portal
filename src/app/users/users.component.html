@@ -1,12 +1,10 @@
 <div [hidden]="!hidden">
   <h2>My Users</h2>
   <div class="ordered items">
-    <div class="item" *ngFor="let user of users"
-         (click)="onSelect(user)"
-         [class.selected]="user === selectedUser">
+    <div class="item" *ngFor="let user of users">
       <div class="item attached">{{user.username}}</div>
     </div>
   </div>
-  <button (click)="auth()" class="users">Auth</button><br>
+  <button class="users">Auth</button><br>
   <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 </div>

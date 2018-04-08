@@ -23,16 +23,16 @@ declare var $: any;
 export class InstitutionComponent implements OnInit, OnDestroy {
   streamForm: FormGroup;
   subjectForm: FormGroup;
-  private user: User;
-  private institution: Institution;
-  private errorMessage: string;
-  private streams: Stream[];
-  private colors: Color[];
-  private fields: Subject[];
-  private subjects: InstitutionSubject[];
+  user: User;
+  institution: Institution;
+  errorMessage: string;
+  streams: Stream[];
+  colors: Color[];
+  fields: Subject[];
+  subjects: InstitutionSubject[];
 
-  private selectedField: Subject;
-  private selectedColor: Color;
+  selectedField: Subject;
+  selectedColor: Color;
 
   constructor(
     private userService: UserService,

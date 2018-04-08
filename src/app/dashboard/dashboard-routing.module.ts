@@ -20,6 +20,7 @@ import {ParentsComponent} from './parents.component';
 import {ParentFormComponent} from './parent-form.component';
 import {TeacherFormComponent} from './teacher-form.component';
 import {StudentDetailComponent} from "./student-detail.component";
+import {GraphsComponent} from "./graphs.component";
 
 
 const dashboardRoutes: Routes = [
@@ -73,6 +74,7 @@ export const dashboardComponents = [
   DashboardMainComponent,
   InstitutionComponent,
   FeedComponent,
+  GraphsComponent,
   ManagementComponent,
   ParentsComponent,
   ParentFormComponent,
@@ -83,6 +85,5 @@ export const dashboardComponents = [
   StudentsComponent,
   TeachersComponent,
   TeacherFormComponent,
-  UserDetailComponent,
-
+  UserDetailComponent
 ];

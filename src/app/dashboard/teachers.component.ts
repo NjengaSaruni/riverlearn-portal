@@ -18,17 +18,17 @@ declare var $: any;
 
 export class TeachersComponent implements OnInit {
   user: User;
-  protected teachers: Teacher[];
-  protected contentReady: boolean;
+  public teachers: Teacher[];
+  public contentReady: boolean;
 
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
 
   constructor(
-    private divisionService: DivisionService,
-    private userService: UserService
+    public divisionService: DivisionService,
+    public userService: UserService
   ) {}
 
   ngOnInit() {

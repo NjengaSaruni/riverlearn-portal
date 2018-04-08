@@ -24,21 +24,21 @@ export class SubjectLineGraphComponent implements OnInit, AfterViewInit {
   selectedLevel: Level;
   selectedClass: Class;
 
-  protected loadingGraph;
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
+  public loadingGraph;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
 
-  protected firstLoad = true;
+  public firstLoad = true;
 
   @ViewChild('subjectLineChart') subjectLineChart: jqxChartComponent;
   title: string;
   description: string;
 
   constructor(
-    private examService: ExamService,
-    private divisionService: DivisionService,
+   public  examService: ExamService,
+   public  divisionService: DivisionService,
     public snackBar: MatSnackBar
   ){}
 

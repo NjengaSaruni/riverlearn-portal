@@ -36,9 +36,9 @@ export class StudentDetailComponent implements OnInit {
   @Input() hero: Hero;
 
   constructor(
-    private route: ActivatedRoute,
-    private divisionService: DivisionService,
-    private location: Location,
+    public route: ActivatedRoute,
+    public divisionService: DivisionService,
+    public location: Location,
     public snackBar: MatSnackBar,
   ) {}
 

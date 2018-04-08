@@ -22,23 +22,23 @@ declare var $: any;
 
 export class InstitutionFormComponent implements OnInit, AfterViewInit {
   constructor(
-    private formBuilder: FormBuilder,
-    private institutionService: InstitutionService,
-    private userService: UserService,
-    private commonService: CommonService,
-    private router: Router
+    public formBuilder: FormBuilder,
+    public institutionService: InstitutionService,
+    public userService: UserService,
+    public commonService: CommonService,
+    public router: Router
   ) {}
 
-  private user: User;
+  public user: User;
 
-  private institutionForm: FormGroup;
-  private contentReady: boolean = false;
-  private institutionTypes: InstitutionType[];
-  private institutions: Institution[];
-  private selectedType: InstitutionType = new InstitutionType();
+  public institutionForm: FormGroup;
+  public contentReady: boolean = false;
+  public institutionTypes: InstitutionType[];
+  public institutions: Institution[];
+  public selectedType: InstitutionType = new InstitutionType();
 
-  private domainTaken: boolean = false;
-  private comparingDomains: boolean = false;
+  public domainTaken: boolean = false;
+  public comparingDomains: boolean = false;
 
   @ViewChild('fileInput') fileInput : any;
 

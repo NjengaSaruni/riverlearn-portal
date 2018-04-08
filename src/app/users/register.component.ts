@@ -44,9 +44,9 @@ export class RegisterComponent implements OnInit {
 
   onCreateAccount = new EventEmitter<boolean>();
 
-  constructor(private formBuilder: FormBuilder,
-              private userService: UserService,
-              private router: Router) {
+  constructor(public formBuilder: FormBuilder,
+              public userService: UserService,
+              public router: Router) {
   }
 
   ngOnInit() {

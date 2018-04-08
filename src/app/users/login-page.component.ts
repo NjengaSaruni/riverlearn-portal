@@ -23,8 +23,8 @@ declare var $: any;
 })
 
 export class LoginPageComponent implements OnInit{
-  private token: Token;
-  private redirectUrl: string;
+  public token: Token;
+  public redirectUrl: string;
 
   errorMessage: string;
   loggedIn: boolean = false;
@@ -46,11 +46,11 @@ export class LoginPageComponent implements OnInit{
   });
 
   constructor (
-    private userService: UserService,
+    public userService: UserService,
     public fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private titleService: Title
+    public route: ActivatedRoute,
+    public router: Router,
+    public titleService: Title
   ) {
 
   }

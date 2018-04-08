@@ -17,20 +17,20 @@ declare var $: any;
 })
 
 export class ParentsComponent implements OnInit {
-  protected parents: Parent[];
-  protected contentReady: boolean;
-  protected searchTextEmpty: boolean;
-  protected searchText: string;
+  public parents: Parent[];
+  public contentReady: boolean;
+  public searchTextEmpty: boolean;
+  public searchText: string;
 
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
-  protected user: User;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
+  public user: User;
 
   constructor(
-    private divisionService: DivisionService,
-    private userService: UserService
+    public divisionService: DivisionService,
+    public userService: UserService
   ) {
     this.getParents();
     this.getUser();

@@ -19,23 +19,23 @@ declare var $: any;
 })
 
 export class ExamSchedulesComponent implements OnInit {
-  protected selectedExam: Exam = null;
+  public selectedExam: Exam = null;
   @ViewChild('schedulerReference') schedulerReference: jqxSchedulerComponent;
   @ViewChild('schedulerReference1') schedulerReference1: jqxSchedulerComponent;
-  private contentReady: boolean = false;
-  private appointments = [];
-  private examPapers: ExamPaper[] = [];
-  protected exams: Exam[];
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
-  private user: User;
+ public  contentReady: boolean = false;
+ public  appointments = [];
+ public  examPapers: ExamPaper[] = [];
+  public exams: Exam[];
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
+ public  user: User;
 
   constructor(
-    private examService: ExamService,
+   public  examService: ExamService,
     public snackBar: MatSnackBar,
-    private userService: UserService) {
+   public  userService: UserService) {
       this.getUser();
   }
 

@@ -32,14 +32,14 @@ export class FeedComponent implements OnInit {
   post: string ;
   images: any[] = [];
 
-  private contentReady: boolean = false;
-  private timerSubscription: AnonymousSubscription;
-  protected profiles: UserProfile[];
+  contentReady: boolean = false;
+  timerSubscription: AnonymousSubscription;
+  profiles: UserProfile[];
 
   jwtHelper: JwtHelper = new JwtHelper();
-  private firstLoad: boolean = true;
-  protected selectedPostComments: PostComment[];
-  private hideGallery: boolean;
+  firstLoad: boolean = true;
+  selectedPostComments: PostComment[];
+  hideGallery: boolean;
 
   constructor(
     private userService: UserService,

@@ -6,7 +6,7 @@
 </div>
 <div id="serverErrorOccurredMessage" [ngClass]="{'hidden': !serverErrorOccured }"
      class="ui icon attached orange floating message">
-  <i (click)="closeServerErrorOccuredMessage();" class="close icon"></i>
+  <i class="close icon"></i>
   <div class="header">
     {{ serverErrorMessageTitle }}
   </div>
@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<form class="ui form attached fluid segment" [formGroup]="registerForm" (ngSubmit)="createUser();" novalidate>
+<form class="ui form attached fluid segment" [formGroup]="registerForm" (ngSubmit)="createUser($event);" novalidate>
   <div class="equal width fields">
     <div class="required field">
       <label>First Name:</label>
@@ -36,7 +36,7 @@
     <div class="email field">
       <label>Email:</label>
       <input type="text" formControlName="email" placeholder="name@example.com"
-             (keyup)="onKeyEmail($event)" [ngClass]="{'error': !correctEmailFormat }">
+             (keyup)="onKeyEmail($event)">
     </div>
     <div class="required field">
       <label>Account Type:</label>

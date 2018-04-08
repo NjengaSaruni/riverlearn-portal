@@ -147,15 +147,15 @@
      class="ui small modal"
      icon="unlock">
   <div class="content">
-    <login (onLoginLoad)="setTitle(title)" (onLogin)="onUserLoggedIn($event);">Loading...</login>
+    <login (onLogin)="onUserLoggedIn($event);">Loading...</login>
   </div>
 </div>
 
-<div (clickOutside)="close();" (orRegister)="userRegistered(userRegistered)" id="registerModal" title="Register"
+<div (clickOutside)="close();" id="registerModal" title="Register"
      class="ui inverted modal"
      icon="add user" >
   <div class="content">
-    <register (onCreateAccount)="onUserCreateAccount(password);">Loading...</register>
+    <register (onCreateAccount)="onUserCreateAccount($event);">Loading...</register>
 
   </div>
 </div>

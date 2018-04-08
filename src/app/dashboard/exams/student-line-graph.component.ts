@@ -31,7 +31,7 @@ export class StudentLineGraphComponent {
   commentTabActive: boolean;
   examPerformances: StudentPaperPerformance[];
   studentPerformances: StudentPaperPerformance[];
-  private timerSubscription: AnonymousSubscription;
+ public  timerSubscription: AnonymousSubscription;
   selectedStudent: Student;
   firstLoad: boolean = true;
   students: Student[];
@@ -61,16 +61,16 @@ export class StudentLineGraphComponent {
   title: string;
   description: string;
 
-  protected color = 'primary';
-  protected mode = 'indeterminate';
-  protected value = 50;
-  protected bufferValue = 75;
+  public color = 'primary';
+  public mode = 'indeterminate';
+  public value = 50;
+  public bufferValue = 75;
   user: User;
 
   constructor(
-    private divisionService: DivisionService,
-    private userService: UserService,
-    private examService: ExamService,
+   public  divisionService: DivisionService,
+   public  userService: UserService,
+   public  examService: ExamService,
     public snackBar: MatSnackBar
   ){
     this.getUser();
